@@ -1,0 +1,7 @@
+historical-timeline/.idea/
+historical-timeline/target/
+*.iml
+test-output
+.project
+.settings
+.claspath
