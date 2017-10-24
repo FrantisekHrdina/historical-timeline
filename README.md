@@ -2,8 +2,8 @@
 PA165 project
 
 ## Members
-Bujdoš, Tibor
-Hrdina, František
-Kočiský, Martin
-Wörgötter, Martin 
+Bujdoš, Tibor <br />
+Hrdina, František <br />
+Kočiský, Martin <br />
+Wörgötter, Martin <br />
 
