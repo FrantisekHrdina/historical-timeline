@@ -2,6 +2,7 @@ package cz.muni.fi.pa165.entities;
 
 import javax.validation.constraints.NotNull;
 import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.*;
 
@@ -22,8 +23,7 @@ public class Timeline {
     @ManyToMany
     private List<Event> events;
 
-    @OneToMany
-    private List<Comment> comments;
+    private List<String> comments;
 
     @OneToOne
     private SeminarGroup seminarGroup;
@@ -63,13 +63,12 @@ public class Timeline {
         event.addTimeline(this);
     }
 
-    public List<Comment> getComments() {
+    public List<String> getComments() {
         return Collections.unmodifiableList(comments);
     }
 
-    public void addComment(Comment comment) {
+    public void addComment(String comment) {
         this.comments.add(comment);
-        comment.setTimeline(this);
     }
 
     public SeminarGroup getSeminarGroup() {
