@@ -9,6 +9,7 @@ import javax.persistence.*;
 /**
  * @author František Hrdina
  */
+
 @Entity
 public class Timeline {
 
@@ -23,6 +24,7 @@ public class Timeline {
     @ManyToMany
     private List<Event> events;
 
+    @OneToMany
     private List<String> comments;
 
     @OneToOne
@@ -32,9 +34,11 @@ public class Timeline {
 
     }
 
-    public Timeline(Long id, String name) {
-        this.id = id;
+    public Timeline(String name, List<Event> events, List<String> comments, SeminarGroup seminarGroup) {
         this.name = name;
+        this.events = events;
+        this.comments = comments;
+        this.seminarGroup = seminarGroup;
     }
 
     public Long getId() {
@@ -53,22 +57,20 @@ public class Timeline {
         this.name = name;
     }
 
-
     public List<Event> getEvents() {
         return Collections.unmodifiableList(events);
     }
 
-    public void AddEvent(Event event) {
-        this.events.add(event);
-        event.addTimeline(this);
+    public void setEvents(List<Event> events) {
+        this.events = events;
     }
 
     public List<String> getComments() {
         return Collections.unmodifiableList(comments);
     }
 
-    public void addComment(String comment) {
-        this.comments.add(comment);
+    public void setComments(List<String> comments) {
+        this.comments = comments;
     }
 
     public SeminarGroup getSeminarGroup() {
