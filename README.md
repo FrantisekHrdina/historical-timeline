@@ -1,6 +1,7 @@
 # Historical Timeline
-PA165 project
-
+[![Build Status](https://travis-ci.org/FrantisekHrdina/historical-timeline.svg?branch=master)](https://travis-ci.org/FrantisekHrdina/historical-timeline)
+<br />
+Project from PA156, FI MU
 ## Members
 Bujdoš, Tibor <br />
 Hrdina, František <br />
