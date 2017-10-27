@@ -5,7 +5,7 @@ import java.util.List;
 
 /**
  *
- * @author Tibor Bujdoö
+ * @author Tibor Bujdo≈°
  */
 public interface EventDao {
     
