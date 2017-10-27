@@ -3,6 +3,9 @@ package cz.muni.fi.pa165.entities;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author Martin Kocisky
@@ -28,6 +31,21 @@ public abstract class User {
     private String passwordHash;
 
     private boolean isTeacher = false;
+
+    @ManyToMany/*(mappedBy = users)*/ // TODO: add dependency to SeminarGroup as per diagram
+    private Set<SeminarGroup> seminarGroupSet = new HashSet<>();
+
+    public User() {
+
+    }
+
+    public User(String forename, String surname, String email, String passwordHash, boolean isTeacher) {
+        this.forename = forename;
+        this.surname = surname;
+        this.email = email;
+        this.passwordHash = passwordHash;
+        this.isTeacher = isTeacher;
+    }
 
     public Long getId() {
         return id;
@@ -75,6 +93,18 @@ public abstract class User {
 
     public void setIsTeacher(boolean isTeacher) {
         this.isTeacher = isTeacher;
+    }
+
+    public void addSeminarGroup(SeminarGroup g) {
+        seminarGroupSet.add(g);
+    }
+
+    public void removeSeminarGroup(SeminarGroup g) {
+        seminarGroupSet.remove(g);
+    }
+
+    public Set<SeminarGroup> getSeminarGroups() {
+        return Collections.unmodifiableSet(seminarGroupSet);
     }
 
     @Override
