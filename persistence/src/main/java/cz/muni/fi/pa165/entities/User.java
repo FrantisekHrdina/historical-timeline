@@ -27,6 +27,7 @@ public abstract class User {
 
     private String passwordHash;
 
+    private boolean isTeacher = false;
 
     public Long getId() {
         return id;
@@ -66,6 +67,14 @@ public abstract class User {
 
     public void setPasswordHash(String passwordHash) {
         this.passwordHash = passwordHash;
+    }
+
+    public boolean getIsTeacher() {
+        return isTeacher;
+    }
+
+    public void setIsTeacher(boolean isTeacher) {
+        this.isTeacher = isTeacher;
     }
 
     @Override

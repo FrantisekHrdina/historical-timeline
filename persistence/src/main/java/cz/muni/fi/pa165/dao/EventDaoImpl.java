@@ -41,6 +41,4 @@ public class EventDaoImpl implements EventDao {
         return em.createQuery("select e from Event e", Event.class).getResultList();
     }
 
-
-
 }
