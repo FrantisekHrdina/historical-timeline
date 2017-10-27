@@ -1,8 +1,8 @@
-historical-timeline/.idea/
-historical-timeline/target/
+**/target
 *.iml
 test-output
 .project
 .settings
-.claspath
+.classpath
 *.jar
+.idea/
