@@ -18,6 +18,8 @@ import javax.persistence.PersistenceUnit;
 import javax.validation.ConstraintViolationException;
 
 import java.sql.Time;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -30,9 +32,6 @@ import static org.assertj.core.api.Assertions.*;
 @TestExecutionListeners(TransactionalTestExecutionListener.class)
 @Transactional
 public class TimelineDaoTest extends AbstractTestNGSpringContextTests {
-
-    @PersistenceUnit
-    private EntityManagerFactory emf;
 
     @Autowired
     private TimelineDao timelineDao;
@@ -61,11 +60,10 @@ public class TimelineDaoTest extends AbstractTestNGSpringContextTests {
     /**
      * Attempting to persist null.
      */
-    @Test(expectedExceptions = InvalidDataAccessApiUsageException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void addTimelineTest_timelineNull() {
         timelineDao.addTimeline(null, firstSeminarGroup);
     }
-
 
     /**
      * Failed to add timeline to a seminar group;
@@ -95,11 +93,17 @@ public class TimelineDaoTest extends AbstractTestNGSpringContextTests {
         assertThat(firstTimeline.getId()).isEqualTo(fromDB.getId());
     }
 
-    @Test(expectedExceptions = InvalidDataAccessApiUsageException.class)
-    public void removeTimelineTest_timelineNull() {
+    /**
+     * Attempting to remove null.
+     */
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void removeTimelineTest_nullTimeline() {
         timelineDao.removeTimeline(null);
     }
 
+    /**
+     * Try to remove timeline which is not in DB.
+     */
     @Test
     public void removeTimelineTest_timelineNotInDb() {
         timelineDao.addTimeline(secondTimeline, secondSeminarGroup);
@@ -112,6 +116,9 @@ public class TimelineDaoTest extends AbstractTestNGSpringContextTests {
 
     }
 
+    /**
+     * Remove timeline.
+     */
     @Test
     public void removeTimelineTest() {
         timelineDao.addTimeline(firstTimeline, firstSeminarGroup);
@@ -124,19 +131,38 @@ public class TimelineDaoTest extends AbstractTestNGSpringContextTests {
         assertThat(timelineDao.findAllTimelines().size()).isEqualTo(1);
     }
 
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void editTimelineTest_nullTimeline() {
+        timelineDao.editTimeline(null);
+    }
+
     @Test
     public void editTimelineTest() {
+        timelineDao.addTimeline(firstTimeline, firstSeminarGroup);
+        firstTimeline.setName("Stone Age");
+        timelineDao.editTimeline(firstTimeline);
 
+        assertThat(timelineDao.findTimeline(firstTimeline.getId()).getName()).isEqualTo(firstTimeline.getName());
+    }
 
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void findTimelineTest_nullTimeline() {
+        timelineDao.findTimeline(null);
     }
 
     @Test
     public void findTimelineTest() {
+        timelineDao.addTimeline(firstTimeline, firstSeminarGroup);
 
+        assertThat(timelineDao.findTimeline(firstTimeline.getId())).isEqualTo(firstTimeline);
     }
 
     @Test
     public void findAllTimelinesTest() {
+        timelineDao.addTimeline(firstTimeline, firstSeminarGroup);
+        timelineDao.addTimeline(secondTimeline, secondSeminarGroup);
 
+        assertThat(timelineDao.findAllTimelines()).containsExactlyInAnyOrder(firstTimeline, secondTimeline);
     }
 }
