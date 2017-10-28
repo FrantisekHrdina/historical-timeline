@@ -4,6 +4,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -20,7 +21,16 @@ public class Event {
 	@Column(nullable = false, unique = true)
 	private String name;
 
+	public List<Timeline> getTimelines() {
+		return Collections.unmodifiableList(timelines);
+	}
+
+	public void setTimelines(List<Timeline> timelines) {
+		this.timelines = timelines;
+	}
+
 	@Column(nullable = false)
+
 	private LocalDate date;
 	private String location;
 	private String description;

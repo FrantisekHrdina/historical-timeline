@@ -19,7 +19,7 @@ public class Timeline {
     @Column(nullable=false, unique=true)
     private String name;
 
-    @ManyToMany
+    @ManyToMany(/*mappedBy = "timelines"*/)
     private List<Event> events = new ArrayList<Event>();
 
     @ElementCollection

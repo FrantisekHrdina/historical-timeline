@@ -16,11 +16,11 @@ import javax.validation.constraints.NotNull;
 public class SeminarGroup {
     
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
     @NotNull
-    @Column(nullable=false, unique=true)
+    @Column(nullable = false, unique = true)
     private String name;
     
     @OneToMany
@@ -88,8 +88,6 @@ public class SeminarGroup {
             return false;
         }
         return true;
-    }
-    
-    
+    }    
     
 }
