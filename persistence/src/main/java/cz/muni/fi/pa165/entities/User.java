@@ -11,7 +11,9 @@ import java.util.Set;
  * @author Martin Kocisky
  */
 
-public abstract class User {
+@Table(name = "Users")
+@Entity
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,7 +26,6 @@ public abstract class User {
     private String surname;
 
     @Column(nullable=false,unique=true)
-    @Pattern(regexp=".+@.+\\....?")
     @NotNull
     private String email;
 
