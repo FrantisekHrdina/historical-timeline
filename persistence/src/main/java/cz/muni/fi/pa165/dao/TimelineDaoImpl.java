@@ -2,6 +2,8 @@ package cz.muni.fi.pa165.dao;
 
 import cz.muni.fi.pa165.entities.SeminarGroup;
 import cz.muni.fi.pa165.entities.Timeline;
+import org.springframework.stereotype.Repository;
+
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -10,6 +12,8 @@ import javax.persistence.PersistenceContext;
  *
  * @author Tibor Bujdoš
  */
+
+@Repository
 public class TimelineDaoImpl implements TimelineDao{
     
     @PersistenceContext
