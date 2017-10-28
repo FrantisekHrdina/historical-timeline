@@ -33,7 +33,7 @@ public class User {
 
     private boolean isTeacher = false;
 
-    @ManyToMany/*(mappedBy = users)*/ // TODO: add dependency to SeminarGroup as per diagram
+    @ManyToMany(/*mappedBy = users*/) // TODO: add dependency to SeminarGroup as per diagram
     private Set<SeminarGroup> seminarGroupSet = new HashSet<>();
 
     public User() {
@@ -107,7 +107,6 @@ public class User {
     public Set<SeminarGroup> getSeminarGroups() {
         return Collections.unmodifiableSet(seminarGroupSet);
     }
-
     @Override
     public int hashCode() {
         if (email != null) return email.hashCode();

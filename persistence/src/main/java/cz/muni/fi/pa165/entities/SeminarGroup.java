@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 package cz.muni.fi.pa165.entities;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -24,7 +26,7 @@ public class SeminarGroup {
     private String name;
     
     @OneToMany
-    private List<Timeline> timelines;
+    private List<Timeline> timelines = new ArrayList<Timeline>();
 
     public SeminarGroup(Long id, String name) {
         this.id = id;
@@ -51,7 +53,7 @@ public class SeminarGroup {
     }
 
     public List<Timeline> getTimelines() {
-        return timelines;
+        return Collections.unmodifiableList(timelines);
     }
 
     public void setTimelines(List<Timeline> timelines) {
