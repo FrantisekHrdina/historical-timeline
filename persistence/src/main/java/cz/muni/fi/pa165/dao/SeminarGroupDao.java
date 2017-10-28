@@ -1,7 +1,6 @@
 package cz.muni.fi.pa165.dao;
 
 import cz.muni.fi.pa165.entities.SeminarGroup;
-import cz.muni.fi.pa165.entities.SeminarGroup;
 
 import java.util.List;
 
@@ -13,7 +12,7 @@ import java.util.List;
 public interface SeminarGroupDao {
 
     /**
-     * Add group g to the databse.
+     * Add group g to the database.
      * @param g
      */
     public void addGroup(SeminarGroup g);
