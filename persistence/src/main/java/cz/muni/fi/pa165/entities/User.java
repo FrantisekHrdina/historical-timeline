@@ -24,7 +24,7 @@ public class User {
     @NotNull
     private String surname;
 
-    @Column(nullable=false,unique=true)
+    @Column(nullable = false, unique = true)
     @Pattern(regexp=".+@.+\\....?")
     @NotNull
     private String email;
@@ -33,8 +33,8 @@ public class User {
 
     private boolean isTeacher = false;
 
-/*    @ManyToMany*//*(mappedBy = users)*//* // TODO: add dependency to SeminarGroup as per diagram
-    private Set<SeminarGroup> seminarGroupSet = new HashSet<>();*/
+    @ManyToMany(/*mappedBy = users*/) // TODO: add dependency to SeminarGroup as per diagram
+    private Set<SeminarGroup> seminarGroupSet = new HashSet<>();
 
     public User() {
 
@@ -96,7 +96,7 @@ public class User {
         this.isTeacher = isTeacher;
     }
 
- /*   public void addSeminarGroup(SeminarGroup g) {
+    public void addSeminarGroup(SeminarGroup g) {
         seminarGroupSet.add(g);
     }
 
@@ -107,7 +107,6 @@ public class User {
     public Set<SeminarGroup> getSeminarGroups() {
         return Collections.unmodifiableSet(seminarGroupSet);
     }
-*/
     @Override
     public int hashCode() {
         if (email != null) return email.hashCode();

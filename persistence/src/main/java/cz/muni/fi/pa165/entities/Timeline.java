@@ -19,25 +19,25 @@ public class Timeline {
     @Column(nullable=false, unique=true)
     private String name;
 
-   /* @ManyToMany(mappedBy = "timelines")
+    @ManyToMany(/*mappedBy = "timelines"*/)
     private List<Event> events = new ArrayList<Event>();
 
     @ElementCollection
     private List<String> comments = new ArrayList<String>();
 
     @OneToOne
-    private SeminarGroup seminarGroup;*/
+    private SeminarGroup seminarGroup;
 
     public Timeline(){
 
     }
 
- /*   public Timeline(String name, List<Event> events, List<String> comments, SeminarGroup seminarGroup) {
+    public Timeline(String name, List<Event> events, List<String> comments, SeminarGroup seminarGroup) {
         this.name = name;
         this.events = events;
         this.comments = comments;
         this.seminarGroup = seminarGroup;
-    }*/
+    }
 
     public Long getId() {
         return id;
@@ -55,7 +55,7 @@ public class Timeline {
         this.name = name;
     }
 
- /*   public List<Event> getEvents() {
+    public List<Event> getEvents() {
         return Collections.unmodifiableList(events);
     }
 
@@ -77,7 +77,7 @@ public class Timeline {
 
     public void setSeminarGroup(SeminarGroup seminarGroup) {
         this.seminarGroup = seminarGroup;
-    }*/
+    }
 
     @Override
     public boolean equals(Object obj) {
