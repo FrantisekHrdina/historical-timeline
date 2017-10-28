@@ -4,32 +4,29 @@
  * and open the template in the editor.
  */
 package cz.muni.fi.pa165.entities;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 /**
  *
- * @author Tibor Bujdoš
+ * @author Tibor BujdoĹˇ
  */
 @Entity
 public class SeminarGroup {
     
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
     @NotNull
-    @Column(nullable=false, unique=true)
+    @Column(nullable = false, unique = true)
     private String name;
     
     @OneToMany
-    private List<Timeline> timelines = new ArrayList<Timeline>();
+    private List<Timeline> timelines;
 
-    public SeminarGroup(Long id, String name) {
-        this.id = id;
+    public SeminarGroup(String name) {
         this.name = name;
     }
 
@@ -53,7 +50,7 @@ public class SeminarGroup {
     }
 
     public List<Timeline> getTimelines() {
-        return Collections.unmodifiableList(timelines);
+        return timelines;
     }
 
     public void setTimelines(List<Timeline> timelines) {
@@ -91,8 +88,6 @@ public class SeminarGroup {
             return false;
         }
         return true;
-    }
-    
-    
+    }    
     
 }

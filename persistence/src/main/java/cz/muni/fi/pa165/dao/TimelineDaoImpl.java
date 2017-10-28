@@ -2,26 +2,29 @@ package cz.muni.fi.pa165.dao;
 
 import cz.muni.fi.pa165.entities.SeminarGroup;
 import cz.muni.fi.pa165.entities.Timeline;
-import org.springframework.stereotype.Repository;
-
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 /**
  *
- * @author Tibor Bujdoš
+ * @author Tibor BujdoĹˇ
  */
-
 @Repository
 public class TimelineDaoImpl implements TimelineDao{
     
     @PersistenceContext
     private EntityManager em;
+    
+    @Autowired
+    private SeminarGroupDao smd;
 
     @Override
     public void addTimeline(Timeline timeline, SeminarGroup seminarGroup) {
-        /*seminarGroup.getTimelines().add(timeline);*/
+        seminarGroup.getTimelines().add(timeline);
+        smd.editGroup(seminarGroup);
         em.persist(timeline);
     }
 
@@ -47,3 +50,4 @@ public class TimelineDaoImpl implements TimelineDao{
     }
     
 }
+
