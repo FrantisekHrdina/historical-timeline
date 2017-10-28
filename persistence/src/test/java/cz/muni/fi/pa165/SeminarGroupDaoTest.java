@@ -144,4 +144,22 @@ public class SeminarGroupDaoTest extends AbstractTestNGSpringContextTests {
 			seminarGroupDao.editGroup(basicSeminarGroup);
 		}).isInstanceOf(IllegalArgumentException.class);
 	}
+	
+	@Test
+	public void findGroupTest() {
+		seminarGroupDao.addGroup(basicSeminarGroup);
+		assertThat(seminarGroupDao.findGroup(basicSeminarGroup.getId())).isEqualTo(basicSeminarGroup);
+	}
+	
+	@Test
+	public void findAllGroups() {
+		List<SeminarGroup> seminarGroups = new ArrayList<SeminarGroup>();
+		seminarGroups.add(basicSeminarGroup);
+		seminarGroups.add(advancedSeminarGroup);
+		
+		seminarGroupDao.addGroup(basicSeminarGroup);
+		seminarGroupDao.addGroup(advancedSeminarGroup);
+
+		assertThat(seminarGroupDao.findAllGroups()).containsAll(seminarGroups);
+	}
 }
