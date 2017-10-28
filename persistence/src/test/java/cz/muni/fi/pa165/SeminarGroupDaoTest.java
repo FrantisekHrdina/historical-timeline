@@ -128,4 +128,20 @@ public class SeminarGroupDaoTest extends AbstractTestNGSpringContextTests {
 		assertThat(seminarGroup.getName()).isEqualTo("Napoleonic Wars");
 		assertThat(seminarGroup.getTimelines()).isEqualTo(timelines);
 	}
+	
+	@Test
+	public void editNullGroup() {
+		assertThatThrownBy(() -> {
+			seminarGroupDao.editGroup(null);
+		}).isInstanceOf(IllegalArgumentException.class);
+	}
+	
+	@Test
+	public void editGroupWithNullName() {
+		seminarGroupDao.addGroup(basicSeminarGroup);
+		basicSeminarGroup.setName(null);
+		assertThatThrownBy(() -> {
+			seminarGroupDao.editGroup(basicSeminarGroup);
+		}).isInstanceOf(IllegalArgumentException.class);
+	}
 }
