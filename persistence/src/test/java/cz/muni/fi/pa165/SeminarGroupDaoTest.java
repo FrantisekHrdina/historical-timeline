@@ -49,20 +49,20 @@ public class SeminarGroupDaoTest extends AbstractTestNGSpringContextTests {
 	}
 	
 	@Test
-	public void testAddGroup() {
+	public void addGroup() {
 		seminarGroupDao.addGroup(basicSeminarGroup);
 		assertThat(seminarGroupDao.findAllGroups()).containsOnly(basicSeminarGroup);
 	}
 	
 	@Test
-	public void testAddNullGroup() {
+	public void addNullGroup() {
 		assertThatThrownBy(() -> {
 			seminarGroupDao.addGroup(null);
 		}).isInstanceOf(IllegalArgumentException.class);
 	}
 
 	@Test
-	public void testAddGroupWithNullName() {
+	public void addGroupWithNullName() {
 		SeminarGroup seminarGroupWithNullName = new SeminarGroup();
 		assertThatThrownBy(() -> {
 			seminarGroupDao.addGroup(seminarGroupWithNullName);
@@ -70,7 +70,7 @@ public class SeminarGroupDaoTest extends AbstractTestNGSpringContextTests {
 	}
 
 	@Test
-	public void testRemoveGroup() {
+	public void removeGroup() {
 		seminarGroupDao.addGroup(basicSeminarGroup);
 		seminarGroupDao.addGroup(advancedSeminarGroup);
 		
@@ -79,14 +79,14 @@ public class SeminarGroupDaoTest extends AbstractTestNGSpringContextTests {
 	}
 	
 	@Test
-	public void testRemoveNullGroup() {
+	public void removeNullGroup() {
 		assertThatThrownBy(() -> {
 			seminarGroupDao.addGroup(null);
 		}).isInstanceOf(IllegalArgumentException.class);
 	}
 	
 	@Test
-	public void testEditGroup() {
+	public void editGroup() {
 		SeminarGroup seminarGroup = new SeminarGroup();
 		seminarGroup.setName("18th/19th century conflicts");
 		
