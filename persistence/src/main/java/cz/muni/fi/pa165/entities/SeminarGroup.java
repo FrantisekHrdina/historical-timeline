@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
 
 /**
  *
- * @author Tibor Bujdoš
+ * @author Tibor BujdoĹˇ
  */
 @Entity
 public class SeminarGroup {
@@ -26,8 +26,7 @@ public class SeminarGroup {
     @OneToMany
     private List<Timeline> timelines;
 
-    public SeminarGroup(Long id, String name) {
-        this.id = id;
+    public SeminarGroup(String name) {
         this.name = name;
     }
 
