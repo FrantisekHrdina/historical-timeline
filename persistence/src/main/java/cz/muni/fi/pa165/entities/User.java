@@ -11,6 +11,7 @@ import java.util.Set;
  * @author Martin Kocisky
  */
 
+@Table(name = "Users")
 @Entity
 public class User {
 
@@ -24,8 +25,7 @@ public class User {
     @NotNull
     private String surname;
 
-    @Column(nullable = false, unique = true)
-    @Pattern(regexp=".+@.+\\....?")
+    @Column(nullable=false,unique=true)
     @NotNull
     private String email;
 
