@@ -11,7 +11,8 @@ import java.util.Set;
  * @author Martin Kocisky
  */
 
-public abstract class User {
+@Entity
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,8 +33,8 @@ public abstract class User {
 
     private boolean isTeacher = false;
 
-    @ManyToMany/*(mappedBy = users)*/ // TODO: add dependency to SeminarGroup as per diagram
-    private Set<SeminarGroup> seminarGroupSet = new HashSet<>();
+/*    @ManyToMany*//*(mappedBy = users)*//* // TODO: add dependency to SeminarGroup as per diagram
+    private Set<SeminarGroup> seminarGroupSet = new HashSet<>();*/
 
     public User() {
 
@@ -95,7 +96,7 @@ public abstract class User {
         this.isTeacher = isTeacher;
     }
 
-    public void addSeminarGroup(SeminarGroup g) {
+ /*   public void addSeminarGroup(SeminarGroup g) {
         seminarGroupSet.add(g);
     }
 
@@ -106,7 +107,7 @@ public abstract class User {
     public Set<SeminarGroup> getSeminarGroups() {
         return Collections.unmodifiableSet(seminarGroupSet);
     }
-
+*/
     @Override
     public int hashCode() {
         if (email != null) return email.hashCode();

@@ -21,7 +21,7 @@ public class TimelineDaoImpl implements TimelineDao{
 
     @Override
     public void addTimeline(Timeline timeline, SeminarGroup seminarGroup) {
-        seminarGroup.getTimelines().add(timeline);
+        /*seminarGroup.getTimelines().add(timeline);*/
         em.persist(timeline);
     }
 

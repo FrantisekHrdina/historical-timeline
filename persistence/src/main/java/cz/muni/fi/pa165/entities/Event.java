@@ -26,8 +26,8 @@ public class Event {
 	private String description;
 	private byte[] image;
 
-	@ManyToMany
-	private List<Timeline> timelines;
+	/*@ManyToMany
+	private List<Timeline> timelines;*/
 
 	public Event(Long id, String name, LocalDate date, String location, String description, byte[] image) {
 		this.id = id;

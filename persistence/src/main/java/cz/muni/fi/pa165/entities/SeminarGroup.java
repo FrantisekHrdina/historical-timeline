@@ -23,8 +23,8 @@ public class SeminarGroup {
     @Column(nullable=false, unique=true)
     private String name;
     
-    @OneToMany
-    private List<Timeline> timelines;
+  /*  @OneToMany
+    private List<Timeline> timelines;*/
 
     public SeminarGroup(Long id, String name) {
         this.id = id;
@@ -50,7 +50,7 @@ public class SeminarGroup {
         this.name = name;
     }
 
-    public List<Timeline> getTimelines() {
+ /*   public List<Timeline> getTimelines() {
         return timelines;
     }
 
@@ -89,7 +89,7 @@ public class SeminarGroup {
             return false;
         }
         return true;
-    }
+    }*/
     
     
     

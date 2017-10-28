@@ -20,7 +20,7 @@ public class SampleTest extends AbstractTestNGSpringContextTests {
     private EntityManagerFactory emf;
 
     @Test
-    public void categoryTest() {
+    public void eventTest() {
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
         Event e = new Event();
