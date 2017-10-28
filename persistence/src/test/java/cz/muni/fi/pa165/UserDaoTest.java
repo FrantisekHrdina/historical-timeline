@@ -100,10 +100,9 @@ public class UserDaoTest extends AbstractTestNGSpringContextTests{
     
     @Test
     public void removeUser() {
-        userDao.addUser(user1);
-        assertThat(user1.getId()).isNotNull();
-        userDao.removeUser(user1);
-        assertThat(user1.getId()).isNull();
+        userDao.removeUser(user2);
+        assertThat(userDao.findAllStudents()).isEmpty();
+        assertThat(userDao.findAllTeachers()).usingFieldByFieldElementComparator().containsOnly(user3);
     }
     
     @Test
