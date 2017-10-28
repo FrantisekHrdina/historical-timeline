@@ -1,19 +1,33 @@
 package cz.muni.fi.pa165.entities;
 
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 /**
  * @author Martin Wörgötter
  */
+@Entity
 public class Event {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+
+	@Column(nullable = false, unique = true)
 	private String name;
+
+	@Column(nullable = false)
 	private LocalDate date;
 	private String location;
 	private String description;
 	private byte[] image;
+
+	@ManyToMany
+	private List<Timeline> timelines;
 
 	public Event(Long id, String name, LocalDate date, String location, String description, byte[] image) {
 		this.id = id;
@@ -22,6 +36,9 @@ public class Event {
 		this.location = location;
 		this.description = description;
 		this.image = image;
+	}
+
+	public Event() {
 	}
 
 	public Long getId() {

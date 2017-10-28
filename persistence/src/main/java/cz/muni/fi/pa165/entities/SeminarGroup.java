@@ -31,6 +31,9 @@ public class SeminarGroup {
         this.name = name;
     }
 
+    public SeminarGroup() {
+    }
+
     public Long getId() {
         return id;
     }

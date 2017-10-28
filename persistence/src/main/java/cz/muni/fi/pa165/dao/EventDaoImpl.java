@@ -1,5 +1,6 @@
 package cz.muni.fi.pa165.dao;
 
+import cz.muni.fi.pa165.entities.Event;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;

@@ -8,7 +8,7 @@ import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author Tibor Bujdoö
+ * @author Tibor Bujdo≈°
  */
 public class TimelineDaoImpl implements TimelineDao{
     

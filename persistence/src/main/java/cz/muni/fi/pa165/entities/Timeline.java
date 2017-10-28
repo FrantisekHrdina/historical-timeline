@@ -1,9 +1,7 @@
 package cz.muni.fi.pa165.entities;
 
 import javax.validation.constraints.NotNull;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import javax.persistence.*;
 
 /**
@@ -22,10 +20,10 @@ public class Timeline {
     private String name;
 
     @ManyToMany
-    private List<Event> events;
+    private List<Event> events = new ArrayList<Event>();
 
-    @OneToMany
-    private List<String> comments;
+    @ElementCollection
+    private List<String> comments = new ArrayList<String>();
 
     @OneToOne
     private SeminarGroup seminarGroup;
