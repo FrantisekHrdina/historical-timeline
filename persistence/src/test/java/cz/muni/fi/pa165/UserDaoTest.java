@@ -95,15 +95,14 @@ public class UserDaoTest extends AbstractTestNGSpringContextTests{
         assertThat(user1.getId()).isNull();
         userDao.addUser(user1);
         assertThat(user1.getId()).isNotNull();
-        assertThat(userDao.findUser(user1.getId())).hasFieldOrPropertyWithValue("surename", "Snow");
+        assertThat(userDao.findUser(user1.getId())).hasFieldOrPropertyWithValue("surname", "Snow");
     }
     
     @Test
     public void removeUser() {
-        userDao.addUser(user1);
-        assertThat(user1.getId()).isNotNull();
-        userDao.removeUser(user1);
-        assertThat(user1.getId()).isNull();
+        userDao.removeUser(user2);
+        assertThat(userDao.findAllStudents()).isEmpty();
+        assertThat(userDao.findAllTeachers()).usingFieldByFieldElementComparator().containsOnly(user3);
     }
     
     @Test
@@ -111,7 +110,7 @@ public class UserDaoTest extends AbstractTestNGSpringContextTests{
         userDao.addUser(user1);
         user1.setSurname("Targaryen");
         userDao.editUser(user1);
-        assertThat(userDao.findUser(user1.getId())).hasFieldOrPropertyWithValue("surename", "Targaryen");
+        assertThat(userDao.findUser(user1.getId())).hasFieldOrPropertyWithValue("surname", "Targaryen");
     }
     
     @Test
