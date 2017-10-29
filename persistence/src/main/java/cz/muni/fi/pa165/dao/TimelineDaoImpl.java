@@ -1,7 +1,9 @@
 package cz.muni.fi.pa165.dao;
 
+import cz.muni.fi.pa165.entities.Event;
 import cz.muni.fi.pa165.entities.SeminarGroup;
 import cz.muni.fi.pa165.entities.Timeline;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -19,18 +21,24 @@ public class TimelineDaoImpl implements TimelineDao{
     private EntityManager em;
     
     @Autowired
-    private SeminarGroupDao smd;
+    private SeminarGroupDao sgd;
+    
+    @Autowired
+    private EventDao ed;
 
     @Override
     public void addTimeline(Timeline timeline, SeminarGroup seminarGroup) {
         seminarGroup.getTimelines().add(timeline);
-        smd.editGroup(seminarGroup);
+        sgd.editGroup(seminarGroup);
         em.persist(timeline);
     }
 
     @Override
     public void removeTimeline(Timeline timeline) {
         em.remove(timeline);
+        SeminarGroup seminarGroup = timeline.getSeminarGroup();
+        seminarGroup.getTimelines().remove(timeline);
+        sgd.editGroup(seminarGroup);
     }
 
     @Override

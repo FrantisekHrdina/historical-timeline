@@ -1,5 +1,6 @@
 package cz.muni.fi.pa165;
 
+import cz.muni.fi.pa165.dao.SeminarGroupDao;
 import cz.muni.fi.pa165.dao.TimelineDao;
 import cz.muni.fi.pa165.entities.SeminarGroup;
 import cz.muni.fi.pa165.entities.Timeline;
@@ -20,6 +21,8 @@ import javax.validation.ConstraintViolationException;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -32,9 +35,15 @@ import static org.assertj.core.api.Assertions.*;
 @TestExecutionListeners(TransactionalTestExecutionListener.class)
 @Transactional
 public class TimelineDaoTest extends AbstractTestNGSpringContextTests {
+    
+    @PersistenceContext
+    private EntityManager em;
 
     @Autowired
     private TimelineDao timelineDao;
+    
+    @Autowired
+    private SeminarGroupDao seminarGroupDao;
 
     private Timeline firstTimeline;
     private Timeline secondTimeline;
@@ -105,7 +114,8 @@ public class TimelineDaoTest extends AbstractTestNGSpringContextTests {
      * Try to remove timeline which is not in DB.
      */
     @Test
-    public void removeTimelineTest_timelineNotInDb() {
+    public void removeTimelineTest_timelineNotInDb() {  
+        firstTimeline.setSeminarGroup(firstSeminarGroup);
         timelineDao.addTimeline(secondTimeline, secondSeminarGroup);
 
         assertThat(timelineDao.findAllTimelines().size()).isEqualTo(1);
@@ -121,13 +131,17 @@ public class TimelineDaoTest extends AbstractTestNGSpringContextTests {
      */
     @Test
     public void removeTimelineTest() {
+        seminarGroupDao.addGroup(firstSeminarGroup);
+        firstTimeline.setSeminarGroup(firstSeminarGroup);
         timelineDao.addTimeline(firstTimeline, firstSeminarGroup);
+        seminarGroupDao.addGroup(secondSeminarGroup);
+        secondTimeline.setSeminarGroup(secondSeminarGroup);
         timelineDao.addTimeline(secondTimeline, secondSeminarGroup);
-
+        
         assertThat(timelineDao.findAllTimelines().size()).isEqualTo(2);
 
         timelineDao.removeTimeline(secondTimeline);
-
+        
         assertThat(timelineDao.findAllTimelines().size()).isEqualTo(1);
     }
 
