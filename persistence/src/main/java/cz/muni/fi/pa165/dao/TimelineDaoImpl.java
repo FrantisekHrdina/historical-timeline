@@ -18,27 +18,16 @@ import org.springframework.stereotype.Repository;
 public class TimelineDaoImpl implements TimelineDao{
     
     @PersistenceContext
-    private EntityManager em;
-    
-    @Autowired
-    private SeminarGroupDao sgd;
-    
-    @Autowired
-    private EventDao ed;
+    private EntityManager em;    
 
     @Override
-    public void addTimeline(Timeline timeline, SeminarGroup seminarGroup) {
-        seminarGroup.getTimelines().add(timeline);
-        sgd.editGroup(seminarGroup);
+    public void addTimeline(Timeline timeline) {
         em.persist(timeline);
     }
 
     @Override
     public void removeTimeline(Timeline timeline) {
         em.remove(timeline);
-        SeminarGroup seminarGroup = timeline.getSeminarGroup();
-        seminarGroup.getTimelines().remove(timeline);
-        sgd.editGroup(seminarGroup);
     }
 
     @Override

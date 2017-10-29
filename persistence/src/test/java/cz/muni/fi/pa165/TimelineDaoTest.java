@@ -71,15 +71,7 @@ public class TimelineDaoTest extends AbstractTestNGSpringContextTests {
      */
     @Test(expectedExceptions = IllegalArgumentException.class)
     public void addTimelineTest_timelineNull() {
-        timelineDao.addTimeline(null, firstSeminarGroup);
-    }
-
-    /**
-     * Failed to add timeline to a seminar group;
-     */
-    @Test(expectedExceptions = NullPointerException.class)
-    public void addTimelineTest_seminarGroupNull() {
-        timelineDao.addTimeline(firstTimeline, null);
+        timelineDao.addTimeline(null);
     }
 
     /**
@@ -88,7 +80,7 @@ public class TimelineDaoTest extends AbstractTestNGSpringContextTests {
     @Test(expectedExceptions = ConstraintViolationException.class)
     public void addTimelineTest_IncorrectTimeline() {
         firstTimeline.setName(null);
-        timelineDao.addTimeline(firstTimeline, firstSeminarGroup);
+        timelineDao.addTimeline(firstTimeline);
     }
 
     /**
@@ -96,7 +88,7 @@ public class TimelineDaoTest extends AbstractTestNGSpringContextTests {
      */
     @Test
     public void addTimelineTest() {
-        timelineDao.addTimeline(firstTimeline, firstSeminarGroup);
+        timelineDao.addTimeline(firstTimeline);
 
         Timeline fromDB = timelineDao.findTimeline(firstTimeline.getId());
         assertThat(firstTimeline.getId()).isEqualTo(fromDB.getId());
@@ -115,8 +107,7 @@ public class TimelineDaoTest extends AbstractTestNGSpringContextTests {
      */
     @Test
     public void removeTimelineTest_timelineNotInDb() {  
-        firstTimeline.setSeminarGroup(firstSeminarGroup);
-        timelineDao.addTimeline(secondTimeline, secondSeminarGroup);
+        timelineDao.addTimeline(secondTimeline);
 
         assertThat(timelineDao.findAllTimelines().size()).isEqualTo(1);
 
@@ -131,12 +122,8 @@ public class TimelineDaoTest extends AbstractTestNGSpringContextTests {
      */
     @Test
     public void removeTimelineTest() {
-        seminarGroupDao.addGroup(firstSeminarGroup);
-        firstTimeline.setSeminarGroup(firstSeminarGroup);
-        timelineDao.addTimeline(firstTimeline, firstSeminarGroup);
-        seminarGroupDao.addGroup(secondSeminarGroup);
-        secondTimeline.setSeminarGroup(secondSeminarGroup);
-        timelineDao.addTimeline(secondTimeline, secondSeminarGroup);
+        timelineDao.addTimeline(firstTimeline);
+        timelineDao.addTimeline(secondTimeline);
         
         assertThat(timelineDao.findAllTimelines().size()).isEqualTo(2);
 
@@ -153,7 +140,7 @@ public class TimelineDaoTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void editTimelineTest() {
-        timelineDao.addTimeline(firstTimeline, firstSeminarGroup);
+        timelineDao.addTimeline(firstTimeline);
         firstTimeline.setName("Stone Age");
         timelineDao.editTimeline(firstTimeline);
 
@@ -167,15 +154,15 @@ public class TimelineDaoTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void findTimelineTest() {
-        timelineDao.addTimeline(firstTimeline, firstSeminarGroup);
+        timelineDao.addTimeline(firstTimeline);
 
         assertThat(timelineDao.findTimeline(firstTimeline.getId())).isEqualTo(firstTimeline);
     }
 
     @Test
     public void findAllTimelinesTest() {
-        timelineDao.addTimeline(firstTimeline, firstSeminarGroup);
-        timelineDao.addTimeline(secondTimeline, secondSeminarGroup);
+        timelineDao.addTimeline(firstTimeline);
+        timelineDao.addTimeline(secondTimeline);
 
         assertThat(timelineDao.findAllTimelines()).containsExactlyInAnyOrder(firstTimeline, secondTimeline);
     }
