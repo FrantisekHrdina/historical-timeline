@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
 
 /**
  *
- * @author Tibor BujdoĹˇ
+ * @author Tibor Bujdoš
  */
 @Entity
 public class SeminarGroup {

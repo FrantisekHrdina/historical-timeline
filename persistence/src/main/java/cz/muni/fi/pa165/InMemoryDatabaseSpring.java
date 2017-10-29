@@ -18,7 +18,9 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 
-
+/**
+ * @author František Hrdina
+ */
 @Configuration
 public class InMemoryDatabaseSpring {
 

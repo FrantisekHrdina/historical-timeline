@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 
 /**
  *
- * @author Tibor BujdoĹˇ
+ * @author Tibor Bujdoš
  */
 @Repository
 public class TimelineDaoImpl implements TimelineDao{

@@ -8,6 +8,11 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
+/**
+ *
+ * @author Martin Wörgötter
+ *
+ */
 @Repository
 public class UserDaoImpl implements UserDao{
 
