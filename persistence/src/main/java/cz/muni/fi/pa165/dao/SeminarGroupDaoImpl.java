@@ -54,6 +54,7 @@ public class SeminarGroupDaoImpl implements SeminarGroupDao {
 		if (g.getName() == null) {
 			throw new IllegalArgumentException("Given group has null name");
 		}
+
 		em.remove(g);
 	}
 
@@ -73,6 +74,10 @@ public class SeminarGroupDaoImpl implements SeminarGroupDao {
 		if (g.getName() == null) {
 			throw new IllegalArgumentException("Given group has null name");
 		}
+
+		if (!em.contains(g)){
+            throw new IllegalArgumentException("Given group is not in db");
+        }
 		em.merge(g);
 	}
 
