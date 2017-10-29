@@ -22,7 +22,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  *
- * František Hrdina
+ * @author František Hrdina
  *
  */
 @ContextConfiguration(classes = PersistenceApplicationContext.class)

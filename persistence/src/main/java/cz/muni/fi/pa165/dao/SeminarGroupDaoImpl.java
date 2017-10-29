@@ -9,6 +9,11 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
+/**
+ *
+ * @author František Hrdina
+ *
+ */
 @Repository
 public class SeminarGroupDaoImpl implements SeminarGroupDao {
 

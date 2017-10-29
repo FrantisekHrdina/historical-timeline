@@ -25,7 +25,7 @@ public class Timeline {
     @ElementCollection
     private List<String> comments = new ArrayList<String>();
 
-    @OneToOne
+    @OneToOne()
     private SeminarGroup seminarGroup;
 
     public Timeline(){
