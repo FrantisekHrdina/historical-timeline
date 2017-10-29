@@ -15,7 +15,6 @@ public interface TimelineDao {
 	 * Adds Timeline
 	 * 
 	 * @param timeline Timeline to be stored
-	 * @param seminarGroup the SeminarGroup owning the Timeline
 	 */
 	void addTimeline(Timeline timeline);
 
