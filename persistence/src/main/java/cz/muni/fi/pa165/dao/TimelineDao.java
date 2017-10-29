@@ -12,12 +12,12 @@ import cz.muni.fi.pa165.entities.Timeline;
  */
 public interface TimelineDao {
 	/**
-	 * Adds Timeline to the given SeminarGroup.
+	 * Adds Timeline
 	 * 
 	 * @param timeline Timeline to be stored
 	 * @param seminarGroup the SeminarGroup owning the Timeline
 	 */
-	void addTimeline(Timeline timeline, SeminarGroup seminarGroup);
+	void addTimeline(Timeline timeline);
 
 	/**
 	 * Removes Timeline
