@@ -92,17 +92,17 @@ public class EventDaoTest extends AbstractTestNGSpringContextTests{
         eventDao.addEvent(null);
     }
 
-    @Test(expectedExceptions = DataAccessException.class)
+    @Test(expectedExceptions = javax.persistence.PersistenceException.class)
     public void addEventWithNullDate() {
         eventDao.addEvent(eventWithNullDate);
     }
 
-    @Test(expectedExceptions = DataAccessException.class)
+    @Test(expectedExceptions = javax.persistence.PersistenceException.class)
     public void addEventWithNullName() {
         eventDao.addEvent(eventWithNullName);
     }
 
-    @Test(expectedExceptions = DataAccessException.class)
+    @Test(expectedExceptions = javax.persistence.PersistenceException.class)
     public void addEventWithNameAlreadyThere() {
         Event redundantNameEvent = new Event();
         redundantNameEvent.setName("Event 1");
@@ -143,7 +143,7 @@ public class EventDaoTest extends AbstractTestNGSpringContextTests{
     /**
      * not sure about this
      */
-    @Test(expectedExceptions = PersistenceException.class)
+    @Test(expectedExceptions = javax.persistence.PersistenceException.class)
     public void editEventNameThatIsAlreadyThere() {
         em.merge(eventInDB2);
         eventInDB2.setName(eventInDB1.getName());
