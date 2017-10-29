@@ -13,15 +13,8 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import static org.assertj.core.api.Assertions.*;
 
-import java.time.LocalDate;
-import java.time.Month;
-import java.util.ArrayList;
-import java.util.List;
-
 import cz.muni.fi.pa165.dao.SeminarGroupDao;
-import cz.muni.fi.pa165.entities.Event;
 import cz.muni.fi.pa165.entities.SeminarGroup;
-import cz.muni.fi.pa165.entities.Timeline;
 
 /**
  *
@@ -39,7 +32,7 @@ public class SeminarGroupDaoTest extends AbstractTestNGSpringContextTests {
 	private SeminarGroupDao seminarGroupDao;
 
 	private SeminarGroup basicSeminarGroup, advancedSeminarGroup;
-	
+
 	@BeforeMethod
 	public void setup() {
 		basicSeminarGroup = new SeminarGroup();
@@ -47,13 +40,14 @@ public class SeminarGroupDaoTest extends AbstractTestNGSpringContextTests {
 		advancedSeminarGroup = new SeminarGroup();
 		advancedSeminarGroup.setName("Advanced");
 	}
-	
+
 	@Test
 	public void addGroup() {
 		seminarGroupDao.addGroup(basicSeminarGroup);
-		assertThat(seminarGroupDao.findAllGroups()).containsOnly(basicSeminarGroup);
+		assertThat(seminarGroupDao.findAllGroups())
+				.containsOnly(basicSeminarGroup);
 	}
-	
+
 	@Test
 	public void addNullGroup() {
 		assertThatThrownBy(() -> {
@@ -70,72 +64,96 @@ public class SeminarGroupDaoTest extends AbstractTestNGSpringContextTests {
 	}
 
 	@Test
+	public void addGroupWithExistingId() {
+		basicSeminarGroup.setId(1L);
+		assertThatThrownBy(() -> {
+			seminarGroupDao.addGroup(basicSeminarGroup);
+		}).isInstanceOf(IllegalArgumentException.class);
+	}
+
+	@Test
 	public void removeGroup() {
 		seminarGroupDao.addGroup(basicSeminarGroup);
 		seminarGroupDao.addGroup(advancedSeminarGroup);
-		
+
 		seminarGroupDao.removeGroup(basicSeminarGroup);
-		assertThat(seminarGroupDao.findAllGroups()).containsOnly(advancedSeminarGroup);
+		assertThat(seminarGroupDao.findAllGroups())
+				.containsOnly(advancedSeminarGroup);
 	}
-	
+
 	@Test
 	public void removeNullGroup() {
 		assertThatThrownBy(() -> {
-			seminarGroupDao.addGroup(null);
+			seminarGroupDao.removeGroup(null);
 		}).isInstanceOf(IllegalArgumentException.class);
 	}
-	
+
+	@Test
+	public void removeNonExistingGroup() {
+		basicSeminarGroup.setId(1L);
+		assertThatThrownBy(() -> {
+			seminarGroupDao.removeGroup(basicSeminarGroup);
+		}).isInstanceOf(IllegalArgumentException.class);
+	}
+
+	@Test
+	public void removeGroupWithNullId() {
+		assertThatThrownBy(() -> {
+			seminarGroupDao.removeGroup(basicSeminarGroup);
+		}).isInstanceOf(IllegalArgumentException.class);
+	}
+
+	@Test
+	public void removeGroupWithNullName() {
+		seminarGroupDao.addGroup(basicSeminarGroup);
+		basicSeminarGroup.setName(null);
+		assertThatThrownBy(() -> {
+			seminarGroupDao.removeGroup(basicSeminarGroup);
+		}).isInstanceOf(IllegalArgumentException.class);
+	}
+
 	@Test
 	public void editGroup() {
-		SeminarGroup seminarGroup = new SeminarGroup();
-		seminarGroup.setName("18th/19th century conflicts");
-		
-		List<Timeline> timelines = new ArrayList<Timeline>();
-		Timeline sevenYearsWar = new Timeline();
-		sevenYearsWar.setName("7 Years' War");
+		SeminarGroup seminarAncientGreek = new SeminarGroup();
+		seminarAncientGreek.setName("Ancient Greece");
 
-		Event battleOfKolin = new Event();
-		battleOfKolin.setName("Battle of Kolín");
-		battleOfKolin.setDate(LocalDate.of(1757, Month.JUNE, 18));
-		Event battleOfTorgau = new Event();
-		battleOfTorgau.setName("Battle of Torgau");
-		battleOfTorgau.setDate(LocalDate.of(1760, Month.NOVEMBER, 3));
-		
-		timelines.add(sevenYearsWar);
-		seminarGroup.setTimelines(timelines);
-		
-		seminarGroupDao.addGroup(seminarGroup);
-		seminarGroup = seminarGroupDao.findGroup(seminarGroup.getId());
-		
-		seminarGroup.setName("Napoleonic Wars");
-		
-		Timeline majorBattles = new Timeline();
-		majorBattles.setName("Major battles");
-		Event battleOfAusterlitz = new Event();
-		battleOfAusterlitz.setName("Battle of Austerlitz");
-		battleOfAusterlitz.setDate(LocalDate.of(1805, Month.DECEMBER, 2));
-		Event battleOfWaterloo = new Event();
-		battleOfWaterloo.setName("Battle of Waterloo");
-		battleOfWaterloo.setDate(LocalDate.of(1815, Month.JUNE, 18));
-		
-		timelines.clear();
-		timelines.add(majorBattles);
-		seminarGroup.setTimelines(timelines);
-		
-		seminarGroupDao.editGroup(seminarGroup);
-		seminarGroup = seminarGroupDao.findGroup(seminarGroup.getId());
-		
-		assertThat(seminarGroup.getName()).isEqualTo("Napoleonic Wars");
-		assertThat(seminarGroup.getTimelines()).isEqualTo(timelines);
+		SeminarGroup seminarAncientRome = new SeminarGroup();
+		seminarAncientRome.setName("Ancient Rome");
+
+		seminarGroupDao.addGroup(seminarAncientGreek);
+		seminarGroupDao.addGroup(seminarAncientRome);
+
+		seminarAncientGreek.setName("Ancient Egypt");
+		seminarGroupDao.editGroup(seminarAncientGreek);
+
+		assertThat(seminarGroupDao.findGroup(seminarAncientGreek.getId()))
+				.isEqualToComparingFieldByField(seminarAncientGreek);
+		assertThat(seminarGroupDao.findGroup(seminarAncientRome.getId()))
+				.isEqualToComparingFieldByField(seminarAncientRome);
 	}
-	
+
 	@Test
 	public void editNullGroup() {
 		assertThatThrownBy(() -> {
 			seminarGroupDao.editGroup(null);
 		}).isInstanceOf(IllegalArgumentException.class);
 	}
-	
+
+	@Test
+	public void editNonExistingGroup() {
+		basicSeminarGroup.setId(1L);
+		assertThatThrownBy(() -> {
+			seminarGroupDao.editGroup(basicSeminarGroup);
+		}).isInstanceOf(IllegalArgumentException.class);
+	}
+
+	@Test
+	public void editGroupWithNullId() {
+		assertThatThrownBy(() -> {
+			seminarGroupDao.editGroup(basicSeminarGroup);
+		}).isInstanceOf(IllegalArgumentException.class);
+	}
+
 	@Test
 	public void editGroupWithNullName() {
 		seminarGroupDao.addGroup(basicSeminarGroup);
@@ -144,22 +162,28 @@ public class SeminarGroupDaoTest extends AbstractTestNGSpringContextTests {
 			seminarGroupDao.editGroup(basicSeminarGroup);
 		}).isInstanceOf(IllegalArgumentException.class);
 	}
-	
+
 	@Test
 	public void findGroupTest() {
 		seminarGroupDao.addGroup(basicSeminarGroup);
-		assertThat(seminarGroupDao.findGroup(basicSeminarGroup.getId())).isEqualTo(basicSeminarGroup);
+		assertThat(seminarGroupDao.findGroup(basicSeminarGroup.getId()))
+				.isEqualTo(basicSeminarGroup);
 	}
-	
+
+	@Test
+	public void findGroupByNullId() {
+		assertThat(seminarGroupDao.findGroup(null)).isNull();
+	}
+
 	@Test
 	public void findAllGroups() {
-		List<SeminarGroup> seminarGroups = new ArrayList<SeminarGroup>();
-		seminarGroups.add(basicSeminarGroup);
-		seminarGroups.add(advancedSeminarGroup);
-		
+		assertThat(seminarGroupDao.findAllGroups()).isEmpty();
+
 		seminarGroupDao.addGroup(basicSeminarGroup);
 		seminarGroupDao.addGroup(advancedSeminarGroup);
 
-		assertThat(seminarGroupDao.findAllGroups()).containsAll(seminarGroups);
+		assertThat(seminarGroupDao.findAllGroups())
+				.usingFieldByFieldElementComparator()
+				.containsOnly(basicSeminarGroup, advancedSeminarGroup);
 	}
 }
