@@ -27,6 +27,12 @@ public class SeminarGroupDaoImpl implements SeminarGroupDao {
      */
     @Override
     public void addGroup(SeminarGroup g) {
+        if (g == null){
+            throw new IllegalArgumentException("Given group is null");
+        }
+        if (g.getName() == null){
+            throw new IllegalArgumentException("Given group has null name");
+        }
         em.persist(g);
     }
 
@@ -47,6 +53,12 @@ public class SeminarGroupDaoImpl implements SeminarGroupDao {
      */
     @Override
     public void editGroup(SeminarGroup g) {
+        if (g == null){
+            throw new IllegalArgumentException("Given group is null");
+        }
+        if (g.getName() == null){
+            throw new IllegalArgumentException("Given group has null name");
+        }
         em.merge(g);
     }
 
