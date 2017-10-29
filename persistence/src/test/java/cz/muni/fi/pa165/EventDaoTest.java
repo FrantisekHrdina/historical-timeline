@@ -140,16 +140,6 @@ public class EventDaoTest extends AbstractTestNGSpringContextTests{
         eventDao.editEvent(null);
     }
 
-    /**
-     * not sure about this
-     */
-    @Test(expectedExceptions = javax.persistence.PersistenceException.class)
-    public void editEventNameThatIsAlreadyThere() {
-        em.merge(eventInDB2);
-        eventInDB2.setName(eventInDB1.getName());
-        eventDao.editEvent(eventInDB2);
-    }
-
     @Test
     public void editEvent() {
         eventInDB1.setName("Event 1 Updated");
