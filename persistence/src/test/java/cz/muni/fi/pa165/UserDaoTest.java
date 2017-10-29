@@ -6,6 +6,7 @@ import cz.muni.fi.pa165.entities.SeminarGroup;
 import cz.muni.fi.pa165.entities.User;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.validation.ConstraintViolationException;
 import static org.assertj.core.api.Assertions.assertThat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -96,6 +97,33 @@ public class UserDaoTest extends AbstractTestNGSpringContextTests{
         userDao.addUser(user1);
         assertThat(user1.getId()).isNotNull();
         assertThat(userDao.findUser(user1.getId())).hasFieldOrPropertyWithValue("surname", "Snow");
+    }
+    
+    @Test
+    public void addSameUserTwice() {
+        userDao.addUser(user1);
+        userDao.addUser(user1);
+        assertThat(userDao.findAllStudents()).usingFieldByFieldElementComparator().contains(user1);
+        //user2 is already stored and is student that is why 2
+        assertThat(userDao.findAllStudents().size()).isEqualTo(2);
+    }
+    
+    @Test(expectedExceptions = ConstraintViolationException.class)
+    public void addUserWithNullForename() {
+        user1.setForename(null);
+        userDao.addUser(user1);
+    }
+    
+    @Test(expectedExceptions = ConstraintViolationException.class)
+    public void addUserWithNullSurname() {
+        user1.setSurname(null);
+        userDao.addUser(user1);
+    }
+    
+    @Test(expectedExceptions = ConstraintViolationException.class)
+    public void addUserWithNullEmail() {
+        user1.setEmail(null);
+        userDao.addUser(user1);
     }
     
     @Test

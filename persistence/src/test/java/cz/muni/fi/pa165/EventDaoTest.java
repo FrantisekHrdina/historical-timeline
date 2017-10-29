@@ -77,7 +77,7 @@ public class EventDaoTest extends AbstractTestNGSpringContextTests{
         eventDao.addEvent(eventInDB1);
         eventDao.addEvent(eventInDB2);
         eventDao.addEvent(eventInDB3);
-
+      
     }
 
     @Test
@@ -156,7 +156,5 @@ public class EventDaoTest extends AbstractTestNGSpringContextTests{
         List<Event> allEvents = eventDao.findAllEvents();
         assertThat(allEvents).doesNotContain(eventInDB3);
     }
-
-
 
 }
