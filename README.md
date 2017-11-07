@@ -3,7 +3,7 @@
 Project from PA156 Enterprise Java, FI MU
 ## Members
 Bujdoš, Tibor <br />
-Hrdina, František <br />
+Hrdina, František (Project manager)<br />
 Kočiský, Martin <br />
 Wörgötter, Martin <br />
 
