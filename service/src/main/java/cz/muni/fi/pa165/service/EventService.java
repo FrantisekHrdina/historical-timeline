@@ -1,4 +1,4 @@
-package cz.muni.fi.pa165.service.service;
+package cz.muni.fi.pa165.service;
 
 /**
  * @author František Hrdina

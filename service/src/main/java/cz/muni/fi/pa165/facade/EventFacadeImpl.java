@@ -1,4 +1,4 @@
-package cz.muni.fi.pa165.service.facade;
+package cz.muni.fi.pa165.facade;
 
 /**
  * @author František Hrdina
