@@ -14,7 +14,7 @@ public interface TimelineFacade {
     public void addComment(Long timelineId, String comment);
 
     public void addSeminarGroup(Long timelineId, Long seminarGroupId);
-    public void removeSeminarGroup(Long timelineId, Long seminarGroupId);
+    public void removeSeminarGroup(Long timelineId);
 
     public void addEvent(Long timelineId, Long eventId);
     public void removeEvent(Long timelineId, Long eventId);
