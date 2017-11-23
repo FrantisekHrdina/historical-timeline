@@ -4,6 +4,9 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import cz.muni.fi.pa165.entities.SeminarGroup;
 
+/**
+ * @author Martin Wörgötter
+ */
 @Service
 public interface SeminarGroupService {
 
