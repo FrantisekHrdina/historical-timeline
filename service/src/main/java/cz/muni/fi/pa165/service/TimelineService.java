@@ -16,11 +16,11 @@ public interface TimelineService {
 
     public void addComment(Long timelineId, String comment);
 
-    public void setSeminarGroup(Long timelineId, Long seminarGroupId);
-    public void removeSeminarGroup(Long timelineId);
+    public void setSeminarGroupToTimeline(Long timelineId, Long seminarGroupId);
+    public void removeSeminarGroupFromTimeline(Long timelineId);
 
-    public void addEvent(Long timelineId, Long eventId);
-    public void removeEvent(Long timelineId, Long eventId);
+    public void addEventToTimeline(Long timelineId, Long eventId);
+    public void removeEventFromTimeline(Long timelineId, Long eventId);
 
     public Timeline getTimelineById(Long timelineId);
     public List<Timeline> getAllTimelines();
