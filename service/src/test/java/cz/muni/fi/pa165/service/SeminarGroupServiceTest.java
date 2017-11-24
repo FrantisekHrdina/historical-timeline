@@ -4,7 +4,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.testng.annotations.BeforeClass;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+import org.springframework.transaction.annotation.Transactional;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -14,6 +16,9 @@ import cz.muni.fi.pa165.exception.DAOException;
 
 import static org.mockito.Mockito.when;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Matchers.any;
 
@@ -22,7 +27,9 @@ import static org.assertj.core.api.Assertions.*;
 /**
  * @author Martin Wörgötter
  */
-public class SeminarGroupServiceTest {
+@Transactional
+@ContextConfiguration(classes = config.ServiceConfiguration.class)
+public class SeminarGroupServiceTest extends AbstractTestNGSpringContextTests {
 
 	@Mock
 	private SeminarGroupDao seminarGroupDao;
@@ -32,46 +39,113 @@ public class SeminarGroupServiceTest {
 	private SeminarGroupService seminarGroupService;
 
 	private SeminarGroup basicGroup;
+	private SeminarGroup advancedGroup;
 
-	@BeforeClass
-    public void setup() {
-        MockitoAnnotations.initMocks(this);
-    }
+	@BeforeMethod
+	public void initMocks() {
+		MockitoAnnotations.initMocks(this);	
+	}
 	
 	@BeforeMethod
-	public void createSeminarGroups() {
-		SeminarGroup basicGroup = new SeminarGroup();
+	public void createSeminarGroups() {		
+		basicGroup = new SeminarGroup();
 		basicGroup.setName("Basic");
-	}
 
+		advancedGroup = new SeminarGroup();
+		basicGroup.setName("Advanced");
+	}
+	
 	@Test
 	public void saveGroup() {
-		when(seminarGroupDao.findGroup(any())).thenReturn(basicGroup);
+		List<SeminarGroup> allSeminarGroups = new ArrayList<>();
+		allSeminarGroups.add(basicGroup);
+		when(seminarGroupDao.findAllGroups()).thenReturn(allSeminarGroups);
 		seminarGroupService.saveGroup(basicGroup);
-		assertThat(seminarGroupDao.findGroup(1l)).isEqualTo(basicGroup);
+		assertThat(seminarGroupService.findAllGroups()).containsOnly(basicGroup);
+	}
+	
+	@Test
+	public void saveNullGroup() {
+		assertThatThrownBy(() -> seminarGroupService.saveGroup(null))
+				.isInstanceOf(IllegalArgumentException.class);
 	}
 
 	@Test
 	public void saveFails() {
-		doThrow(new Exception()).when(seminarGroupDao).addGroup(any());
-		assertThatThrownBy(() -> seminarGroupService.saveGroup(basicGroup)).isInstanceOf(DAOException.class);
+		doThrow(new RuntimeException()).when(seminarGroupDao).addGroup(any());
+		assertThatThrownBy(() -> seminarGroupService.saveGroup(basicGroup))
+				.isInstanceOf(DAOException.class);
 	}
-	
+
+	@Test
+	public void removeGroup() {
+		seminarGroupService.saveGroup(basicGroup);
+		seminarGroupService.saveGroup(advancedGroup);
+
+		seminarGroupService.removeGroup(basicGroup);
+		
+		List<SeminarGroup> remainingGroups = new ArrayList<>();
+		remainingGroups.add(advancedGroup);
+		when(seminarGroupDao.findAllGroups()).thenReturn(remainingGroups);
+		
+		assertThat(seminarGroupService.findAllGroups())
+				.containsOnly(advancedGroup);
+	}
+
+	@Test
+	public void removeNullGroup() {
+		assertThatThrownBy(() -> seminarGroupService.removeGroup(null))
+				.isInstanceOf(IllegalArgumentException.class);
+	}
+
 	@Test
 	public void removeFails() {
-		doThrow(new Exception()).when(seminarGroupDao).removeGroup(any());
-		assertThatThrownBy(() -> seminarGroupService.removeGroup(basicGroup)).isInstanceOf(DAOException.class);
+		doThrow(new RuntimeException()).when(seminarGroupDao).removeGroup(any());
+		assertThatThrownBy(() -> seminarGroupService.removeGroup(basicGroup))
+				.isInstanceOf(DAOException.class);
+	}
+
+	@Test
+	public void findGroup() {
+		seminarGroupService.saveGroup(basicGroup);
+		assertThat(seminarGroupService.findGroup(basicGroup.getId()))
+				.isEqualTo(basicGroup);
+	}
+
+	@Test
+	public void findGroupByNullId() {
+		assertThat(seminarGroupService.findGroup(null)).isNull();
 	}
 	
 	@Test
 	public void findFails() {
-		doThrow(new Exception()).when(seminarGroupDao).findGroup(any());
-		assertThatThrownBy(() -> seminarGroupService.findGroup(1l)).isInstanceOf(DAOException.class);
+		doThrow(new RuntimeException()).when(seminarGroupDao).findGroup(any());
+		assertThatThrownBy(() -> seminarGroupService.findGroup(1l))
+				.isInstanceOf(DAOException.class);
+	}
+
+	@Test
+	public void findAllGroups() {
+		when(seminarGroupDao.findAllGroups()).thenReturn(new ArrayList<SeminarGroup>());
+		assertThat(seminarGroupService.findAllGroups()).isEmpty();
+
+		seminarGroupService.saveGroup(basicGroup);
+		seminarGroupService.saveGroup(advancedGroup);
+
+		List<SeminarGroup> allGroups = new ArrayList<>();
+		allGroups.add(basicGroup);
+		allGroups.add(advancedGroup);
+		when(seminarGroupDao.findAllGroups()).thenReturn(allGroups);
+		assertThat(seminarGroupService.findAllGroups())
+				.usingFieldByFieldElementComparator()
+				.containsOnly(basicGroup, advancedGroup);
 	}
 	
 	@Test
 	public void findAllFails() {
-		doThrow(new Exception()).when(seminarGroupDao).findAllGroups();
-		assertThatThrownBy(() -> seminarGroupService.findAllGroups()).isInstanceOf(DAOException.class);
+		doThrow(new RuntimeException()).when(seminarGroupDao).findAllGroups();
+		assertThatThrownBy(() -> seminarGroupService.findAllGroups())
+				.isInstanceOf(DAOException.class);
 	}
+
 }
