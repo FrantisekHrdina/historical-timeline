@@ -10,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import cz.muni.fi.pa165.configuration.ServiceConfiguration;
+
 import cz.muni.fi.pa165.dao.SeminarGroupDao;
 import cz.muni.fi.pa165.entities.SeminarGroup;
 import cz.muni.fi.pa165.exception.DAOException;
@@ -28,7 +30,7 @@ import static org.assertj.core.api.Assertions.*;
  * @author Martin Wörgötter
  */
 @Transactional
-@ContextConfiguration(classes = config.ServiceConfiguration.class)
+@ContextConfiguration(classes = ServiceConfiguration.class)
 public class SeminarGroupServiceTest extends AbstractTestNGSpringContextTests {
 
 	@Mock
