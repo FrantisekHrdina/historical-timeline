@@ -1,6 +1,8 @@
 package cz.muni.fi.pa165.dao;
 
 import cz.muni.fi.pa165.entities.Event;
+
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -44,5 +46,15 @@ public interface EventDao {
      * @return all Events
      */
     List<Event> findAllEvents();
+
+    /**
+     * Finds alee Events in range
+     *
+     * @param from
+     * @param to
+     * @return events in range
+     */
+    List<Event> findEventsInRange(LocalDate from, LocalDate to);
+    List<Event> findEventsByLocation (String location);
     
 }

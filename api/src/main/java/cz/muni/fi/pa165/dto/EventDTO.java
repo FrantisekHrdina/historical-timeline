@@ -1,6 +1,8 @@
 package cz.muni.fi.pa165.dto;
 
 import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.Objects;
 
 /**
  * @author František Hrdina
@@ -73,4 +75,23 @@ public class EventDTO {
         this.image = image;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || !(obj instanceof EventDTO)) return false;
+
+        EventDTO other = (EventDTO) obj;
+
+        return Objects.equals(getName(), other.getName());
+    }
+
+    @Override
+    public int hashCode() {
+        if (name != null){
+            return 31 * name.hashCode();
+        }
+        else {
+            return 0;
+        }
+    }
 }
