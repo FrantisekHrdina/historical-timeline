@@ -33,10 +33,10 @@ public class PersistenceApplicationContext {
     /**
      * Enables automatic translation of exceptions to DataAccessExceptions.
      */
-//    @Bean
-//    public PersistenceExceptionTranslationPostProcessor postProcessor() {
-//        return new PersistenceExceptionTranslationPostProcessor();
-//    }
+    @Bean
+    public PersistenceExceptionTranslationPostProcessor postProcessor() {
+        return new PersistenceExceptionTranslationPostProcessor();
+    }
 
     @Bean
     public JpaTransactionManager transactionManager() {

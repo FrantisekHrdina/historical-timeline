@@ -5,6 +5,7 @@ import cz.muni.fi.pa165.dao.TimelineDao;
 import cz.muni.fi.pa165.entities.SeminarGroup;
 import cz.muni.fi.pa165.entities.Timeline;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
@@ -69,7 +70,7 @@ public class TimelineDaoTest extends AbstractTestNGSpringContextTests {
     /**
      * Attempting to persist null.
      */
-    @Test(expectedExceptions = IllegalArgumentException.class)
+    @Test(expectedExceptions = DataAccessException.class)
     public void addTimelineTest_timelineNull() {
         timelineDao.addTimeline(null);
     }
@@ -97,7 +98,7 @@ public class TimelineDaoTest extends AbstractTestNGSpringContextTests {
     /**
      * Attempting to remove null.
      */
-    @Test(expectedExceptions = IllegalArgumentException.class)
+    @Test(expectedExceptions = DataAccessException.class)
     public void removeTimelineTest_nullTimeline() {
         timelineDao.removeTimeline(null);
     }
@@ -133,7 +134,7 @@ public class TimelineDaoTest extends AbstractTestNGSpringContextTests {
     }
 
 
-    @Test(expectedExceptions = IllegalArgumentException.class)
+    @Test(expectedExceptions = DataAccessException.class)
     public void editTimelineTest_nullTimeline() {
         timelineDao.editTimeline(null);
     }
@@ -147,7 +148,7 @@ public class TimelineDaoTest extends AbstractTestNGSpringContextTests {
         assertThat(timelineDao.findTimeline(firstTimeline.getId()).getName()).isEqualTo(firstTimeline.getName());
     }
 
-    @Test(expectedExceptions = IllegalArgumentException.class)
+    @Test(expectedExceptions = DataAccessException.class)
     public void findTimelineTest_nullTimeline() {
         timelineDao.findTimeline(null);
     }

@@ -9,6 +9,7 @@ import javax.persistence.PersistenceContext;
 import javax.validation.ConstraintViolationException;
 import static org.assertj.core.api.Assertions.assertThat;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
@@ -76,17 +77,17 @@ public class UserDaoTest extends AbstractTestNGSpringContextTests{
         seminarGroupDao.addGroup(seminarGroup2);
     }
     
-    @Test(expectedExceptions = IllegalArgumentException.class)
+    @Test(expectedExceptions = DataAccessException.class)
     public void addNullUser() {
         userDao.addUser(null);
     }
     
-    @Test(expectedExceptions = IllegalArgumentException.class)
+    @Test(expectedExceptions = DataAccessException.class)
     public void editNullUser() {
         userDao.editUser(null);
     }
     
-    @Test(expectedExceptions = IllegalArgumentException.class)
+    @Test(expectedExceptions = DataAccessException.class)
     public void removeNullUser() {
         userDao.removeUser(null);
     }

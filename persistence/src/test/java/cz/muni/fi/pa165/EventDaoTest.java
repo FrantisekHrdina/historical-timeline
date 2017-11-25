@@ -87,22 +87,22 @@ public class EventDaoTest extends AbstractTestNGSpringContextTests{
         assertThat(allEvents).hasSize(3).contains(eventInDB1, eventInDB2, eventInDB3);
     }
 
-    @Test(expectedExceptions = IllegalArgumentException.class)
+    @Test(expectedExceptions = DataAccessException.class)
     public void addEventThatIsNull() {
         eventDao.addEvent(null);
     }
 
-    @Test(expectedExceptions = javax.persistence.PersistenceException.class)
+    @Test(expectedExceptions = DataAccessException.class)
     public void addEventWithNullDate() {
         eventDao.addEvent(eventWithNullDate);
     }
 
-    @Test(expectedExceptions = javax.persistence.PersistenceException.class)
+    @Test(expectedExceptions = DataAccessException.class)
     public void addEventWithNullName() {
         eventDao.addEvent(eventWithNullName);
     }
 
-    @Test(expectedExceptions = javax.persistence.PersistenceException.class)
+    @Test(expectedExceptions = DataAccessException.class)
     public void addEventWithNameAlreadyThere() {
         Event redundantNameEvent = new Event();
         redundantNameEvent.setName("Event 1");
@@ -123,7 +123,7 @@ public class EventDaoTest extends AbstractTestNGSpringContextTests{
         assertThat(allEvents).contains(newEvent);
     }
 
-    @Test(expectedExceptions = IllegalArgumentException.class)
+    @Test(expectedExceptions = DataAccessException.class)
     public void findEventWithNullId() {
         eventDao.findEvent(null);
     }
@@ -135,7 +135,7 @@ public class EventDaoTest extends AbstractTestNGSpringContextTests{
         assertThat(founded).isEqualTo(eventInDB1);
     }
 
-    @Test(expectedExceptions = IllegalArgumentException.class)
+    @Test(expectedExceptions = DataAccessException.class)
     public void editEventThatIsNull() {
         eventDao.editEvent(null);
     }

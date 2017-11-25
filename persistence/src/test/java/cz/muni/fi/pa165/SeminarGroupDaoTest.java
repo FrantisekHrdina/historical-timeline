@@ -4,6 +4,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
@@ -52,7 +53,7 @@ public class SeminarGroupDaoTest extends AbstractTestNGSpringContextTests {
 	public void addNullGroup() {
 		assertThatThrownBy(() -> {
 			seminarGroupDao.addGroup(null);
-		}).isInstanceOf(IllegalArgumentException.class);
+		}).isInstanceOf(DataAccessException.class);
 	}
 
 	@Test
@@ -60,7 +61,7 @@ public class SeminarGroupDaoTest extends AbstractTestNGSpringContextTests {
 		SeminarGroup seminarGroupWithNullName = new SeminarGroup();
 		assertThatThrownBy(() -> {
 			seminarGroupDao.addGroup(seminarGroupWithNullName);
-		}).isInstanceOf(IllegalArgumentException.class);
+		}).isInstanceOf(DataAccessException.class);
 	}
 
 	@Test
@@ -68,7 +69,7 @@ public class SeminarGroupDaoTest extends AbstractTestNGSpringContextTests {
 		basicSeminarGroup.setId(1L);
 		assertThatThrownBy(() -> {
 			seminarGroupDao.addGroup(basicSeminarGroup);
-		}).isInstanceOf(IllegalArgumentException.class);
+		}).isInstanceOf(DataAccessException.class);
 	}
 
 	@Test
@@ -85,7 +86,7 @@ public class SeminarGroupDaoTest extends AbstractTestNGSpringContextTests {
 	public void removeNullGroup() {
 		assertThatThrownBy(() -> {
 			seminarGroupDao.removeGroup(null);
-		}).isInstanceOf(IllegalArgumentException.class);
+		}).isInstanceOf(DataAccessException.class);
 	}
 
 	@Test
@@ -93,14 +94,14 @@ public class SeminarGroupDaoTest extends AbstractTestNGSpringContextTests {
 		basicSeminarGroup.setId(1L);
 		assertThatThrownBy(() -> {
 			seminarGroupDao.removeGroup(basicSeminarGroup);
-		}).isInstanceOf(IllegalArgumentException.class);
+		}).isInstanceOf(DataAccessException.class);
 	}
 
 	@Test
 	public void removeGroupWithNullId() {
 		assertThatThrownBy(() -> {
 			seminarGroupDao.removeGroup(basicSeminarGroup);
-		}).isInstanceOf(IllegalArgumentException.class);
+		}).isInstanceOf(DataAccessException.class);
 	}
 
 	@Test
@@ -109,7 +110,7 @@ public class SeminarGroupDaoTest extends AbstractTestNGSpringContextTests {
 		basicSeminarGroup.setName(null);
 		assertThatThrownBy(() -> {
 			seminarGroupDao.removeGroup(basicSeminarGroup);
-		}).isInstanceOf(IllegalArgumentException.class);
+		}).isInstanceOf(DataAccessException.class);
 	}
 
 	@Test
@@ -136,7 +137,7 @@ public class SeminarGroupDaoTest extends AbstractTestNGSpringContextTests {
 	public void editNullGroup() {
 		assertThatThrownBy(() -> {
 			seminarGroupDao.editGroup(null);
-		}).isInstanceOf(IllegalArgumentException.class);
+		}).isInstanceOf(DataAccessException.class);
 	}
 
 	@Test
@@ -144,14 +145,14 @@ public class SeminarGroupDaoTest extends AbstractTestNGSpringContextTests {
 		basicSeminarGroup.setId(1L);
 		assertThatThrownBy(() -> {
 			seminarGroupDao.editGroup(basicSeminarGroup);
-		}).isInstanceOf(IllegalArgumentException.class);
+		}).isInstanceOf(DataAccessException.class);
 	}
 
 	@Test
 	public void editGroupWithNullId() {
 		assertThatThrownBy(() -> {
 			seminarGroupDao.editGroup(basicSeminarGroup);
-		}).isInstanceOf(IllegalArgumentException.class);
+		}).isInstanceOf(DataAccessException.class);
 	}
 
 	@Test
@@ -160,7 +161,7 @@ public class SeminarGroupDaoTest extends AbstractTestNGSpringContextTests {
 		basicSeminarGroup.setName(null);
 		assertThatThrownBy(() -> {
 			seminarGroupDao.editGroup(basicSeminarGroup);
-		}).isInstanceOf(IllegalArgumentException.class);
+		}).isInstanceOf(DataAccessException.class);
 	}
 
 	@Test
