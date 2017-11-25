@@ -30,7 +30,7 @@ public class TimelineServiceTest {
     public void prepareTestTimeline(){
         testTimeline = new Timeline();
 
-        when(exchangeService.getCurrencyRate(Currency.EUR, Currency.CZK)).thenReturn(BigDecimal.valueOf(27));
+        //when(exchangeService.getCurrencyRate(Currency.EUR, Currency.CZK)).thenReturn(BigDecimal.valueOf(27));
     }
 
     @BeforeMethod
