@@ -11,9 +11,9 @@ import java.util.List;
 /**
  * @author František Hrdina
  */
-
 @Service
 public class BeanMappingServiceImpl implements BeanMappingService {
+
     @Autowired
     private Mapper dozer;
 
