@@ -5,8 +5,8 @@ import cz.muni.fi.pa165.dto.EventDTO;
 /*
 import cz.muni.fi.pa165.dto.TimelineDTO;
 import cz.muni.fi.pa165.dto.UserDTO;
-import cz.muni.fi.pa165.dto.SeminarGroupDTO;
 */
+import cz.muni.fi.pa165.dto.SeminarGroupDTO;
 import cz.muni.fi.pa165.dto.TimelineDTO;
 import cz.muni.fi.pa165.entities.Event;
 import cz.muni.fi.pa165.entities.SeminarGroup;
@@ -53,10 +53,10 @@ public class ServiceConfiguration {
         protected void configure() {
             mapping(Event.class, EventDTO.class);
             mapping(Timeline.class, TimelineDTO.class);
-
+            mapping(SeminarGroup.class, SeminarGroupDTO.class);
             /*
             mapping(User.class, UserDTO.class);
-            mapping(SeminarGroup.class, SeminarGroupDTO.class);*/
+            */
         }
     }
 
