@@ -42,22 +42,22 @@ public class TimelineFacadeImpl implements TimelineFacade {
 
     @Override
     public void addSeminarGroup(Long timelineId, Long seminarGroupId) {
-        timelineService.setSeminarGroup(timelineId, seminarGroupId);
+        timelineService.setSeminarGroupToTimeline(timelineId, seminarGroupId);
     }
 
     @Override
     public void removeSeminarGroup(Long timelineId) {
-        timelineService.removeSeminarGroup(timelineId);
+        timelineService.removeSeminarGroupFromTimeline(timelineId);
     }
 
     @Override
     public void addEvent(Long timelineId, Long eventId) {
-        timelineService.addEvent(timelineId, eventId);
+        timelineService.addEventToTimeline(timelineId, eventId);
     }
 
     @Override
     public void removeEvent(Long timelineId, Long eventId) {
-        timelineService.removeEvent(timelineId, eventId);
+        timelineService.removeEventFromTimeline(timelineId, eventId);
     }
 
     @Override
