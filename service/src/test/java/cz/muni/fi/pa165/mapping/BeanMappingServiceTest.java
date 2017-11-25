@@ -10,7 +10,6 @@ import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import cz.muni.fi.pa165.mapping.BeanMappingService;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.ArrayList;
