@@ -107,7 +107,7 @@ public class SeminarGroupServiceTest extends AbstractTestNGSpringContextTests {
 
 	@Test
 	public void findGroup() {
-		seminarGroupService.saveGroup(basicGroup);
+		when(seminarGroupDao.findGroup(basicGroup.getId())).thenReturn(basicGroup);
 		assertThat(seminarGroupService.findGroup(basicGroup.getId()))
 				.isEqualTo(basicGroup);
 	}
@@ -128,9 +128,6 @@ public class SeminarGroupServiceTest extends AbstractTestNGSpringContextTests {
 	public void findAllGroups() {
 		when(seminarGroupDao.findAllGroups()).thenReturn(new ArrayList<SeminarGroup>());
 		assertThat(seminarGroupService.findAllGroups()).isEmpty();
-
-		seminarGroupService.saveGroup(basicGroup);
-		seminarGroupService.saveGroup(advancedGroup);
 
 		List<SeminarGroup> allGroups = new ArrayList<>();
 		allGroups.add(basicGroup);
