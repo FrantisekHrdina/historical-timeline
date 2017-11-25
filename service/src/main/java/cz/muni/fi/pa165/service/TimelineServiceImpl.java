@@ -9,6 +9,7 @@ import cz.muni.fi.pa165.entities.Timeline;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.sql.Time;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -36,7 +37,7 @@ public class TimelineServiceImpl implements TimelineService {
     public void addComment(Long timelineId, String comment) {
         Timeline timeline = timelineDao.findTimeline(timelineId);
 
-        List<String> comments = timeline.getComments();
+        List<String> comments = new ArrayList<>(timeline.getComments());
         comments.add(comment);
         timeline.setComments(comments);
 
@@ -50,7 +51,7 @@ public class TimelineServiceImpl implements TimelineService {
 
         timeline.setSeminarGroup(seminarGroup);
 
-        List<Timeline> timelines = seminarGroup.getTimelines();
+        List<Timeline> timelines = new ArrayList<>(seminarGroup.getTimelines());
         timelines.add(timeline);
         seminarGroup.setTimelines(timelines);
 
@@ -65,7 +66,7 @@ public class TimelineServiceImpl implements TimelineService {
 
         timeline.setSeminarGroup(null);
 
-        List<Timeline> timelines = seminarGroup.getTimelines();
+        List<Timeline> timelines = new ArrayList<>(seminarGroup.getTimelines());
         timelines.remove(timeline);
         seminarGroup.setTimelines(timelines);
 
@@ -78,11 +79,11 @@ public class TimelineServiceImpl implements TimelineService {
         Timeline timeline = timelineDao.findTimeline(timelineId);
         Event event = eventDao.findEvent(eventId);
 
-        List<Event> events = timeline.getEvents();
+        List<Event> events = new ArrayList<>(timeline.getEvents());
         events.add(event);
         timeline.setEvents(events);
 
-        List<Timeline> timelines = event.getTimelines();
+        List<Timeline> timelines = new ArrayList<>(event.getTimelines());
         timelines.add(timeline);
         event.setTimelines(timelines);
 
@@ -95,7 +96,7 @@ public class TimelineServiceImpl implements TimelineService {
         Timeline timeline = timelineDao.findTimeline(timelineId);
         Event event = eventDao.findEvent(eventId);
 
-        List<Event> events = timeline.getEvents();
+        List<Event> events = new ArrayList<>(timeline.getEvents());
         events.remove(event);
         timeline.setEvents(events);
 

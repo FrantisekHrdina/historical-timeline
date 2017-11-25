@@ -76,9 +76,7 @@ public class TimelineServiceTest {
         testSeminarGroup.setName("Class #1");
         testSeminarGroup.setId(1L);
 
-        List<Timeline> list = new ArrayList<>();
-        list.add(testTimeline3);
-        testSeminarGroup.setTimelines(list);
+        testSeminarGroup.setTimelines(Arrays.asList(testTimeline3));
         testTimeline3.setSeminarGroup(testSeminarGroup);
     }
 
@@ -88,6 +86,9 @@ public class TimelineServiceTest {
         testEvent.setDescription("This poor bear froze to death so suddenly.");
         testEvent.setLocation("Europe");
         testEvent.setId(1L);
+
+        testTimeline3.setEvents(Arrays.asList(testEvent));
+        testEvent.setTimelines(Arrays.asList(testTimeline3));
     }
 
     public void prepareMockBehaviour() {
@@ -118,7 +119,10 @@ public class TimelineServiceTest {
         when(timelineDao.findAllTimelines()).thenReturn(Arrays.asList(testTimeline, testTimeline2));
 
         // logic
+        when(timelineDao.findTimeline(3L)).thenReturn(testTimeline3);
         when(seminarGroupDao.findGroup(1L)).thenReturn(testSeminarGroup);
+        when(eventDao.findEvent(1L)).thenReturn(testEvent);
+
     }
 
     @Test
@@ -189,18 +193,37 @@ public class TimelineServiceTest {
 
     @Test
     public void addEventToTimeline() {
+        timelineService.addEventToTimeline(1L, 1L);
+        verify(timelineDao).findTimeline(1L);
+        verify(eventDao).findEvent(1L);
 
+        Assert.assertEquals(testTimeline.getEvents(), Arrays.asList(testEvent));
+        Assert.assertEquals(testEvent.getTimelines(), Arrays.asList(testTimeline));
+
+        Assert.assertEquals(testTimeline3.getEvents().size(), 1);
+        Assert.assertEquals(testEvent.getTimelines().size(), 1);
+
+        verify(timelineDao).editTimeline(testTimeline);
+        verify(eventDao).editEvent(testEvent);
     }
 
     @Test
     public void removeEventFromTimeline() {
+        timelineService.removeEventFromTimeline(3L, 1L);
+        verify(timelineDao).findTimeline(3L);
+        verify(eventDao).findEvent(1L);
 
+        Assert.assertEquals(testTimeline3.getEvents().size(), 0);
+        Assert.assertEquals(testEvent.getTimelines().size(), 0);
+
+        verify(timelineDao).editTimeline(testTimeline);
+        verify(eventDao).editEvent(testEvent);
     }
     /////////////////////////////////////
 
     @Test
     public void getTimelineByIdTest() {
-        Assert.assertEquals(timelineDao.findTimeline(1L), testTimeline.getId());
+        Assert.assertEquals(timelineDao.findTimeline(1L), testTimeline);
         verify(timelineDao).findTimeline(1L);
     }
 
