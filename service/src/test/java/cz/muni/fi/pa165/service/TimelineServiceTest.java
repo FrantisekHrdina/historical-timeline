@@ -10,9 +10,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.test.context.ContextConfiguration;
 import org.testng.annotations.BeforeMethod;
 
-import java.math.BigDecimal;
-
-import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 @ContextConfiguration(classes = ServiceConfiguration.class)
@@ -29,13 +26,10 @@ public class TimelineServiceTest {
     @BeforeMethod
     public void prepareTestTimeline(){
         testTimeline = new Timeline();
-
-        //when(exchangeService.getCurrencyRate(Currency.EUR, Currency.CZK)).thenReturn(BigDecimal.valueOf(27));
     }
 
     @BeforeMethod
     public void prepareTestSeminarGroup(){
 
     }
-
 }
