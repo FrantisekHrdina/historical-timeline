@@ -5,7 +5,9 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 import org.springframework.transaction.annotation.Transactional;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -30,6 +32,7 @@ import static org.assertj.core.api.Assertions.*;
  * @author Martin Wörgötter
  */
 @Transactional
+@TestExecutionListeners(TransactionalTestExecutionListener.class)
 @ContextConfiguration(classes = ServiceConfiguration.class)
 public class SeminarGroupServiceTest extends AbstractTestNGSpringContextTests {
 
@@ -54,7 +57,7 @@ public class SeminarGroupServiceTest extends AbstractTestNGSpringContextTests {
 		basicGroup.setName("Basic");
 
 		advancedGroup = new SeminarGroup();
-		basicGroup.setName("Advanced");
+		advancedGroup.setName("Advanced");
 	}
 	
 	@Test

@@ -13,14 +13,14 @@ public interface SeminarGroupFacade {
 	 * 
 	 * @param g
 	 */
-	public void saveGroup(SeminarGroupDTO g);
+	public Long saveGroup(SeminarGroupDTO g);
 
 	/**
 	 * Delete group g from the database.
 	 * 
-	 * @param g
+	 * @param id
 	 */
-	public void removeGroup(SeminarGroupDTO g);
+	public void removeGroup(Long id);
 
 	/**
 	 * Find group by id and return an object.

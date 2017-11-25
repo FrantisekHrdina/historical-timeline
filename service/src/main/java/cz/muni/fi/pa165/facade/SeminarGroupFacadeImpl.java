@@ -25,17 +25,16 @@ public class SeminarGroupFacadeImpl implements SeminarGroupFacade {
 	private BeanMappingService beanMappingService;
 
 	@Override
-	public void saveGroup(SeminarGroupDTO g) {
+	public Long saveGroup(SeminarGroupDTO g) {
 		SeminarGroup seminarGroup = beanMappingService.mapTo(g,
 				SeminarGroup.class);
 		seminarGroupService.saveGroup(seminarGroup);
+		return seminarGroup.getId();
 	}
 
 	@Override
-	public void removeGroup(SeminarGroupDTO g) {
-		SeminarGroup seminarGroup = beanMappingService.mapTo(g,
-				SeminarGroup.class);
-		seminarGroupService.removeGroup(seminarGroup);
+	public void removeGroup(Long id) {
+		seminarGroupService.removeGroup(seminarGroupService.findGroup(id));
 	}
 
 	@Override
