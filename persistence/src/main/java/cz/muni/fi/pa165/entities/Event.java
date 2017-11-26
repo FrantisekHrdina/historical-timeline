@@ -3,10 +3,7 @@ package cz.muni.fi.pa165.entities;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * @author Martin Wörgötter
@@ -37,7 +34,7 @@ public class Event {
 	private byte[] image;
 
 	@ManyToMany
-	private List<Timeline> timelines;
+	private List<Timeline> timelines = new ArrayList<>();
 
 	public Event(Long id, String name, LocalDate date, String location, String description, byte[] image) {
 		this.id = id;
