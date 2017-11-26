@@ -132,4 +132,17 @@ public class Event {
 			return false;
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		return "Event{" +
+				"id=" + id +
+				", name='" + name + '\'' +
+				", date=" + date +
+				", location='" + location + '\'' +
+				", description='" + description + '\'' +
+				", image=" + Arrays.toString(image) +
+				", timelines=" + timelines +
+				'}';
+	}
 }
