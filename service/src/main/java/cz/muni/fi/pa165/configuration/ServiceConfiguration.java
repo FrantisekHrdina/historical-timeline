@@ -15,6 +15,8 @@ import cz.muni.fi.pa165.entities.User;
 import cz.muni.fi.pa165.facade.EventFacadeImpl;
 import cz.muni.fi.pa165.facade.SeminarGroupFacadeImpl;
 import cz.muni.fi.pa165.facade.TimelineFacadeImpl;
+import cz.muni.fi.pa165.mapping.BeanMappingService;
+import cz.muni.fi.pa165.mapping.BeanMappingServiceImpl;
 import cz.muni.fi.pa165.service.EventServiceImpl;
 import cz.muni.fi.pa165.service.SeminarGroupServiceImpl;
 import cz.muni.fi.pa165.service.TimelineServiceImpl;
@@ -39,11 +41,12 @@ import org.springframework.context.annotation.Import;
         /*
         UserFacadeImpl.class, UserServiceImpl.class,
         */
-        SeminarGroupFacadeImpl.class, SeminarGroupServiceImpl.class
+        SeminarGroupFacadeImpl.class, SeminarGroupServiceImpl.class,
+        BeanMappingServiceImpl.class
 })
 public class ServiceConfiguration {
     @Bean
-    public Mapper dozer(){
+    public Mapper dozer() {
         DozerBeanMapper dozer = new DozerBeanMapper();
         dozer.addMapping(new DozerCustomConfig());
         return dozer;

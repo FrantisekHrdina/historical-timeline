@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import javax.inject.Named;
 import java.sql.Time;
@@ -26,6 +27,7 @@ import java.util.List;
  *
  * @author Martin Kocisky, 421131
  */
+@Service
 public class TimelineServiceImpl implements TimelineService {
 
     @Autowired

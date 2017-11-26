@@ -15,6 +15,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.test.context.ContextConfiguration;
 import org.testng.Assert;
@@ -40,8 +41,9 @@ public class TimelineServiceTest {
     @Mock
     private EventDao eventDao;
 
+    @Autowired
     @InjectMocks
-    private TimelineService timelineService = new TimelineServiceImpl();
+    private TimelineServiceImpl timelineService;
 
     private Timeline testTimeline;
     private Timeline testTimeline2;
