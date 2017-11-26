@@ -7,6 +7,9 @@ import cz.muni.fi.pa165.dao.TimelineDao;
 import cz.muni.fi.pa165.entities.Event;
 import cz.muni.fi.pa165.entities.SeminarGroup;
 import cz.muni.fi.pa165.entities.Timeline;
+import cz.muni.fi.pa165.exception.DAOException;
+import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -15,17 +18,15 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.dao.DataAccessException;
 import org.springframework.test.context.ContextConfiguration;
 import org.testng.Assert;
-import org.junit.Test;
-import org.junit.Before;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
-
+/**
+ * @author Martin Kocisky, 421131
+ */
 @RunWith(MockitoJUnitRunner.class)
 @ContextConfiguration(classes = ServiceConfiguration.class)
 public class TimelineServiceTest {
@@ -47,8 +48,10 @@ public class TimelineServiceTest {
     private Timeline testTimeline3;
 
     private SeminarGroup testSeminarGroup;
+    private SeminarGroup testSeminarGroup2;
 
     private Event testEvent;
+    private Event testEvent2;
 
     @Before
     public void setUp() {
@@ -78,6 +81,10 @@ public class TimelineServiceTest {
 
         testSeminarGroup.setTimelines(Arrays.asList(testTimeline3));
         testTimeline3.setSeminarGroup(testSeminarGroup);
+
+        testSeminarGroup2 = new SeminarGroup();
+        testSeminarGroup2.setName("Class #2");
+        testSeminarGroup2.setId(2L);
     }
 
     public void prepareTestEvent(){
@@ -89,11 +96,16 @@ public class TimelineServiceTest {
 
         testTimeline3.setEvents(Arrays.asList(testEvent));
         testEvent.setTimelines(Arrays.asList(testTimeline3));
+
+        testEvent2 = new Event();
+        testEvent2.setName("Today a bear unfroze.");
+        testEvent2.setDescription("This lucky bear woke up so suddenly.");
+        testEvent2.setLocation("Alaska");
+        testEvent2.setId(2L);
     }
 
     public void prepareMockBehaviour() {
 
-        // create behaviour
         doAnswer((InvocationOnMock invocation) -> {
             Object argument = invocation.getArguments()[0];
             if (argument == null) {
@@ -110,18 +122,15 @@ public class TimelineServiceTest {
 
         }).when(timelineDao).addTimeline(any(Timeline.class));
 
-
-
-        // find behaviour
         when(timelineDao.findTimeline(1L)).thenReturn(testTimeline);
         when(timelineDao.findTimeline(null)).thenThrow(new NullPointerException());
         when(timelineDao.findTimeline(7L)).thenThrow(new NullPointerException());
         when(timelineDao.findAllTimelines()).thenReturn(Arrays.asList(testTimeline, testTimeline2));
 
-        // logic
         when(timelineDao.findTimeline(3L)).thenReturn(testTimeline3);
         when(seminarGroupDao.findGroup(1L)).thenReturn(testSeminarGroup);
         when(eventDao.findEvent(1L)).thenReturn(testEvent);
+        when(eventDao.findEvent(2L)).thenReturn(testEvent2);
 
     }
 
@@ -143,29 +152,16 @@ public class TimelineServiceTest {
 
     @Test
     public void addCommentTest() {
-//        String comment = "Ice Age was so icy.";
-//        String comment2 = "Ice Age was too long ago.";
-//
-//        Long id = timelineService.createTimeline(testTimeline);
-//
-//        // check one comment
-//        timelineService.addComment(id, comment);
-//
-//        Timeline timeline = timelineService.getTimelineById(id);
-//
-//        Assert.assertEquals(timeline.getComments().size(), 1);
-//        Assert.assertEquals(timeline.getComments().get(0), comment);
-//
-//        // check comment added to the end
-//        timelineService.addComment(id, comment2);
-//        timeline = timelineService.getTimelineById(id);
-//
-//        Assert.assertEquals(timeline.getComments().size(), 2);
-//        Assert.assertEquals(timeline.getComments().get(timeline.getComments().size() - 1), comment2);
+        String comment = "Ice Age was so icy.";
+
+        timelineService.addComment(1L, comment);
+        verify(timelineDao).findTimeline(1L);
+
+        Assert.assertEquals(testTimeline.getComments(), Arrays.asList(comment));
+
+        verify(timelineDao).editTimeline(testTimeline);
     }
 
-
-    ///////////////////////////////////// make sure these methods that manipulate multiple Dao work
     @Test
     public void setSeminarGroupToTimeline() {
         timelineService.setSeminarGroupToTimeline(1L, 1L);
@@ -193,18 +189,15 @@ public class TimelineServiceTest {
 
     @Test
     public void addEventToTimeline() {
-        timelineService.addEventToTimeline(1L, 1L);
+        timelineService.addEventToTimeline(1L, 2L);
         verify(timelineDao).findTimeline(1L);
-        verify(eventDao).findEvent(1L);
+        verify(eventDao).findEvent(2L);
 
-        Assert.assertEquals(testTimeline.getEvents(), Arrays.asList(testEvent));
-        Assert.assertEquals(testEvent.getTimelines(), Arrays.asList(testTimeline));
-
-        Assert.assertEquals(testTimeline3.getEvents().size(), 1);
-        Assert.assertEquals(testEvent.getTimelines().size(), 1);
+        Assert.assertEquals(testTimeline.getEvents(), Arrays.asList(testEvent2));
+        Assert.assertEquals(testEvent2.getTimelines(), Arrays.asList(testTimeline));
 
         verify(timelineDao).editTimeline(testTimeline);
-        verify(eventDao).editEvent(testEvent);
+        verify(eventDao).editEvent(testEvent2);
     }
 
     @Test
@@ -216,10 +209,9 @@ public class TimelineServiceTest {
         Assert.assertEquals(testTimeline3.getEvents().size(), 0);
         Assert.assertEquals(testEvent.getTimelines().size(), 0);
 
-        verify(timelineDao).editTimeline(testTimeline);
+        verify(timelineDao).editTimeline(testTimeline3);
         verify(eventDao).editEvent(testEvent);
     }
-    /////////////////////////////////////
 
     @Test
     public void getTimelineByIdTest() {
@@ -227,14 +219,16 @@ public class TimelineServiceTest {
         verify(timelineDao).findTimeline(1L);
     }
 
-    @Test(expected = DataAccessException.class)
+    @Test(expected = DAOException.class)
     public void getTimelineByIdTest_NotFound() {
-        timelineDao.findTimeline(7L);
+        timelineService.getTimelineById(7L);
+        verify(timelineDao).findTimeline(7L);
     }
 
-    @Test(expected = DataAccessException.class)
+    @Test(expected = DAOException.class)
     public void getTimelineByIdTest_null() {
-        timelineDao.findTimeline(null);
+        timelineService.getTimelineById(null);
+        verify(timelineDao).findTimeline(null);
     }
 
     @Test

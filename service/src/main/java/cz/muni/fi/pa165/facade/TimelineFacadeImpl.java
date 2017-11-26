@@ -17,8 +17,6 @@ import java.util.List;
  */
 public class TimelineFacadeImpl implements TimelineFacade {
 
-    final static Logger log = LoggerFactory.getLogger(TimelineFacadeImpl.class);
-
     @Inject
     private TimelineService timelineService;
 
