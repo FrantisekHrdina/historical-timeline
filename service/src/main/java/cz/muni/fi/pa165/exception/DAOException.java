@@ -11,4 +11,13 @@ public class DAOException extends DataAccessException {
 		super(msg);
 	}
 
+	/**
+	 * Constructor for DataAccessException.
+	 *
+	 * @param msg   the detail message
+	 * @param cause the root cause (usually from using a underlying
+	 */
+	public DAOException(String msg, Throwable cause) {
+		super(msg, cause);
+	}
 }

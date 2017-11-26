@@ -9,10 +9,10 @@ import java.util.List;
  * @author František Hrdina
  */
 public interface EventFacade {
-    void addEvent(EventDTO event);
-    void removeEvent(EventDTO event);
+    Long addEvent(EventDTO event);
+    void removeEvent(Long id);
     void editEvent(EventDTO event);
-    void findEvent(Long id);
+    EventDTO findEvent (Long id);
     List<EventDTO> findAllEvents();
     List<EventDTO> findEventsInRange(LocalDate from, LocalDate to);
     List<EventDTO> findEventsByLocation(String location);
