@@ -19,7 +19,7 @@ public class EventDTO {
     private String location;
     private String description;
     private byte[] image;
-    private List<TimelineDTO> timelines;
+    /*private List<TimelineDTO> timelines;*/
 
     public EventDTO() {
     }
@@ -81,13 +81,13 @@ public class EventDTO {
         this.image = image;
     }
 
-    public List<TimelineDTO> getTimelines() {
+/*    public List<TimelineDTO> getTimelines() {
         return Collections.unmodifiableList(timelines);
     }
 
     public void setTimelines(List<TimelineDTO> timelines) {
         this.timelines = timelines;
-    }
+    }*/
 
     @Override
     public boolean equals(Object obj) {
