@@ -22,6 +22,7 @@ import cz.muni.fi.pa165.service.SeminarGroupServiceImpl;
 import org.dozer.DozerBeanMapper;
 import org.dozer.Mapper;
 import org.dozer.loader.api.BeanMappingBuilder;
+import org.dozer.loader.api.FieldsMappingOptions;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -51,7 +52,8 @@ public class ServiceConfiguration {
     public class DozerCustomConfig extends BeanMappingBuilder {
         @Override
         protected void configure() {
-            mapping(Event.class, EventDTO.class);
+            mapping(Event.class, EventDTO.class).fields("date", "date",
+                    FieldsMappingOptions.copyByReference());
             mapping(Timeline.class, TimelineDTO.class);
             mapping(SeminarGroup.class, SeminarGroupDTO.class);
             /*

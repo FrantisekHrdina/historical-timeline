@@ -7,6 +7,8 @@ import cz.muni.fi.pa165.service.EventService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import java.time.LocalDate;
@@ -15,10 +17,13 @@ import java.util.List;
 /**
  * @author František Hrdina
  */
+@Service
+@Transactional
 public class EventFacadeImpl implements EventFacade {
 
     final static Logger log = LoggerFactory.getLogger(EventFacadeImpl.class);
 
+    //@Autowired
     @Inject
     private EventService eventService;
 
@@ -26,15 +31,16 @@ public class EventFacadeImpl implements EventFacade {
     private BeanMappingService beanMappingService;
 
     @Override
-    public void addEvent(EventDTO event) {
+    public Long addEvent(EventDTO event) {
         Event mappedEvent = beanMappingService.mapTo(event, Event.class);
         eventService.addEvent(mappedEvent);
+
+        return mappedEvent.getId();
     }
 
     @Override
-    public void removeEvent(EventDTO event) {
-        Event mappedEvent = beanMappingService.mapTo(event, Event.class);
-        eventService.removeEvent(mappedEvent);
+    public void removeEvent(Long id) {
+        eventService.removeEvent(eventService.findEvent(id));
     }
 
     @Override
@@ -44,8 +50,9 @@ public class EventFacadeImpl implements EventFacade {
     }
 
     @Override
-    public void findEvent(Long id) {
-        eventService.findEvent(id);
+    public EventDTO findEvent(Long id) {
+
+        return beanMappingService.mapTo(eventService.findEvent(id), EventDTO.class);
     }
 
     @Override

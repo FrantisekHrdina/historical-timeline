@@ -3,6 +3,7 @@ package cz.muni.fi.pa165.service;
 import cz.muni.fi.pa165.configuration.ServiceConfiguration;
 import cz.muni.fi.pa165.dao.EventDao;
 import cz.muni.fi.pa165.entities.Event;
+import cz.muni.fi.pa165.exception.DAOException;
 import org.hibernate.service.spi.ServiceException;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -93,22 +94,22 @@ public class EventServiceTest extends AbstractTransactionalTestNGSpringContextTe
         assertThat(allEvents).hasSize(3).contains(eventInDB1, eventInDB2, eventInDB3);
     }
 
-    @Test(expectedExceptions = IllegalArgumentException.class)
+    @Test(expectedExceptions = DAOException.class)
     public void addEventThatIsNull() {
         eventService.addEvent(null);
     }
 
-    @Test(expectedExceptions = javax.persistence.PersistenceException.class)
+    @Test(expectedExceptions = DAOException.class)
     public void addEventWithNullDate() {
         eventService.addEvent(eventWithNullDate);
     }
 
-    @Test(expectedExceptions = javax.persistence.PersistenceException.class)
+    @Test(expectedExceptions = DAOException.class)
     public void addEventWithNullName() {
         eventService.addEvent(eventWithNullName);
     }
 
-    @Test(expectedExceptions = javax.persistence.PersistenceException.class)
+    @Test(expectedExceptions = DAOException.class)
     public void addEventWithNameAlreadyThere() {
         Event redundantNameEvent = new Event();
         redundantNameEvent.setName("Event 1");
@@ -129,7 +130,7 @@ public class EventServiceTest extends AbstractTransactionalTestNGSpringContextTe
         assertThat(allEvents).contains(newEvent);
     }
 
-    @Test(expectedExceptions = IllegalArgumentException.class)
+    @Test(expectedExceptions = DAOException.class)
     public void findEventWithNullId() {
         eventService.findEvent(null);
     }
@@ -141,7 +142,7 @@ public class EventServiceTest extends AbstractTransactionalTestNGSpringContextTe
         assertThat(founded).isEqualTo(eventInDB1);
     }
 
-    @Test(expectedExceptions = IllegalArgumentException.class)
+    @Test(expectedExceptions = DAOException.class)
     public void editEventThatIsNull() {
         eventService.editEvent(null);
     }
@@ -161,6 +162,35 @@ public class EventServiceTest extends AbstractTransactionalTestNGSpringContextTe
         eventService.removeEvent(eventInDB3);
         List<Event> allEvents = eventService.findAllEvents();
         assertThat(allEvents).doesNotContain(eventInDB3);
+    }
+
+    @Test
+    public void findEventsInRange() {
+        Event eventInRange = new Event();
+        eventInRange.setName("In range");
+        eventInRange.setDate(LocalDate.of(2005,1,1));
+        eventService.addEvent(eventInRange);
+
+        List<Event> eventsInRange = eventService.findEventsInRange(
+                LocalDate.of(2004, 12, 31),
+                LocalDate.of(2005,1,2));
+
+        assertThat(eventsInRange).hasSize(1).contains(eventInRange);
+
+    }
+
+    @Test
+    public void findEventsByLocation() {
+        Event eventInLocation = new Event();
+        eventInLocation.setName("Location");
+        eventInLocation.setDate(LocalDate.now());
+        eventInLocation.setLocation("Brno");
+        eventService.addEvent(eventInLocation);
+
+        List<Event> eventsByLocation = eventService.findEventsByLocation("Brno");
+
+        assertThat(eventsByLocation).hasSize(1).contains(eventInLocation);
+
     }
 
 

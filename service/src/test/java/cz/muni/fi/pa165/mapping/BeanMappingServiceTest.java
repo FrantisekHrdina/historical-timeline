@@ -3,7 +3,9 @@ package cz.muni.fi.pa165.mapping;
 
 import cz.muni.fi.pa165.configuration.ServiceConfiguration;
 import cz.muni.fi.pa165.dto.EventDTO;
+import cz.muni.fi.pa165.dto.TimelineDTO;
 import cz.muni.fi.pa165.entities.Event;
+import cz.muni.fi.pa165.entities.Timeline;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
@@ -28,6 +30,7 @@ public class BeanMappingServiceTest extends AbstractTestNGSpringContextTests {
     private BeanMappingService beanMappingService;
 
     private List<Event> events = new ArrayList<Event>();
+    private List<Timeline> timelines = new ArrayList<Timeline>();
 
     @BeforeMethod
     public void createEvents(){
@@ -49,12 +52,29 @@ public class BeanMappingServiceTest extends AbstractTestNGSpringContextTests {
         thirdEvent.setDescription("Description of third");
         thirdEvent.setLocation("Third location");
         thirdEvent.setDate(LocalDate.now());
+
+        events.add(firstEvent);
+        events.add(secondEvent);
+        events.add(thirdEvent);
+
+        Timeline timeline = new Timeline();
+        timeline.setName("Test");
+        timelines.add(timeline);
+
+
     }
 
     @Test
     public void mapEvents(){
         List<EventDTO> mappedEvents = beanMappingService.mapTo(events, EventDTO.class);
         assertThat(mappedEvents).hasSize(events.size());
+    }
+
+    @Test
+    public void mapTimelines(){
+        List<TimelineDTO> mappedTimelines = beanMappingService.mapTo(timelines, TimelineDTO.class);
+        assertThat(mappedTimelines).hasSize(timelines.size());
+
     }
 
 }
