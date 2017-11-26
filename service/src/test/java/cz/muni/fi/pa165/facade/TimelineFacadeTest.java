@@ -5,6 +5,7 @@ import cz.muni.fi.pa165.dto.TimelineDTO;
 import cz.muni.fi.pa165.entities.Timeline;
 import cz.muni.fi.pa165.service.TimelineService;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -15,6 +16,7 @@ import org.springframework.test.context.ContextConfiguration;
 import static org.assertj.core.api.Assertions.*;
 
 import java.sql.Time;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.mockito.Mockito.*;
@@ -33,21 +35,32 @@ public class TimelineFacadeTest {
     private TimelineFacade timelineFacade = new TimelineFacadeImpl();
 
     private TimelineDTO testTimelineDTO;
+    private Timeline testTimeline;
 
+    @Before
     public void setUp() {
-        testTimelineDTO = new TimelineDTO();
-        testTimelineDTO.setName("Ice Age");
+        prepareEntities();
+        prepareMockBahaviour();
     }
 
-    public void prepareBahaviour() {
-        when(timelineService.createTimeline(any(Timeline.class))).thenReturn(1L);
+    public void prepareEntities() {
+        testTimelineDTO = new TimelineDTO();
+        testTimelineDTO.setName("Ice Age");
+
+        testTimeline = new Timeline();
+        testTimeline.setId(1L);
+        testTimeline.setName("Bronze Age");
+    }
+
+    public void prepareMockBahaviour() {
+        when(timelineService.getTimelineById(1L)).thenReturn(testTimeline);
+        when(timelineService.getAllTimelines()).thenReturn(Arrays.asList(testTimeline));
     }
 
     @Test
     public void createTimelineTest() {
-        Long id = timelineFacade.createTimeline(testTimelineDTO);
+        timelineFacade.createTimeline(testTimelineDTO);
         verify(timelineService).createTimeline(any(Timeline.class));
-        assertThat(id).isEqualTo(1L);
     }
 
     @Test
@@ -59,31 +72,40 @@ public class TimelineFacadeTest {
 
     @Test
     public void addSeminarGroupTest() {
+        timelineFacade.addSeminarGroup(1L, 1L);
     }
 
     @Test
     public void removeSeminarGroupTest() {
+        timelineFacade.removeSeminarGroup(1L);
     }
 
     @Test
     public void addEventTest() {
+        timelineFacade.addEvent(1L,1L);
+        verify(timelineService).addEventToTimeline(1L, 1L);
     }
 
     @Test
     public void removeEventTest() {
+        timelineFacade.removeEvent(1L, 1L);
+        verify(timelineService).removeEventFromTimeline(1L, 1L);
     }
 
     @Test
     public void getTimelineByIdTest() {
-        timelineFacade.getTimelineById(1L);
+        TimelineDTO timelineDTO = timelineFacade.getTimelineById(1L);
         verify(timelineService).getTimelineById(1L);
+
+        assertThat(timelineDTO.getId()).isEqualTo(1L);
+        assertThat(timelineDTO.getName()).contains("Bronze Age");
     }
 
     @Test
     public void getAllTimelinesTest() {
         List<TimelineDTO> timelineDTOList = timelineFacade.getAllTimelines();
         verify(timelineService).getAllTimelines();
-        Assert.assertEquals(timelineDTOList.size(), 0);
+        Assert.assertEquals(timelineDTOList.size(), 1);
     }
 
     @Test
