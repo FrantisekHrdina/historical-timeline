@@ -4,6 +4,7 @@ import cz.muni.fi.pa165.configuration.ServiceConfiguration;
 import cz.muni.fi.pa165.dto.TimelineDTO;
 import cz.muni.fi.pa165.entities.Timeline;
 import cz.muni.fi.pa165.service.TimelineService;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -51,6 +52,9 @@ public class TimelineFacadeTest {
 
     @Test
     public void addCommentTest() {
+        String comment = "Apples are violet.";
+        timelineFacade.addComment(1L, comment);
+        verify(timelineService).addComment(1L, comment);
     }
 
     @Test
@@ -71,13 +75,20 @@ public class TimelineFacadeTest {
 
     @Test
     public void getTimelineByIdTest() {
+        timelineFacade.getTimelineById(1L);
+        verify(timelineService).getTimelineById(1L);
     }
 
     @Test
     public void getAllTimelinesTest() {
+        List<TimelineDTO> timelineDTOList = timelineFacade.getAllTimelines();
+        verify(timelineService).getAllTimelines();
+        Assert.assertEquals(timelineDTOList.size(), 0);
     }
 
     @Test
     public void deleteTimelineTest() {
+        timelineFacade.deleteTimeline(1L);
+        verify(timelineService).deleteTimeline(1L);
     }
 }
