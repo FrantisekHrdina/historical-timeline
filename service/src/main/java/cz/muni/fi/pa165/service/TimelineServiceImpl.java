@@ -59,6 +59,8 @@ public class TimelineServiceImpl implements TimelineService {
     public void setSeminarGroupToTimeline(Long timelineId, Long seminarGroupId) {
         if (timelineId == null || seminarGroupId == null) throw new IllegalArgumentException("Null is not acceptable!");
         try {
+            removeSeminarGroupFromTimeline(timelineId);
+
             Timeline timeline = timelineDao.findTimeline(timelineId);
             SeminarGroup seminarGroup = seminarGroupDao.findGroup(seminarGroupId);
 
@@ -84,9 +86,11 @@ public class TimelineServiceImpl implements TimelineService {
 
             timeline.setSeminarGroup(null);
 
-            List<Timeline> timelines = new ArrayList<>(seminarGroup.getTimelines());
-            timelines.remove(timeline);
-            seminarGroup.setTimelines(timelines);
+            if (seminarGroup != null) {
+                List<Timeline> timelines = new ArrayList<>(seminarGroup.getTimelines());
+                timelines.remove(timeline);
+                seminarGroup.setTimelines(timelines);
+            }
 
             timelineDao.editTimeline(timeline);
             seminarGroupDao.editGroup(seminarGroup);
