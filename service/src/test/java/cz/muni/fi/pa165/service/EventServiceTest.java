@@ -13,15 +13,19 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import javax.inject.Inject;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.Mockito.*;
 
 
 /**
@@ -34,6 +38,7 @@ public class EventServiceTest extends AbstractTransactionalTestNGSpringContextTe
     private EventDao eventDao;
 
     @Autowired
+    @InjectMocks
     private EventService eventService;
 
     @BeforeClass
@@ -67,7 +72,6 @@ public class EventServiceTest extends AbstractTransactionalTestNGSpringContextTe
         eventInDB3.setLocation("Here");
         eventInDB3.setDescription("Description");
 
-
         eventWithNullDate = new Event();
         eventWithNullDate.setName("Event null date");
         eventWithNullDate.setDate(null);
@@ -75,21 +79,23 @@ public class EventServiceTest extends AbstractTransactionalTestNGSpringContextTe
         eventWithNullName = new Event();
         eventWithNullName.setName(null);
         eventWithNullName.setDate(LocalDate.now());
-
-        eventService.addEvent(eventInDB1);
-        eventService.addEvent(eventInDB2);
-        eventService.addEvent(eventInDB3);
     }
 
     @Test
     public void findAllEvents() {
-        List<Event> allEvents = eventService.findAllEvents();
+        List<Event> expectedEvents = new ArrayList<Event>();
+        expectedEvents.add(eventInDB1);
+        expectedEvents.add(eventInDB2);
+        expectedEvents.add(eventInDB3);
 
-        assertThat(allEvents).hasSize(3).contains(eventInDB1, eventInDB2, eventInDB3);
+        when(eventDao.findAllEvents()).thenReturn(expectedEvents);
+        assertThat(eventService.findAllEvents()).isEqualTo(expectedEvents);
+        verify(eventDao, times(1)).findAllEvents();
     }
 
-    @Test(expectedExceptions = DAOException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void addEventThatIsNull() {
+        doThrow(new IllegalArgumentException()).when(eventDao).addEvent(any());
         eventService.addEvent(null);
     }
 
@@ -114,26 +120,27 @@ public class EventServiceTest extends AbstractTransactionalTestNGSpringContextTe
     @Test
     public void addEvent() {
         Event newEvent = new Event();
-        newEvent.setName("New event");
+        newEvent.setName("New event to add");
         newEvent.setDate(LocalDate.now());
-
         eventService.addEvent(newEvent);
-
-        List<Event> allEvents = eventService.findAllEvents();
-
-        assertThat(allEvents).contains(newEvent);
+        verify(eventDao, times(1)).addEvent(newEvent);
     }
 
-    @Test(expectedExceptions = DAOException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void findEventWithNullId() {
         eventService.findEvent(null);
     }
 
     @Test
     public void findEvent() {
-        Event founded = eventService.findEvent(eventInDB1.getId());
+        Event eventToFound = new Event();
+        eventToFound.setName("To found");
+        eventToFound.setDate(LocalDate.now());
+        eventToFound.setId(10L);
 
-        assertThat(founded).isEqualTo(eventInDB1);
+        when(eventDao.findEvent(10L)).thenReturn(eventToFound);
+        assertThat(eventService.findEvent(10L)).isEqualTo(eventToFound);
+        verify(eventDao, times(1)).findEvent(10L);
     }
 
     @Test(expectedExceptions = DAOException.class)
@@ -143,19 +150,19 @@ public class EventServiceTest extends AbstractTransactionalTestNGSpringContextTe
 
     @Test
     public void editEvent() {
-        eventInDB1.setName("Event 1 Updated");
-        eventService.editEvent(eventInDB1);
+        Event eventToUpd = new Event();
+        eventToUpd.setName("Event to update");
+        eventToUpd.setDate(LocalDate.now());
 
-        Event eventDB = eventService.findEvent(eventInDB1.getId());
-
-        assertThat(eventDB).isEqualTo(eventInDB1);
+        eventToUpd.setName("Event 1 Updated");
+        eventService.editEvent(eventToUpd);
+        verify(eventDao, times(1)).editEvent(eventToUpd);
     }
 
     @Test
     public void removeEvent(){
         eventService.removeEvent(eventInDB3);
-        List<Event> allEvents = eventService.findAllEvents();
-        assertThat(allEvents).doesNotContain(eventInDB3);
+        verify(eventDao, times(1)).removeEvent(eventInDB3);
     }
 
     @Test
@@ -163,14 +170,21 @@ public class EventServiceTest extends AbstractTransactionalTestNGSpringContextTe
         Event eventInRange = new Event();
         eventInRange.setName("In range");
         eventInRange.setDate(LocalDate.of(2005,1,1));
-        eventService.addEvent(eventInRange);
 
-        List<Event> eventsInRange = eventService.findEventsInRange(
+        List<Event> expectedEvents = new ArrayList<Event>();
+        expectedEvents.add(eventInRange);
+
+        when(eventService.findEventsInRange(
+                LocalDate.of(2004, 12, 31),
+                LocalDate.of(2005,1,2)))
+                .thenReturn(expectedEvents);
+        assertThat(eventDao.findEventsInRange(
+                LocalDate.of(2004, 12, 31),
+                LocalDate.of(2005,1,2)))
+                .isEqualTo(expectedEvents);
+        verify(eventDao, times(1)).findEventsInRange(
                 LocalDate.of(2004, 12, 31),
                 LocalDate.of(2005,1,2));
-
-        assertThat(eventsInRange).hasSize(1).contains(eventInRange);
-
     }
 
     @Test
@@ -179,11 +193,12 @@ public class EventServiceTest extends AbstractTransactionalTestNGSpringContextTe
         eventInLocation.setName("Location");
         eventInLocation.setDate(LocalDate.now());
         eventInLocation.setLocation("Brno");
-        eventService.addEvent(eventInLocation);
 
-        List<Event> eventsByLocation = eventService.findEventsByLocation("Brno");
+        List<Event> expectedEvents = new ArrayList<Event>();
+        expectedEvents.add(eventInLocation);
 
-        assertThat(eventsByLocation).hasSize(1).contains(eventInLocation);
-
+        when(eventDao.findEventsByLocation("Brno")).thenReturn(expectedEvents);
+        assertThat(eventService.findEventsByLocation("Brno")).isEqualTo(expectedEvents);
+        verify(eventDao, times(1)).findEventsByLocation("Brno");
     }
 }

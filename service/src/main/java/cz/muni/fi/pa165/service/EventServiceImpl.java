@@ -24,7 +24,7 @@ public class EventServiceImpl implements EventService{
     @Override
     public void addEvent(Event event) {
         if (event == null){
-            throw new DAOException("Error when adding Event, event is null");
+            throw new IllegalArgumentException("Error when adding Event, event is null");
         }
         try{
             eventDao.addEvent(event);
@@ -63,6 +63,9 @@ public class EventServiceImpl implements EventService{
 
     @Override
     public Event findEvent(Long id) {
+        if (id == null){
+            throw new IllegalArgumentException("given id is null");
+        }
         try{
             return eventDao.findEvent(id);
         }
