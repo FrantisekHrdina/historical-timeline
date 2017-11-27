@@ -30,6 +30,7 @@ public class TimelineServiceImpl implements TimelineService {
 
     @Override
     public Long createTimeline(Timeline t) {
+        if (t == null) throw new IllegalArgumentException("Null is not acceptable!");
         try {
             timelineDao.addTimeline(t);
             return t.getId();
@@ -40,6 +41,7 @@ public class TimelineServiceImpl implements TimelineService {
 
     @Override
     public void addComment(Long timelineId, String comment) {
+        if (timelineId == null || comment == null) throw new IllegalArgumentException("Null is not acceptable!");
         try {
             Timeline timeline = timelineDao.findTimeline(timelineId);
 
@@ -55,6 +57,7 @@ public class TimelineServiceImpl implements TimelineService {
 
     @Override
     public void setSeminarGroupToTimeline(Long timelineId, Long seminarGroupId) {
+        if (timelineId == null || seminarGroupId == null) throw new IllegalArgumentException("Null is not acceptable!");
         try {
             Timeline timeline = timelineDao.findTimeline(timelineId);
             SeminarGroup seminarGroup = seminarGroupDao.findGroup(seminarGroupId);
@@ -68,12 +71,13 @@ public class TimelineServiceImpl implements TimelineService {
             timelineDao.editTimeline(timeline);
             seminarGroupDao.editGroup(seminarGroup);
         } catch (Exception e) {
-        throw new DAOException(e.getMessage());
-    }
+            throw new DAOException(e.getMessage());
+        }
     }
 
     @Override
     public void removeSeminarGroupFromTimeline(Long timelineId) {
+        if (timelineId == null) throw new IllegalArgumentException("Null is not acceptable!");
         try {
             Timeline timeline = timelineDao.findTimeline(timelineId);
             SeminarGroup seminarGroup = timeline.getSeminarGroup();
@@ -93,6 +97,7 @@ public class TimelineServiceImpl implements TimelineService {
 
     @Override
     public void addEventToTimeline(Long timelineId, Long eventId) {
+        if (timelineId == null || eventId == null) throw new IllegalArgumentException("Null is not acceptable!");
         try {
             Timeline timeline = timelineDao.findTimeline(timelineId);
             Event event = eventDao.findEvent(eventId);
@@ -114,6 +119,7 @@ public class TimelineServiceImpl implements TimelineService {
 
     @Override
     public void removeEventFromTimeline(Long timelineId, Long eventId) {
+        if (timelineId == null || eventId == null) throw new IllegalArgumentException("Null is not acceptable!");
         try {
             Timeline timeline = timelineDao.findTimeline(timelineId);
             Event event = eventDao.findEvent(eventId);
@@ -135,6 +141,7 @@ public class TimelineServiceImpl implements TimelineService {
 
     @Override
     public Timeline getTimelineById(Long timelineId) {
+        if (timelineId == null) throw new IllegalArgumentException("Null is not acceptable!");
         try {
             return timelineDao.findTimeline(timelineId);
         } catch (Exception e) {
@@ -153,6 +160,7 @@ public class TimelineServiceImpl implements TimelineService {
 
     @Override
     public void deleteTimeline(Long timelineId) {
+        if (timelineId == null) throw new IllegalArgumentException("Null is not acceptable!");
         try {
             Timeline timeline = timelineDao.findTimeline(timelineId);
             timelineDao.removeTimeline(timeline);
