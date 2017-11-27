@@ -14,47 +14,53 @@ public interface EventFacade {
      * Add event
      *
      * @param event Event to be added
-     * @return
+     * @return Added event
      */
     Long addEvent(EventDTO event);
 
     /**
+     * Remove id by id
      *
-     * @param id
+     * @param id Given id
      */
     void removeEvent(Long id);
 
     /**
+     * Edit event given in argument
      *
-     * @param event
+     * @param event Given event
      */
     void editEvent(EventDTO event);
 
     /**
+     * Find event by id
      *
-     * @param id
-     * @return
+     * @param id given id
+     * @return Founded Event
      */
     EventDTO findEvent (Long id);
 
     /**
+     *  Find all events
      *
-     * @return
+     * @return List of events
      */
     List<EventDTO> findAllEvents();
 
     /**
+     * Find all events in range from - to
      *
-     * @param from
-     * @param to
-     * @return
+     * @param from Date from
+     * @param to Date to
+     * @return List of events in range from - to
      */
     List<EventDTO> findEventsInRange(LocalDate from, LocalDate to);
 
     /**
+     * Find events by location
      *
-     * @param location
-     * @return
+     * @param location Given location
+     * @return List of events with given location
      */
     List<EventDTO> findEventsByLocation(String location);
 }
