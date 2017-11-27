@@ -9,11 +9,15 @@ import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author Tibor Bujdoš
  */
+@Service
+@Transactional
 public class UserFacadeImpl implements UserFacade{
     
     final static Logger log = LoggerFactory.getLogger(EventFacadeImpl.class);
@@ -25,15 +29,15 @@ public class UserFacadeImpl implements UserFacade{
     private BeanMappingService beanMappingService;
 
     @Override
-    public void addUser(UserDTO user) {
+    public Long addUser(UserDTO user) {
         User mappedUser = beanMappingService.mapTo(user, User.class);
         userService.addUser(mappedUser);
+        return mappedUser.getId();
     }
 
     @Override
-    public void removeUser(UserDTO user) {
-        User mappedUser = beanMappingService.mapTo(user, User.class);
-        userService.removeUser(mappedUser);
+    public void removeUser(Long id) {
+        userService.removeUser(userService.findUser(id));
     }
 
     @Override
