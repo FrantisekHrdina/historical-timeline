@@ -125,8 +125,8 @@ public class TimelineServiceTest {
         }).when(timelineDao).addTimeline(any(Timeline.class));
 
         when(timelineDao.findTimeline(1L)).thenReturn(testTimeline);
-        when(timelineDao.findTimeline(null)).thenThrow(new NullPointerException());
-        when(timelineDao.findTimeline(7L)).thenThrow(new NullPointerException());
+        when(timelineDao.findTimeline(null)).thenThrow(new DAOException(""));
+        when(timelineDao.findTimeline(7L)).thenThrow(new DAOException(""));
         when(timelineDao.findAllTimelines()).thenReturn(Arrays.asList(testTimeline, testTimeline2));
 
         when(timelineDao.findTimeline(3L)).thenReturn(testTimeline3);
@@ -134,6 +134,7 @@ public class TimelineServiceTest {
         when(eventDao.findEvent(1L)).thenReturn(testEvent);
         when(eventDao.findEvent(2L)).thenReturn(testEvent2);
 
+        when(timelineDao.findTimeline(2L)).thenThrow(new DAOException(""));
     }
 
     @Test
@@ -142,14 +143,14 @@ public class TimelineServiceTest {
         verify(timelineDao).addTimeline(testTimeline);
     }
 
-    @Test(expected = DataAccessException.class)
-    public void createTimelineTest_NoName() {
-        timelineService.createTimeline(testTimeline2);
+    @Test(expected = IllegalArgumentException.class)
+    public void createTimelineTest_null() {
+        timelineService.createTimeline(null);
     }
 
     @Test(expected = DataAccessException.class)
-    public void createTimelineTest_null() {
-        timelineService.createTimeline(null);
+    public void createTimelineTest_NoName() {
+        timelineService.createTimeline(testTimeline2);
     }
 
     @Test
@@ -164,17 +165,42 @@ public class TimelineServiceTest {
         verify(timelineDao).editTimeline(testTimeline);
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void addCommentTest_nullComment() {
+        timelineService.addComment(1L, null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void addCommentTest_nullTimeline() {
+        timelineService.addComment(null, "");
+    }
+
+    @Test(expected = DataAccessException.class)
+    public void addCommentTest_noTimeline() {
+        timelineService.addComment(2L, "");
+    }
+
     @Test
     public void setSeminarGroupToTimeline() {
         timelineService.setSeminarGroupToTimeline(1L, 1L);
-        verify(timelineDao).findTimeline(1L);
+        verify(timelineDao, times(2)).findTimeline(1L);
         verify(seminarGroupDao).findGroup(1L);
 
         Assert.assertEquals(testTimeline.getSeminarGroup(), testSeminarGroup);
         Assert.assertEquals(testSeminarGroup.getTimelines(), Arrays.asList(testTimeline3, testTimeline));
 
-        verify(timelineDao).editTimeline(testTimeline);
+        verify(timelineDao, times(2)).editTimeline(testTimeline);
         verify(seminarGroupDao).editGroup(testSeminarGroup);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void setSeminarGroupToTimeline_nullTimeline() {
+        timelineService.setSeminarGroupToTimeline(null, 1L);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void setSeminarGroupToTimeline_nullGrp() {
+        timelineService.setSeminarGroupToTimeline(1L, null);
     }
 
     @Test
@@ -202,6 +228,16 @@ public class TimelineServiceTest {
         verify(eventDao).editEvent(testEvent2);
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void addEventToTimeline_nullTimeline() {
+        timelineService.addEventToTimeline(null, 1L);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void addEventToTimeline_nullGrp() {
+        timelineService.addEventToTimeline(1L, null);
+    }
+
     @Test
     public void removeEventFromTimeline() {
         timelineService.removeEventFromTimeline(3L, 1L);
@@ -213,6 +249,16 @@ public class TimelineServiceTest {
 
         verify(timelineDao).editTimeline(testTimeline3);
         verify(eventDao).editEvent(testEvent);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void removeEventFromTimeline_nullTimeline() {
+        timelineService.removeEventFromTimeline(null, 1L);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void removeEventFromTimeline_nullGrp() {
+        timelineService.removeEventFromTimeline(1L, null);
     }
 
     @Test
@@ -227,7 +273,7 @@ public class TimelineServiceTest {
         verify(timelineDao).findTimeline(7L);
     }
 
-    @Test(expected = DAOException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void getTimelineByIdTest_null() {
         timelineService.getTimelineById(null);
         verify(timelineDao).findTimeline(null);
@@ -245,4 +291,8 @@ public class TimelineServiceTest {
         verify(timelineDao).removeTimeline(testTimeline);
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void deleteTimelineTest_null() {
+        timelineService.deleteTimeline(null);
+    }
 }

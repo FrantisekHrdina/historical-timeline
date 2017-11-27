@@ -2,9 +2,6 @@ package cz.muni.fi.pa165.configuration;
 
 import cz.muni.fi.pa165.PersistenceApplicationContext;
 import cz.muni.fi.pa165.dto.EventDTO;
-/*
-import cz.muni.fi.pa165.dto.TimelineDTO;
-*/
 import cz.muni.fi.pa165.dto.UserDTO;
 import cz.muni.fi.pa165.dto.SeminarGroupDTO;
 import cz.muni.fi.pa165.dto.TimelineDTO;
@@ -55,6 +52,7 @@ public class ServiceConfiguration {
     public class DozerCustomConfig extends BeanMappingBuilder {
         @Override
         protected void configure() {
+            /* Mapping of LocalDate attributes must be specified manually */
             mapping(Event.class, EventDTO.class).fields("date", "date",
                     FieldsMappingOptions.copyByReference());
             mapping(Timeline.class, TimelineDTO.class);
