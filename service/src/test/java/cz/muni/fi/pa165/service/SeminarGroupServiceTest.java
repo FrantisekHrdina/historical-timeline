@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Matchers.any;
 
 import static org.assertj.core.api.Assertions.*;
@@ -48,27 +49,24 @@ public class SeminarGroupServiceTest extends AbstractTestNGSpringContextTests {
 
 	@BeforeMethod
 	public void initMocks() {
-		MockitoAnnotations.initMocks(this);	
+		MockitoAnnotations.initMocks(this);
 	}
-	
+
 	@BeforeMethod
-	public void createSeminarGroups() {		
+	public void createSeminarGroups() {
 		basicGroup = new SeminarGroup();
 		basicGroup.setName("Basic");
 
 		advancedGroup = new SeminarGroup();
 		advancedGroup.setName("Advanced");
 	}
-	
+
 	@Test
 	public void saveGroup() {
-		List<SeminarGroup> allSeminarGroups = new ArrayList<>();
-		allSeminarGroups.add(basicGroup);
-		when(seminarGroupDao.findAllGroups()).thenReturn(allSeminarGroups);
 		seminarGroupService.saveGroup(basicGroup);
-		assertThat(seminarGroupService.findAllGroups()).containsOnly(basicGroup);
+		verify(seminarGroupDao).addGroup(basicGroup);
 	}
-	
+
 	@Test
 	public void saveNullGroup() {
 		assertThatThrownBy(() -> seminarGroupService.saveGroup(null))
@@ -85,16 +83,8 @@ public class SeminarGroupServiceTest extends AbstractTestNGSpringContextTests {
 	@Test
 	public void removeGroup() {
 		seminarGroupService.saveGroup(basicGroup);
-		seminarGroupService.saveGroup(advancedGroup);
-
 		seminarGroupService.removeGroup(basicGroup);
-		
-		List<SeminarGroup> remainingGroups = new ArrayList<>();
-		remainingGroups.add(advancedGroup);
-		when(seminarGroupDao.findAllGroups()).thenReturn(remainingGroups);
-		
-		assertThat(seminarGroupService.findAllGroups())
-				.containsOnly(advancedGroup);
+		verify(seminarGroupDao).removeGroup(basicGroup);
 	}
 
 	@Test
@@ -105,14 +95,16 @@ public class SeminarGroupServiceTest extends AbstractTestNGSpringContextTests {
 
 	@Test
 	public void removeFails() {
-		doThrow(new RuntimeException()).when(seminarGroupDao).removeGroup(any());
+		doThrow(new RuntimeException()).when(seminarGroupDao)
+				.removeGroup(any());
 		assertThatThrownBy(() -> seminarGroupService.removeGroup(basicGroup))
 				.isInstanceOf(DAOException.class);
 	}
 
 	@Test
 	public void findGroup() {
-		when(seminarGroupDao.findGroup(basicGroup.getId())).thenReturn(basicGroup);
+		when(seminarGroupDao.findGroup(basicGroup.getId()))
+				.thenReturn(basicGroup);
 		assertThat(seminarGroupService.findGroup(basicGroup.getId()))
 				.isEqualTo(basicGroup);
 	}
@@ -121,7 +113,7 @@ public class SeminarGroupServiceTest extends AbstractTestNGSpringContextTests {
 	public void findGroupByNullId() {
 		assertThat(seminarGroupService.findGroup(null)).isNull();
 	}
-	
+
 	@Test
 	public void findFails() {
 		doThrow(new RuntimeException()).when(seminarGroupDao).findGroup(any());
@@ -131,7 +123,8 @@ public class SeminarGroupServiceTest extends AbstractTestNGSpringContextTests {
 
 	@Test
 	public void findAllGroups() {
-		when(seminarGroupDao.findAllGroups()).thenReturn(new ArrayList<SeminarGroup>());
+		when(seminarGroupDao.findAllGroups())
+				.thenReturn(new ArrayList<SeminarGroup>());
 		assertThat(seminarGroupService.findAllGroups()).isEmpty();
 
 		List<SeminarGroup> allGroups = new ArrayList<>();
@@ -142,7 +135,7 @@ public class SeminarGroupServiceTest extends AbstractTestNGSpringContextTests {
 				.usingFieldByFieldElementComparator()
 				.containsOnly(basicGroup, advancedGroup);
 	}
-	
+
 	@Test
 	public void findAllFails() {
 		doThrow(new RuntimeException()).when(seminarGroupDao).findAllGroups();
