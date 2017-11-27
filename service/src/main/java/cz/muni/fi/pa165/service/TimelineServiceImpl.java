@@ -7,24 +7,13 @@ import cz.muni.fi.pa165.entities.Event;
 import cz.muni.fi.pa165.entities.SeminarGroup;
 import cz.muni.fi.pa165.entities.Timeline;
 import cz.muni.fi.pa165.exception.DAOException;
-import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.AfterThrowing;
-import org.aspectj.lang.annotation.Around;
-import org.aspectj.lang.annotation.Aspect;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Configurable;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-import javax.inject.Named;
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
  * @author Martin Kocisky, 421131
  */
 @Service

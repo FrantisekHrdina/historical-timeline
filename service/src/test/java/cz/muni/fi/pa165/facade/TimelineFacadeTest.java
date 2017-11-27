@@ -5,15 +5,18 @@ import cz.muni.fi.pa165.dto.TimelineDTO;
 import cz.muni.fi.pa165.entities.Timeline;
 import cz.muni.fi.pa165.mapping.BeanMappingService;
 import cz.muni.fi.pa165.service.TimelineService;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestExecutionListeners;
+import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
+import org.springframework.transaction.annotation.Transactional;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
 import java.util.Arrays;
 import java.util.List;
@@ -24,9 +27,8 @@ import static org.mockito.Mockito.*;
 /**
  * @author Martin Kocisky, 421131
  */
-@RunWith(MockitoJUnitRunner.class)
 @ContextConfiguration(classes = ServiceConfiguration.class)
-public class TimelineFacadeTest {
+public class TimelineFacadeTest extends AbstractTestNGSpringContextTests {
 
     @Mock
     private TimelineService timelineService;
@@ -38,7 +40,12 @@ public class TimelineFacadeTest {
     private TimelineDTO testTimelineDTO;
     private Timeline testTimeline;
 
-    @Before
+    @BeforeMethod
+    public void initMocks() {
+        MockitoAnnotations.initMocks(this);
+    }
+
+    @BeforeMethod
     public void setUp() {
         prepareEntities();
         prepareMockBahaviour();
@@ -72,13 +79,15 @@ public class TimelineFacadeTest {
     }
 
     @Test
-    public void addSeminarGroupTest() {
-        timelineFacade.addSeminarGroup(1L, 1L);
+    public void setSeminarGroupTest() {
+        timelineFacade.setSeminarGroup(1L, 1L);
+        verify(timelineService).setSeminarGroupToTimeline(1L, 1L);
     }
 
     @Test
     public void removeSeminarGroupTest() {
         timelineFacade.removeSeminarGroup(1L);
+        verify(timelineService).removeSeminarGroupFromTimeline(1L);
     }
 
     @Test
@@ -93,12 +102,10 @@ public class TimelineFacadeTest {
         verify(timelineService).removeEventFromTimeline(1L, 1L);
     }
 
-    /* // TODO: BeanMapper is not being injected
     @Test
     public void getTimelineByIdTest() {
         TimelineDTO timelineDTO = timelineFacade.getTimelineById(1L);
         verify(timelineService).getTimelineById(1L);
-
         assertThat(timelineDTO.getId()).isEqualTo(1L);
         assertThat(timelineDTO.getName()).contains("Bronze Age");
     }
@@ -107,9 +114,9 @@ public class TimelineFacadeTest {
     public void getAllTimelinesTest() {
         List<TimelineDTO> timelineDTOList = timelineFacade.getAllTimelines();
         verify(timelineService).getAllTimelines();
-        Assert.assertEquals(timelineDTOList.size(), 1);
+        assertThat(timelineDTOList.size()).isEqualTo(1);
     }
-    */
+
 
     @Test
     public void deleteTimelineTest() {

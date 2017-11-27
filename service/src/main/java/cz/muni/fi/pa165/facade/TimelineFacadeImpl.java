@@ -42,7 +42,7 @@ public class TimelineFacadeImpl implements TimelineFacade {
     }
 
     @Override
-    public void addSeminarGroup(Long timelineId, Long seminarGroupId) {
+    public void setSeminarGroup(Long timelineId, Long seminarGroupId) {
         timelineService.setSeminarGroupToTimeline(timelineId, seminarGroupId);
     }
 
