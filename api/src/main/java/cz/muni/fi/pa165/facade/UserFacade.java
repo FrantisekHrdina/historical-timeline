@@ -13,14 +13,14 @@ public interface UserFacade {
      * 
      * @param user 
      */
-    void addUser(UserDTO user);
+    Long addUser(UserDTO user);
     
     /**
      * Remove user from database
      * 
      * @param user 
      */
-    void removeUser(UserDTO user);
+    void removeUser(Long id);
     
     /**
      * Edit user in database

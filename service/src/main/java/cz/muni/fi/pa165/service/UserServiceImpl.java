@@ -4,6 +4,7 @@ import cz.muni.fi.pa165.dao.UserDao;
 import cz.muni.fi.pa165.entities.User;
 import cz.muni.fi.pa165.exception.DAOException;
 import java.util.List;
+import javax.inject.Inject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +15,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserServiceImpl implements UserService {
     
-    @Autowired
+    @Inject
     private UserDao userDao;
 
     @Override
