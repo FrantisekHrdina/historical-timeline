@@ -31,7 +31,6 @@ import static org.mockito.Mockito.*;
 /**
  * @author František Hrdina
  */
-//@RunWith(MockitoJUnitRunner.class)
 @ContextConfiguration(classes = ServiceConfiguration.class)
 public class EventServiceTest extends AbstractTransactionalTestNGSpringContextTests{
 
@@ -202,8 +201,4 @@ public class EventServiceTest extends AbstractTransactionalTestNGSpringContextTe
         assertThat(eventService.findEventsByLocation("Brno")).isEqualTo(expectedEvents);
         verify(eventDao, times(1)).findEventsByLocation("Brno");
     }
-
-
-
-
 }
