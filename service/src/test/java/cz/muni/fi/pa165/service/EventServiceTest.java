@@ -27,20 +27,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * @author František Hrdina
  */
-//@RunWith(MockitoJUnitRunner.class)
 @ContextConfiguration(classes = ServiceConfiguration.class)
 public class EventServiceTest extends AbstractTransactionalTestNGSpringContextTests{
 
     @Mock
     private EventDao eventDao;
 
-   /* @Mock*/
-   @Autowired
+    @Autowired
     private EventService eventService;
-
-/*    @Autowired
-    @InjectMocks
-    private EventService eventService = new EventServiceImpl();*/
 
     @BeforeClass
     public void setup() throws ServiceException {
@@ -192,8 +186,4 @@ public class EventServiceTest extends AbstractTransactionalTestNGSpringContextTe
         assertThat(eventsByLocation).hasSize(1).contains(eventInLocation);
 
     }
-
-
-
-
 }
