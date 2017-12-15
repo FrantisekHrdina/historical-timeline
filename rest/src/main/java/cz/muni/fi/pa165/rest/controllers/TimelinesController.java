@@ -125,7 +125,18 @@ public class TimelinesController {
         }
     }
 
-//    public List<TimelineDTO> getAllTimelines();
+    @RequestMapping(
+            value = "/all",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<TimelineDTO> getAllTimelines() {
+        try {
+            return timelineFacade.getAllTimelines();
+        } catch (Exception e) {
+            logger.error("getAllTimelines", e);
+            throw new ResourceNotFoundException();
+        }
+    }
 
     @RequestMapping(
             value = "/{id}",
