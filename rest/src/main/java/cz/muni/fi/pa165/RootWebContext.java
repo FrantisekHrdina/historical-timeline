@@ -22,7 +22,11 @@ import java.util.Locale;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
 
-
+/**
+ *
+ * @author František Hrdina
+ *
+ */
 @EnableWebMvc
 @Configuration
 @Import(ServiceConfiguration.class)
