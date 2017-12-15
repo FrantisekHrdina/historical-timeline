@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import cz.muni.fi.pa165.dto.SeminarGroupCreateDTO;
 import cz.muni.fi.pa165.dto.SeminarGroupDTO;
 import cz.muni.fi.pa165.entities.SeminarGroup;
 import cz.muni.fi.pa165.mapping.BeanMappingService;
@@ -25,7 +26,7 @@ public class SeminarGroupFacadeImpl implements SeminarGroupFacade {
 	private BeanMappingService beanMappingService;
 
 	@Override
-	public Long saveGroup(SeminarGroupDTO g) {
+	public Long saveGroup(SeminarGroupCreateDTO g) {
 		SeminarGroup seminarGroup = beanMappingService.mapTo(g,
 				SeminarGroup.class);
 		seminarGroupService.saveGroup(seminarGroup);
