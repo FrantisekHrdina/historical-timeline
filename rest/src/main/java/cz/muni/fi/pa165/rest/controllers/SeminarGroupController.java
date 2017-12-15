@@ -16,7 +16,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import cz.muni.fi.pa165.rest.ApiUris;
+import cz.muni.fi.pa165.rest.exceptions.ResourceNotDeletableException;
+import cz.muni.fi.pa165.rest.exceptions.ResourceNotFoundException;
+import cz.muni.fi.pa165.dto.SeminarGroupCreateDTO;
 import cz.muni.fi.pa165.dto.SeminarGroupDTO;
+import cz.muni.fi.pa165.exception.DAOException;
 import cz.muni.fi.pa165.facade.SeminarGroupFacade;
 
 /**
@@ -37,36 +41,58 @@ public class SeminarGroupController {
 	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public final List<SeminarGroupDTO> getSeminarGroups() {
 		logger.debug("rest getSeminarGroups()");
-
-		return seminarGroupFacade.findAllGroups();
+		try {
+			return seminarGroupFacade.findAllGroups();
+		} catch (DAOException ex) {
+			logger.debug("rest findAllGroups() error");
+		}
+		return null;
 	}
 
-	//TODO: exception
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public final SeminarGroupDTO getSeminarGroup(@PathVariable("id") long id) throws Exception {
+	public final SeminarGroupDTO getSeminarGroup(@PathVariable("id") long id) {
 		logger.debug("rest getSeminarGroup({})", id);
-
-		SeminarGroupDTO seminarGroup = seminarGroupFacade.findGroup(id);
-		if (seminarGroup == null)
-			throw new Exception(
-					"SeminarGroup " + id + " not found.");
-		return seminarGroup;
+		try {
+			SeminarGroupDTO seminarGroup = seminarGroupFacade.findGroup(id);
+			if (seminarGroup == null)
+				throw new ResourceNotFoundException(
+						"SeminarGroup " + id + " not found.");
+			return seminarGroup;
+		} catch (DAOException ex) {
+			logger.debug("rest findGroup({}) error", id, ex);
+			throw new ResourceNotFoundException("SeminarGroup " + id + " not found.");
+		}
+		
 	}
-	
-	//TODO: validation
-    @RequestMapping(value = "/create", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public final SeminarGroupDTO createSeminarGroup(@RequestBody @Valid SeminarGroupDTO seminarGroupDTO, BindingResult bindingResult) throws Exception {
-    	logger.debug("rest createSeminarGroup()");
-    	
-    	Long id = seminarGroupFacade.saveGroup(seminarGroupDTO);
-    	return seminarGroupFacade.findGroup(id);
-    }
-    
-    //TODO: exception
-    @RequestMapping(value = "/{id}/remove", method = RequestMethod.GET)
-    public final void removeSeminarGroup(@PathVariable("id") long id) {
-    	logger.debug("rest removeSeminarGroup({})", id);
-    	seminarGroupFacade.removeGroup(id);
-    }
+
+	@RequestMapping(value = "/create", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public final SeminarGroupDTO createSeminarGroup(
+			@RequestBody @Valid SeminarGroupCreateDTO seminarGroupCreateDTO,
+			BindingResult bindingResult) {
+		logger.debug("rest createSeminarGroup()");
+		Long id = null;
+		try {
+			id = seminarGroupFacade.saveGroup(seminarGroupCreateDTO);
+		} catch (IllegalArgumentException | DAOException ex) {
+			logger.debug("createSeminarGroup({}) error", seminarGroupCreateDTO, ex);
+		} 
+		try {
+			return seminarGroupFacade.findGroup(id);
+		} catch (DAOException ex) {
+			logger.debug("rest error retrieving SeminarGroup after save.");
+		}
+		return null;
+	}
+
+	@RequestMapping(value = "/{id}/remove", method = RequestMethod.DELETE)
+	public final void removeSeminarGroup(@PathVariable("id") long id) {
+		logger.debug("rest removeSeminarGroup({})", id);
+		try {
+			seminarGroupFacade.removeGroup(id);
+		} catch (IllegalArgumentException | DAOException ex) {
+			logger.debug("removeSeminarGroup({}) error", id, ex);
+			throw new ResourceNotDeletableException("SeminarGroup " + id + " cannot be deleted.");
+		}
+	}
 
 }
