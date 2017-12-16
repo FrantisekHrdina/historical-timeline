@@ -35,7 +35,7 @@ public class UserController {
 
     @Inject
     private UserFacade userFacade;
-    
+    /*
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public final List<UserDTO> getStudents() {
 	logger.debug("rest getStudents()");
@@ -57,7 +57,7 @@ public class UserController {
 	}
             return null;
     }
-    
+    */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public final UserDTO getUser(@PathVariable("id") long id) throws Exception {
         logger.debug("rest getUser({})", id);
