@@ -12,6 +12,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import cz.muni.fi.pa165.configuration.ServiceConfiguration;
+import cz.muni.fi.pa165.dto.SeminarGroupCreateDTO;
 import cz.muni.fi.pa165.dto.SeminarGroupDTO;
 
 /**
@@ -25,28 +26,36 @@ public class SeminarGroupFacadeTest extends AbstractTestNGSpringContextTests {
 	@Autowired
 	private SeminarGroupFacade seminarGroupFacade;
 	
+	private SeminarGroupCreateDTO basicGroupCreate;
+	private SeminarGroupCreateDTO advancedGroupCreate;
 	private SeminarGroupDTO basicGroup;
 	private SeminarGroupDTO advancedGroup;
 	
 	@BeforeMethod
 	public void createSeminarGroups() {		
+		basicGroupCreate = new SeminarGroupCreateDTO();
+		basicGroupCreate.setName("Basic");
+
+		advancedGroupCreate = new SeminarGroupCreateDTO();
+		advancedGroupCreate.setName("Advanced");
+		
 		basicGroup = new SeminarGroupDTO();
 		basicGroup.setName("Basic");
-
+		
 		advancedGroup = new SeminarGroupDTO();
 		advancedGroup.setName("Advanced");
 	}
 	
 	@Test
 	public void saveGroup() {
-		Long id = seminarGroupFacade.saveGroup(basicGroup);
+		Long id = seminarGroupFacade.saveGroup(basicGroupCreate);
 		assertThat(seminarGroupFacade.findGroup(id)).isEqualTo(basicGroup);
 	}
 	
 	@Test
 	public void removeGroup() {
-		Long id = seminarGroupFacade.saveGroup(basicGroup);
-		seminarGroupFacade.saveGroup(advancedGroup);
+		Long id = seminarGroupFacade.saveGroup(basicGroupCreate);
+		seminarGroupFacade.saveGroup(advancedGroupCreate);
 		assertThat(seminarGroupFacade.findAllGroups()).containsOnly(basicGroup, advancedGroup);
 		seminarGroupFacade.removeGroup(id);
 		assertThat(seminarGroupFacade.findAllGroups()).containsOnly(advancedGroup);
@@ -54,14 +63,14 @@ public class SeminarGroupFacadeTest extends AbstractTestNGSpringContextTests {
 	
 	@Test
 	public void findGroup() {
-		Long id = seminarGroupFacade.saveGroup(basicGroup);
+		Long id = seminarGroupFacade.saveGroup(basicGroupCreate);
 		assertThat(seminarGroupFacade.findGroup(id)).isEqualTo(basicGroup);
 	}
 	
 	@Test
 	public void findAllGroups() {
-		seminarGroupFacade.saveGroup(basicGroup);
-		seminarGroupFacade.saveGroup(advancedGroup);
+		seminarGroupFacade.saveGroup(basicGroupCreate);
+		seminarGroupFacade.saveGroup(advancedGroupCreate);
 		assertThat(seminarGroupFacade.findAllGroups()).containsOnly(basicGroup, advancedGroup);
 	}
 }

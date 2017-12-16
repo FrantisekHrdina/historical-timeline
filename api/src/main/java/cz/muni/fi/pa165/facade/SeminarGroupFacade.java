@@ -2,6 +2,7 @@ package cz.muni.fi.pa165.facade;
 
 import java.util.List;
 
+import cz.muni.fi.pa165.dto.SeminarGroupCreateDTO;
 import cz.muni.fi.pa165.dto.SeminarGroupDTO;
 
 /**
@@ -11,9 +12,9 @@ public interface SeminarGroupFacade {
 	/**
 	 * Add group g to the database or update g if it already exists.
 	 * 
-	 * @param g
+	 * @param seminarGroupCreateDTO
 	 */
-	public Long saveGroup(SeminarGroupDTO g);
+	public Long saveGroup(SeminarGroupCreateDTO seminarGroupCreateDTO);
 
 	/**
 	 * Delete group g from the database.
