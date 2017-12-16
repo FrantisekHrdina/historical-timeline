@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import cz.muni.fi.pa165.rest.ApiUris;
 import cz.muni.fi.pa165.rest.exceptions.ResourceNotDeletableException;
 import cz.muni.fi.pa165.rest.exceptions.ResourceNotFoundException;
+import cz.muni.fi.pa165.rest.exceptions.InvalidRequestException;
 import cz.muni.fi.pa165.dto.SeminarGroupCreateDTO;
 import cz.muni.fi.pa165.dto.SeminarGroupDTO;
 import cz.muni.fi.pa165.exception.DAOException;
@@ -60,23 +61,28 @@ public class SeminarGroupController {
 			return seminarGroup;
 		} catch (DAOException ex) {
 			logger.debug("rest findGroup({}) error", id, ex);
-			throw new ResourceNotFoundException("SeminarGroup " + id + " not found.");
+			throw new ResourceNotFoundException(
+					"SeminarGroup " + id + " not found.");
 		}
-		
+
 	}
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public final SeminarGroupDTO createSeminarGroup(
-			@RequestBody @Valid SeminarGroupCreateDTO seminarGroupCreateDTO) {
+			@RequestBody @Valid SeminarGroupCreateDTO seminarGroupCreateDTO,
+			BindingResult bindingResult) {
 		logger.debug("rest createSeminarGroup()");
-		logger.debug(seminarGroupCreateDTO.toString());
 		Long id = null;
+		if (bindingResult.hasErrors()) {
+			logger.error("failed validation {}", bindingResult.toString());
+            throw new InvalidRequestException("Failed validation.");
+		}
 		try {
-			logger.debug("calling facade saveGroup()");
 			id = seminarGroupFacade.saveGroup(seminarGroupCreateDTO);
 		} catch (IllegalArgumentException | DAOException ex) {
-			logger.debug("createSeminarGroup({}) error", seminarGroupCreateDTO, ex);
-		} 
+			logger.debug("createSeminarGroup({}) error", seminarGroupCreateDTO,
+					ex);
+		}
 		try {
 			return seminarGroupFacade.findGroup(id);
 		} catch (DAOException ex) {
@@ -92,7 +98,8 @@ public class SeminarGroupController {
 			seminarGroupFacade.removeGroup(id);
 		} catch (IllegalArgumentException | DAOException ex) {
 			logger.debug("removeSeminarGroup({}) error", id, ex);
-			throw new ResourceNotDeletableException("SeminarGroup " + id + " cannot be deleted.");
+			throw new ResourceNotDeletableException(
+					"SeminarGroup " + id + " cannot be deleted.");
 		}
 	}
 
