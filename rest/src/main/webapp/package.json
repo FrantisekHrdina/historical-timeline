@@ -1,0 +1,9 @@
+{
+  "name": "historical-timeline",
+  "version": "1.0.0",
+  "description": "PA165 project",
+  "dependencies": {
+    "angular-route": "^1.6.7",
+    "jquery": "^3.2.1"
+  }
+}
