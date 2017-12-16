@@ -1,9 +1,14 @@
 package cz.muni.fi.pa165.facade;
 
+import cz.muni.fi.pa165.dto.EventDTO;
 import cz.muni.fi.pa165.dto.TimelineDTO;
+import cz.muni.fi.pa165.entities.Event;
+import cz.muni.fi.pa165.entities.SeminarGroup;
 import cz.muni.fi.pa165.entities.Timeline;
 import cz.muni.fi.pa165.mapping.BeanMappingService;
 import cz.muni.fi.pa165.mapping.BeanMappingServiceImpl;
+import cz.muni.fi.pa165.service.EventService;
+import cz.muni.fi.pa165.service.SeminarGroupService;
 import cz.muni.fi.pa165.service.TimelineService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
 import java.sql.Time;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,6 +29,12 @@ public class TimelineFacadeImpl implements TimelineFacade {
     @Inject
     private TimelineService timelineService;
 
+    @Inject
+    private SeminarGroupService seminarGroupService;
+
+    @Inject
+    private EventService eventService;
+
     @Autowired
     private BeanMappingService beanMappingService;
 
@@ -31,6 +43,16 @@ public class TimelineFacadeImpl implements TimelineFacade {
         Timeline timeline = new Timeline();
         timeline.setName(timelineDTO.getName());
         timeline.setComments(timelineDTO.getComments());
+
+        List<Event> events = new ArrayList<>();
+        List<EventDTO> eventDTOs = timelineDTO.getEvents();
+        for (EventDTO e : eventDTOs) {
+            events.add(eventService.findEvent(e.getId()));
+        }
+        timeline.setEvents(events);
+
+        SeminarGroup seminarGroup = seminarGroupService.findGroup(timelineDTO.getSeminarGroup().getId());
+        timeline.setSeminarGroup(seminarGroup);
 
         timelineService.createTimeline(timeline);
         return timeline.getId();

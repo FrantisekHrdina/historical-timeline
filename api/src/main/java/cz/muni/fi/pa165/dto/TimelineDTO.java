@@ -13,6 +13,10 @@ public class TimelineDTO {
     private String name;
     private List<String> comments = new ArrayList<String>();
 
+    private List<EventDTO> events = new ArrayList<>();
+
+    private SeminarGroupDTO seminarGroup;
+
     public Long getId() {
         return id;
     }
@@ -52,5 +56,21 @@ public class TimelineDTO {
             return 31 * name.hashCode();
         }
         return 0;
+    }
+
+    public List<EventDTO> getEvents() {
+        return events;
+    }
+
+    public void setEvents(List<EventDTO> events) {
+        this.events = events;
+    }
+
+    public SeminarGroupDTO getSeminarGroup() {
+        return seminarGroup;
+    }
+
+    public void setSeminarGroup(SeminarGroupDTO seminarGroup) {
+        this.seminarGroup = seminarGroup;
     }
 }
