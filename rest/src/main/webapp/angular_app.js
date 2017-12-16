@@ -135,9 +135,21 @@ controllers.controller('TimelinesCtrl', function ($scope, $http) {
 controllers.controller('NewTimelineCtrl', function ($scope, $http, $rootScope, $location) {
     console.log('New Timeline form');
     //set object bound to form fields
+
+    $http.get('events').then(function (response) {
+        $scope.events = response.data;
+    });
+
+    $http.get('groups').then(function (response) {
+        $scope.groups = response.data;
+    });
+
     $scope.timeline = {
-        'name': ''
+        'name': '',
+        'events': {},
+        'group': ''
     };
+
     $scope.create = function (timeline) {
         $http({
             method: 'POST',
