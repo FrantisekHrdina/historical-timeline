@@ -67,11 +67,12 @@ public class SeminarGroupController {
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public final SeminarGroupDTO createSeminarGroup(
-			@RequestBody @Valid SeminarGroupCreateDTO seminarGroupCreateDTO,
-			BindingResult bindingResult) {
+			@RequestBody @Valid SeminarGroupCreateDTO seminarGroupCreateDTO) {
 		logger.debug("rest createSeminarGroup()");
+		logger.debug(seminarGroupCreateDTO.toString());
 		Long id = null;
 		try {
+			logger.debug("calling facade saveGroup()");
 			id = seminarGroupFacade.saveGroup(seminarGroupCreateDTO);
 		} catch (IllegalArgumentException | DAOException ex) {
 			logger.debug("createSeminarGroup({}) error", seminarGroupCreateDTO, ex);

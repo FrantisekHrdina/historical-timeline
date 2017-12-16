@@ -21,7 +21,8 @@ controllers.controller('NewGroupCtrl', function ($scope, $http) {
 	console.log('New group form');
 	//set object bound to form fields
 	$scope.group = {
-		'name': ''
+		'name': '',
+		'timelines': []
 	};
 	$scope.create = function (group) {
 		$http({

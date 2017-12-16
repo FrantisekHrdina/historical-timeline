@@ -42,6 +42,12 @@ public class SeminarGroupCreateDTO {
 	}
 
 	@Override
+	public String toString() {
+		return "SeminarGroupCreateDTO [name=" + name + ", timelines="
+				+ timelines + "]";
+	}
+
+	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
