@@ -1,0 +1,20 @@
+<h1>Seminar groups</h1>
+
+<a href="#!/new_group" class="btn btn-primary">
+	<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+	New seminar group
+</a>
+<table class="table">
+	<thead>
+		<tr>
+			<th>Id</th>
+			<th>Name</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="group in groups track by $index">
+			<td>{{group.id}}</td>
+			<td>{{group.name}}</td>
+		</tr>
+	</tbody>
+</table>
