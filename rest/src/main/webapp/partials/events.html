@@ -1,9 +1,8 @@
 <h1>Events</h1>
 
-<a href="#!/new_event" class="btn btn-primary">
-    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-    New Event
-</a>
+<button ng-click="createEvent()" class="btn btn-primary">
+    <span class="glyphicon glyphicon-plus"></span> New Event
+</button>
 <table class="table">
     <thead>
     <tr>
@@ -12,6 +11,7 @@
         <th>Location</th>
         <th>Date</th>
         <th>Description</th>
+        <th>Update</th>
         <th>Delete</th>
     </tr>
     </thead>
@@ -23,7 +23,12 @@
         <td>{{event.date}}</td>
         <td>{{event.description}}</td>
         <td>
-            <button ng-click="deleteEvent(event)" type="submit" class="btn btn-primary">Delete</button>
+            <button ng-click="updateEvent(event)" type="submit"
+                    class="btn btn-primary">Update</button>
+        </td>
+        <td>
+            <button ng-click="deleteEvent(event)" type="submit"
+                    class="btn btn-primary">Delete</button>
         </td>
     </tr>
     </tbody>
