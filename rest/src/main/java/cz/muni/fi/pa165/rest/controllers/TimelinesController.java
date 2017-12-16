@@ -124,7 +124,6 @@ public class TimelinesController {
     }
 
     @RequestMapping(
-            value = "/all",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public List<TimelineDTO> getAllTimelines() {

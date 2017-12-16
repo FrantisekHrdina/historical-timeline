@@ -19,6 +19,7 @@
 	
 	<a href="#!/groups">Seminar groups</a>
 	<a href="#!/events">Events</a>
+	<a href="#!/timelines">Timelines</a>
 	
 	<div class="container">
 		<div ng-app="historicalTimelineApp">
