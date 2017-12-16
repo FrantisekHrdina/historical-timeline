@@ -1,9 +1,9 @@
 <h1>Seminar groups</h1>
 
-<a href="#!/new_group" class="btn btn-primary"> <span
-	class="glyphicon glyphicon-plus" aria-hidden="true"></span> New seminar
+<button ng-click="createGroup()" class="btn btn-primary"> <span
+	class="glyphicon glyphicon-plus"></span> New seminar
 	group
-</a>
+</button>
 <table class="table">
 	<thead>
 		<tr>
@@ -16,6 +16,8 @@
 			<td>{{group.id}}</td>
 			<td>{{group.name}}</td>
 			<td>
+				<button ng-click="updateGroup(group)" type="submit"
+					class="btn btn-primary">Update</button>
 				<button ng-click="deleteGroup(group)" type="submit"
 					class="btn btn-primary">Delete</button>
 			</td>

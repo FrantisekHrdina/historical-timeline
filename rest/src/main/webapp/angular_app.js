@@ -17,11 +17,24 @@ function loadGroups($http, $scope) {
 	});
 }
 
-controllers.controller('GroupsCtrl', function ($scope, $http, $rootScope) {
+controllers.controller('GroupsCtrl', function ($scope, $http, $rootScope, $location) {
 	loadGroups($http, $scope);
 	
+	$scope.createGroup = function (group) {
+		console.log('create new group');
+		$scope.group = null;
+		$location.path('new_group');
+	}
+	
+	$scope.updateGroup = function (group) {
+		console.log('update group with id=' + group.id + ' (' + group.name + ')');
+		console.log(group);
+		$rootScope.group = group;
+		$location.path('new_group');
+	}
+	
 	$scope.deleteGroup = function (group) {
-		console.log('deleting group with id=' + group.id + ' (' + group.name + ')');
+		console.log('delete group with id=' + group.id + ' (' + group.name + ')');
 		$http({
 			method: 'DELETE',
 			url: 'groups/' + group.id
@@ -38,12 +51,7 @@ controllers.controller('GroupsCtrl', function ($scope, $http, $rootScope) {
 });
 
 controllers.controller('NewGroupCtrl', function ($scope, $http, $rootScope, $location) {
-	console.log('new group form');
-	//set object bound to form fields
-	$scope.group = {
-		'name': '',
-		'timelines': []
-	};
+	console.log('group form');
 	$scope.create = function (group) {
 		$http({
 			method: 'POST',
