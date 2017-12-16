@@ -19,11 +19,11 @@ public class Timeline {
     @Column(nullable=false, unique=true)
     private String name;
 
-    @ManyToMany
-    private List<Event> events = new ArrayList<Event>();
+    @OneToMany
+    private Set<Event> events = new HashSet<Event>();
 
     @ElementCollection(fetch = FetchType.EAGER)
-    private List<String> comments = new ArrayList<String>();
+    private Set<String> comments = new LinkedHashSet<>();
 
     @OneToOne()
     private SeminarGroup seminarGroup;
@@ -32,7 +32,7 @@ public class Timeline {
 
     }
 
-    public Timeline(String name, List<Event> events, List<String> comments, SeminarGroup seminarGroup) {
+    public Timeline(String name, Set<Event> events, Set<String> comments, SeminarGroup seminarGroup) {
         this.name = name;
         this.events = events;
         this.comments = comments;
@@ -55,19 +55,19 @@ public class Timeline {
         this.name = name;
     }
 
-    public List<Event> getEvents() {
+    public Set<Event> getEvents() {
         return events;
     }
 
-    public void setEvents(List<Event> events) {
+    public void setEvents(Set<Event> events) {
         this.events = events;
     }
 
-    public List<String> getComments() {
+    public Set<String> getComments() {
         return comments;
     }
 
-    public void setComments(List<String> comments) {
+    public void setComments(Set<String> comments) {
         this.comments = comments;
     }
 

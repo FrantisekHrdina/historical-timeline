@@ -1,5 +1,6 @@
 package cz.muni.fi.pa165.dto;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
@@ -21,7 +22,9 @@ public class EventDTO {
     private String location;
     private String description;
     private byte[] image;
-    private List<TimelineDTO> timelines = new ArrayList<TimelineDTO>();
+//    private List<TimelineDTO> timelines = new ArrayList<TimelineDTO>();
+    @JsonBackReference
+    private TimelineDTO timeline;
 
     public EventDTO() {
     }
@@ -83,13 +86,13 @@ public class EventDTO {
         this.image = image;
     }
 
-    public List<TimelineDTO> getTimelines() {
-        return Collections.unmodifiableList(timelines);
-    }
-
-    public void setTimelines(List<TimelineDTO> timelines) {
-        this.timelines = timelines;
-    }
+//    public List<TimelineDTO> getTimelines() {
+//        return Collections.unmodifiableList(timelines);
+//    }
+//
+//    public void setTimelines(List<TimelineDTO> timelines) {
+//        this.timelines = timelines;
+//    }
 
     @Override
     public boolean equals(Object obj) {
@@ -109,5 +112,13 @@ public class EventDTO {
         else {
             return 0;
         }
+    }
+
+    public TimelineDTO getTimeline() {
+        return timeline;
+    }
+
+    public void setTimeline(TimelineDTO timeline) {
+        this.timeline = timeline;
     }
 }

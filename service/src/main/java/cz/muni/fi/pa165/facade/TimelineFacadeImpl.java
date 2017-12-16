@@ -49,8 +49,8 @@ public class TimelineFacadeImpl implements TimelineFacade {
         timeline.setName(timelineDTO.getName());
         timeline.setComments(timelineDTO.getComments());
 
-        List<Event> events = new ArrayList<>();
-        List<EventDTO> eventDTOs = timelineDTO.getEvents();
+        Set<Event> events = new HashSet<>();
+        Set<EventDTO> eventDTOs = timelineDTO.getEvents();
         for (EventDTO e : eventDTOs) {
             events.add(eventService.findEvent(e.getId()));
         }
