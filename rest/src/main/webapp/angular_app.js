@@ -17,7 +17,7 @@ controllers.controller('GroupsCtrl', function ($scope, $http) {
 	});
 });
 
-controllers.controller('NewGroupCtrl', function ($scope, $http) {
+controllers.controller('NewGroupCtrl', function ($scope, $http, $rootScope, $location) {
 	console.log('New group form');
 	//set object bound to form fields
 	$scope.group = {
