@@ -32,6 +32,7 @@ public class MainController {
         Map<String, String> resourceMap = new HashMap<>();
 
         resourceMap.put("events_uri", ApiUris.ROOT_URI_EVENTS);
+        resourceMap.put("timelines_uri", ApiUris.ROOT_URI_TIMELINES);
 
         return Collections.unmodifiableMap(resourceMap);
     }

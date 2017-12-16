@@ -29,7 +29,7 @@ import org.springframework.context.annotation.Primary;
  */
 @EnableWebMvc
 @Configuration
-@Import(ServiceConfiguration.class)
+@Import({ServiceConfiguration.class, SampleDataConfig.class})
 @ComponentScan(basePackages = {"cz.muni.fi.pa165.rest.controllers"})
 public class RootWebContext extends WebMvcConfigurerAdapter {
 

@@ -22,7 +22,7 @@ public class Timeline {
     @ManyToMany(/*mappedBy = "timelines"*/)
     private List<Event> events = new ArrayList<Event>();
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     private List<String> comments = new ArrayList<String>();
 
     @OneToOne()
