@@ -12,7 +12,10 @@
 	<script type="text/javascript" src="./node_modules/angular/angular.js"></script>
 	<script type="text/javascript" src="./node_modules/angular-route/angular-route.min.js"></script>
 	<script type="text/javascript" src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+	
 	<script type="text/javascript" src="./angular_app.js"></script>
+	<script type="text/javascript" src="./event_controller.js"></script>
+	<script type="text/javascript" src="./group_controller.js"></script>
 </head>
 <body>
 	<h1>Welcome to the Historical Timeline project!</h1>
