@@ -109,12 +109,7 @@ public class TimelineServiceImpl implements TimelineService {
             events.add(event);
             timeline.setEvents(events);
 
-//            List<Timeline> timelines = new ArrayList<>(event.getTimelines());
-//            timelines.add(timeline);
-//            event.setTimelines(timelines);
-
             event.setTimeline(timeline);
-
 
             timelineDao.editTimeline(timeline);
             eventDao.editEvent(event);
@@ -134,9 +129,6 @@ public class TimelineServiceImpl implements TimelineService {
             events.remove(event);
             timeline.setEvents(events);
 
-//            List<Timeline> timelines = new ArrayList<>(event.getTimelines());
-//            timelines.remove(timeline);
-//            event.setTimelines(timelines);
             event.setTimeline(null);
 
             timelineDao.editTimeline(timeline);

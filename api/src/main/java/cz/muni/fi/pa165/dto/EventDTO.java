@@ -22,7 +22,7 @@ public class EventDTO {
     private String location;
     private String description;
     private byte[] image;
-//    private List<TimelineDTO> timelines = new ArrayList<TimelineDTO>();
+
     @JsonBackReference
     private TimelineDTO timeline;
 
@@ -85,14 +85,6 @@ public class EventDTO {
     public void setImage(byte[] image) {
         this.image = image;
     }
-
-//    public List<TimelineDTO> getTimelines() {
-//        return Collections.unmodifiableList(timelines);
-//    }
-//
-//    public void setTimelines(List<TimelineDTO> timelines) {
-//        this.timelines = timelines;
-//    }
 
     @Override
     public boolean equals(Object obj) {

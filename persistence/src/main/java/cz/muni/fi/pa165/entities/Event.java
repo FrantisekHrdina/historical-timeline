@@ -18,23 +18,11 @@ public class Event {
 	@Column(nullable = false, unique = true)
 	private String name;
 
-//	public List<Timeline> getTimelines() {
-//		return timelines;
-//	}
-//
-//	public void setTimelines(List<Timeline> timelines) {
-//		this.timelines = timelines;
-//	}
-
 	@Column(nullable = false)
-
 	private LocalDate date;
 	private String location;
 	private String description;
 	private byte[] image;
-
-//	@ManyToMany(mappedBy = "events")
-//	private List<Timeline> timelines = new ArrayList<>();
 
 	@ManyToOne
 	private Timeline timeline;
@@ -145,7 +133,6 @@ public class Event {
 				", location='" + location + '\'' +
 				", description='" + description + '\'' +
 				", image=" + Arrays.toString(image) +
-//				", timelines=" + timelines +
 				'}';
 	}
 
