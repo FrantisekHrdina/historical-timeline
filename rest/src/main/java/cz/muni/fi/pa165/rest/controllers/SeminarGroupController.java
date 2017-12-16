@@ -91,7 +91,7 @@ public class SeminarGroupController {
 		return null;
 	}
 
-	@RequestMapping(value = "/{id}/remove", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public final void removeSeminarGroup(@PathVariable("id") long id) {
 		logger.debug("rest removeSeminarGroup({})", id);
 		try {
