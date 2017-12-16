@@ -18,7 +18,7 @@
 	<h1>Welcome to the Historical Timeline project!</h1>
 	
 	<a href="#!/groups">Seminar groups</a>
-	<a href="#!/events">Events</a>
+  <a href="#!/events">Events</a>
 	
 	<div class="container">
 		<div ng-app="historicalTimelineApp">
