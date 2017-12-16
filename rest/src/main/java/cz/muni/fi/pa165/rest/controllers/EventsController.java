@@ -52,7 +52,7 @@ public class EventsController {
             return eventDTO;
         }
         else {
-            throw new ResourceNotFoundException();
+            throw new ResourceNotFoundException("Event not found, id:" + id);
         }
     }
 
@@ -67,7 +67,7 @@ public class EventsController {
             return eventFacade.findEvent(id);
         }
         catch (Exception ex) {
-            throw new ResourceAlreadyExistingException();
+            throw new ResourceAlreadyExistingException("Event was not created", ex);
         }
     }
 
@@ -84,7 +84,7 @@ public class EventsController {
             foundedEvent = eventFacade.findEvent(id);
         } catch (ResourceNotFoundException ex) {
             logger.error("rest findEvent in updateEvent({})", id, ex);
-            throw new ResourceNotFoundException();
+            throw new ResourceNotFoundException("Event to update not found, id:" + id, ex);
         }
 
         //EventDTO toBeUpdated = event;
@@ -94,7 +94,7 @@ public class EventsController {
             return event;
         } catch (Exception ex) {
             logger.error("updateEvent({})", id, ex);
-            throw new ResourceNotModifiedException();
+            throw new ResourceNotModifiedException("Event not updated, id:" + id, ex);
         }
     }
 
@@ -108,10 +108,10 @@ public class EventsController {
             eventFacade.removeEvent(id);
         } catch (ResourceNotFoundException ex) {
             logger.error("deletevEvent({})", id, ex);
-            throw new ResourceNotFoundException();
+            throw new ResourceNotFoundException("Event to delete not found, id:" + id);
         } catch (DataAccessException ex) {
             logger.error("deleteEvent({}) constraint violation", id, ex);
-            throw new ResourceNotDeletableException();
+            throw new ResourceNotDeletableException("Event not deleted, id" + id, ex);
         }
 
     }
