@@ -1,0 +1,6 @@
+
+Timelines:
+
+curl http://localhost:8080/pa165/rest/timelines/1
+curl http://localhost:8080/pa165/rest/timelines/all
+
