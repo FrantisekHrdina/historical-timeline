@@ -1,0 +1,33 @@
+<form name="form"  novalidate class="form-horizontal">
+
+    <div class="form-group" ng-class="{'has-error': !(form.name.$valid, form.location.$valid, form.date.$valid, form.description.$valid)}">
+        <label for="name" class="col-sm-2 control-label">Name</label>
+        <div class="col-sm-10">
+            <input placeholder="name" id="name" type="text" ng-maxlength="32" name="name" class="form-control"
+                   ng-model="event.name" required/>
+            <p class="help-block" ng-show="form.name.$error.required">name is required</p>
+            <p class="help-block" ng-show="form.name.$error.maxlength">name must have at most 32 characters</p>
+        </div>
+        <label for="date" class="col-sm-2 control-label">Date</label>
+        <div class="col-sm-10">
+            <input placeholder="yyyy-mm-dd" id="date" type="date"  name="date" class="form-control"
+                   ng-model="event.date" required/>
+            <p class="help-block" ng-show="form.date.$error.required">date is required</p>
+        </div>
+        <label for="location" class="col-sm-2 control-label">Location</label>
+        <div class="col-sm-10">
+            <input placeholder="Prague" id="location" type="text" ng-maxlength="32" name="location" class="form-control"
+                   ng-model="event.location" />
+            <p class="help-block" ng-show="form.location.$error.maxlength">name must have at most 32 characters</p>
+        </div>
+        <label for="description" class="col-sm-2 control-label">Description</label>
+        <div class="col-sm-10">
+            <input placeholder="Some description" id="description" type="text" ng-maxlength="32" name="description" class="form-control"
+                   ng-model="event.description" />
+            <p class="help-block" ng-show="form.description.$error.maxlength">name must have at most 32 characters</p>
+        </div>
+    </div>
+
+    <!-- show disabled button if form is not valid -->
+    <button ng-disabled="!form.$valid" ng-click="create(event)" class="btn btn-primary" type="submit" >Create event</button>
+</form>
