@@ -1,6 +1,7 @@
 package cz.muni.fi.pa165.facade;
 
 import cz.muni.fi.pa165.dto.EventDTO;
+import cz.muni.fi.pa165.dto.SeminarGroupDTO;
 import cz.muni.fi.pa165.dto.TimelineDTO;
 import cz.muni.fi.pa165.entities.Event;
 import cz.muni.fi.pa165.entities.SeminarGroup;
@@ -96,6 +97,7 @@ public class TimelineFacadeImpl implements TimelineFacade {
     @Override
     public List<TimelineDTO> getAllTimelines() {
         List<Timeline> timelineList = timelineService.getAllTimelines();
+//        return map(timelineList);
         return beanMappingService.mapTo(timelineList,TimelineDTO.class);
     }
 
@@ -103,4 +105,23 @@ public class TimelineFacadeImpl implements TimelineFacade {
     public void deleteTimeline(Long timelineId) {
         timelineService.deleteTimeline(timelineId);
     }
+
+//    private List<TimelineDTO> map(List<Timeline> timelineList) {
+//        List<TimelineDTO> timelineDTOList = new ArrayList<>();
+//        for (Timeline timeline : timelineList) {
+//            timelineDTOList.add(innerMap(timeline));
+//        }
+//        return timelineDTOList;
+//    }
+//
+//    private TimelineDTO innerMap(Timeline timeline) {
+//        TimelineDTO timelineDTO = new TimelineDTO();
+//        timelineDTO.setId(timeline.getId());
+//        timelineDTO.setName(timeline.getName());
+//        timelineDTO.setComments(timeline.getComments());
+//        timelineDTO.setEvents(beanMappingService.mapTo(timeline.getEvents(), EventDTO.class));
+//        timelineDTO.setSeminarGroup(beanMappingService.mapTo(timeline.getSeminarGroup(), SeminarGroupDTO.class));
+//        return timelineDTO;
+//    }
+
 }
