@@ -2,6 +2,8 @@ package cz.muni.fi.pa165.dto;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 
 import java.time.LocalDate;
 import java.util.*;
@@ -12,6 +14,9 @@ import java.util.*;
 public class EventDTO {
     private Long id;
     private String name;
+
+    @JsonSerialize(using = ToStringSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate date;
     private String location;
     private String description;
