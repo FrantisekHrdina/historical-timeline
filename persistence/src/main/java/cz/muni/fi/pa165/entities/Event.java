@@ -19,7 +19,7 @@ public class Event {
 	private String name;
 
 	public List<Timeline> getTimelines() {
-		return Collections.unmodifiableList(timelines);
+		return timelines;
 	}
 
 	public void setTimelines(List<Timeline> timelines) {

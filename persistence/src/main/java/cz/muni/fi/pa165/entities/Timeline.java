@@ -56,7 +56,7 @@ public class Timeline {
     }
 
     public List<Event> getEvents() {
-        return Collections.unmodifiableList(events);
+        return events;
     }
 
     public void setEvents(List<Event> events) {
@@ -64,7 +64,7 @@ public class Timeline {
     }
 
     public List<String> getComments() {
-        return Collections.unmodifiableList(comments);
+        return comments;
     }
 
     public void setComments(List<String> comments) {
