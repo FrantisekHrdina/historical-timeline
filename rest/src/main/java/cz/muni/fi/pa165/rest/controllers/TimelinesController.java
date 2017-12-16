@@ -1,6 +1,5 @@
 package cz.muni.fi.pa165.rest.controllers;
 
-import cz.muni.fi.pa165.dto.EventDTO;
 import cz.muni.fi.pa165.dto.TimelineDTO;
 import cz.muni.fi.pa165.facade.TimelineFacade;
 import cz.muni.fi.pa165.rest.ApiUris;
@@ -14,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import javax.inject.Inject;
 import java.util.List;
 
 import static org.springframework.http.MediaType.*;
@@ -27,7 +25,7 @@ import static org.springframework.http.MediaType.*;
 @RequestMapping(ApiUris.ROOT_URI_TIMELINES)
 public class TimelinesController {
 
-    final static Logger logger = LoggerFactory.getLogger(TimelinesController.class);
+    private final static Logger logger = LoggerFactory.getLogger(TimelinesController.class);
 
     @Autowired
     private TimelineFacade timelineFacade;
