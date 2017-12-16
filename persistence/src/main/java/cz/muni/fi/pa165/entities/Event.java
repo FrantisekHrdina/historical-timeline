@@ -33,7 +33,7 @@ public class Event {
 	private String description;
 	private byte[] image;
 
-	@ManyToMany
+	@ManyToMany(mappedBy = "events")
 	private List<Timeline> timelines = new ArrayList<>();
 
 	public Event(Long id, String name, LocalDate date, String location, String description, byte[] image) {
