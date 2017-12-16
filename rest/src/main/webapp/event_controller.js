@@ -1,46 +1,47 @@
 let event = angular.module('event', []);
 
-event.controller('EventsCtrl', function ($scope, $http) {
-    console.log('Loading events');
+function loadEvents($http, $scope) {
+    console.log('loading events');
     $http.get('events').then(function (response) {
         $scope.events = response.data;
     });
+}
+
+event.controller('EventsCtrl', function ($scope, $http, $rootScope, $location) {
+    loadEvents($http, $scope);
+
+    $scope.createEvent = function (event) {
+        console.log('create new event');
+        $scope.event = null;
+        $location.path('new_event');
+    }
+
+    $scope.updateEvent = function (event) {
+        console.log('update event with id=' + event.id + ' (' + event.name + ')');
+        console.log(event);
+        $rootScope.event = event;
+        $location.path('new_event');
+    }
 
     $scope.deleteEvent = function (event) {
-        console.log("deleting event with id=" + event.id + ' (' + event.name + ')');
-        $http.delete(event._links.delete.href).then(
-            function success(response) {
-                console.log('deleted event ' + event.id + ' on server');
-                //display confirmation alert
-                $rootScope.successAlert = 'Deleted event "' + event.name + '"';
-                //load new list of all products
-                $location.path('events');
-            },
-            function error(response) {
-                console.log("error when deleting event");
-                console.log(response);
-                switch (response.data.code) {
-                    case 'ResourceNotFoundException':
-                        $rootScope.errorAlert = 'Cannot delete non-existent event ! ';
-                        break;
-                    default:
-                        $rootScope.errorAlert = 'Cannot delete event ! Reason given by the server: '+response.data.message;
-                        break;
-                }
-            }
-        );
+        console.log('delete event with id=' + event.id + ' (' + event.name + ')');
+        $http({
+            method: 'DELETE',
+            url: 'events/' + event.id
+        }).then(function success(response) {
+            console.log('deleted event ' + event.name);
+            $rootScope.successAlert = 'Event "' + event.name + '" was deleted.';
+            loadEvents($http, $scope);
+        }, function error(response) {
+            console.log('could not delete event ' + event.name);
+            $scope.errorAlert = 'Could not delete event.';
+        });
     };
+
 });
 
 event.controller('NewEventCtrl', function ($scope, $http, $rootScope, $location) {
-    console.log('New Event form');
-    //set object bound to form fields
-    $scope.event = {
-        'name': '',
-        'date': '',
-        'location': '',
-        'description': ''
-    };
+    console.log('event form');
     $scope.create = function (event) {
         $http({
             method: 'POST',
@@ -48,6 +49,7 @@ event.controller('NewEventCtrl', function ($scope, $http, $rootScope, $location)
             data: event
         }).then(function success(response) {
             let createdEvent = response.data;
+            console.log('created event ' + createdEvent.name)
             $rootScope.successAlert = 'A new event "' + createdEvent.name + '" was created';
             $location.path('events')
         }, function error(response) {
