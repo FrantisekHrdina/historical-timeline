@@ -19,7 +19,7 @@ public class Timeline {
     @Column(nullable=false, unique=true)
     private String name;
 
-    @OneToMany
+    @OneToMany(mappedBy = "timeline")
     private Set<Event> events = new HashSet<Event>();
 
     @ElementCollection(fetch = FetchType.EAGER)

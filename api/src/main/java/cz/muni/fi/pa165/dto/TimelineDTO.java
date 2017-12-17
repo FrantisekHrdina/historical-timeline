@@ -15,6 +15,18 @@ public class TimelineDTO {
 
     private SeminarGroupDTO seminarGroup;
 
+
+    public TimelineDTO() {
+
+    }
+
+    public TimelineDTO(String name, Set<String> comments, Set<EventDTO> events, SeminarGroupDTO seminarGroup) {
+        this.name = name;
+        this.comments = comments;
+        this.events = events;
+        this.seminarGroup = seminarGroup;
+    }
+
     public Long getId() {
         return id;
     }

@@ -38,6 +38,24 @@ timeline.controller('TimelinesCtrl', function ($scope, $http, $rootScope, $locat
         });
     };
 
+    $scope.loadEvent = function (event) {
+        $location.path('events/' + event.id);
+    }
+
+    $scope.removeEvent = function (timeline, event) {
+        $http({
+            method: 'DELETE',
+            url: 'timelines/' + timeline.id + '/removeevent/' + event.id
+        }).then(function success(response) {
+            console.log('Removed timeline ' + timeline.name);
+            $rootScope.successAlert = 'Event "' + event.name + '" removed from timeline "' + timeline.name + '"';
+            loadTimelines($http, $scope);
+        }, function error(response) {
+            console.log('Could not remove event from timeline "' + timeline.name + '".');
+            $scope.errorAlert = 'Could not remove event from timeline.';
+        });
+    }
+
 });
 
 timeline.controller('NewTimelineCtrl', function ($scope, $http, $rootScope, $location) {
