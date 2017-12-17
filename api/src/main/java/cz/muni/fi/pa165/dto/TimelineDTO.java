@@ -1,8 +1,6 @@
 package cz.muni.fi.pa165.dto;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * @author Martin Kocisky, 421131
@@ -11,7 +9,11 @@ public class TimelineDTO {
 
     private Long id;
     private String name;
-    private List<String> comments = new ArrayList<String>();
+    private Set<String> comments = new LinkedHashSet<>();
+
+    private Set<EventDTO> events = new HashSet<>();
+
+    private SeminarGroupDTO seminarGroup;
 
     public Long getId() {
         return id;
@@ -29,11 +31,11 @@ public class TimelineDTO {
         this.name = name;
     }
 
-    public List<String> getComments() {
+    public Set<String> getComments() {
         return comments;
     }
 
-    public void setComments(List<String> comments) {
+    public void setComments(Set<String> comments) {
         this.comments = comments;
     }
 
@@ -52,5 +54,21 @@ public class TimelineDTO {
             return 31 * name.hashCode();
         }
         return 0;
+    }
+
+    public Set<EventDTO> getEvents() {
+        return events;
+    }
+
+    public void setEvents(Set<EventDTO> events) {
+        this.events = events;
+    }
+
+    public SeminarGroupDTO getSeminarGroup() {
+        return seminarGroup;
+    }
+
+    public void setSeminarGroup(SeminarGroupDTO seminarGroup) {
+        this.seminarGroup = seminarGroup;
     }
 }

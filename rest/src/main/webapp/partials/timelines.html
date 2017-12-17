@@ -1,0 +1,50 @@
+<h1>Timelines</h1>
+
+<button ng-click="createTimeline()" class="btn btn-primary">
+    <span class="glyphicon glyphicon-plus"></span> New Timeline
+</button>
+<table class="table">
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Seminar Group</th>
+        <th>Events</th>
+        <th>Comments</th>
+        <th>Update</th>
+        <th>Delete</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="timeline in timelines track by $index">
+        <td>{{timeline.id}}</td>
+        <td>{{timeline.name}}</td>
+        <td>{{timeline.seminarGroup}}</td>
+
+        <td>
+            <table>
+                <tr ng-repeat="event in timeline.events">
+                    <td>{{event.date}}</td>
+                    <td>{{event.name}}</td>
+                    <!-- TODO-->
+                    <td><button ng-click="loadEvents()" type="submit"
+                                class="btn btn-primary btn-xs">Get event</button></td>
+                </tr>
+            </table>
+        <td>
+            <table>
+                <tr ng-repeat="comment in timeline.comments">
+                    <td>{{comment}}</td>
+                </tr>
+            </table>
+        <td>
+            <button ng-click="updateTimeline(timeline)" type="submit"
+                    class="btn btn-primary">Update</button>
+        </td>
+        <td>
+            <button ng-click="deleteTimeline(timeline)" type="submit"
+                    class="btn btn-primary">Delete</button>
+        </td>
+    </tr>
+    </tbody>
+</table>

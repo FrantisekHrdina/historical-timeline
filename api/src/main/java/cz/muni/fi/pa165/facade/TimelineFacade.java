@@ -1,5 +1,6 @@
 package cz.muni.fi.pa165.facade;
 
+import cz.muni.fi.pa165.dto.TimelineCreateDTO;
 import cz.muni.fi.pa165.dto.TimelineDTO;
 
 import java.util.List;
@@ -15,7 +16,7 @@ public interface TimelineFacade {
      * @param t
      * @return id of the new timeline
      */
-    public Long createTimeline(TimelineDTO t);
+    public Long createTimeline(TimelineCreateDTO t);
 
     /**
      * Add comment to a timeline.

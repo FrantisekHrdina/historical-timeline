@@ -21,6 +21,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.testng.Assert;
 
 import java.util.Arrays;
+import java.util.HashSet;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
@@ -96,8 +97,8 @@ public class TimelineServiceTest {
         testEvent.setLocation("Europe");
         testEvent.setId(1L);
 
-        testTimeline3.setEvents(Arrays.asList(testEvent));
-        testEvent.setTimelines(Arrays.asList(testTimeline3));
+        testTimeline3.setEvents(new HashSet<>(Arrays.asList(testEvent)));
+        testEvent.setTimeline(testTimeline3);
 
         testEvent2 = new Event();
         testEvent2.setName("Today a bear unfroze.");
@@ -222,7 +223,7 @@ public class TimelineServiceTest {
         verify(eventDao).findEvent(2L);
 
         Assert.assertEquals(testTimeline.getEvents(), Arrays.asList(testEvent2));
-        Assert.assertEquals(testEvent2.getTimelines(), Arrays.asList(testTimeline));
+        Assert.assertEquals(testEvent2.getTimeline(), testTimeline);
 
         verify(timelineDao).editTimeline(testTimeline);
         verify(eventDao).editEvent(testEvent2);
@@ -245,7 +246,7 @@ public class TimelineServiceTest {
         verify(eventDao).findEvent(1L);
 
         Assert.assertEquals(testTimeline3.getEvents().size(), 0);
-        Assert.assertEquals(testEvent.getTimelines().size(), 0);
+        Assert.assertEquals(testEvent.getTimeline(), null);
 
         verify(timelineDao).editTimeline(testTimeline3);
         verify(eventDao).editEvent(testEvent);

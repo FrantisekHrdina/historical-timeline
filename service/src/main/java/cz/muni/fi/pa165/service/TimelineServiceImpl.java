@@ -10,8 +10,7 @@ import cz.muni.fi.pa165.exception.DAOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author Martin Kocisky, 421131
@@ -45,7 +44,7 @@ public class TimelineServiceImpl implements TimelineService {
         try {
             Timeline timeline = timelineDao.findTimeline(timelineId);
 
-            List<String> comments = new ArrayList<>(timeline.getComments());
+            Set<String> comments = new LinkedHashSet<>(timeline.getComments());
             comments.add(comment);
             timeline.setComments(comments);
 
@@ -106,13 +105,11 @@ public class TimelineServiceImpl implements TimelineService {
             Timeline timeline = timelineDao.findTimeline(timelineId);
             Event event = eventDao.findEvent(eventId);
 
-            List<Event> events = new ArrayList<>(timeline.getEvents());
+            Set<Event> events = new HashSet<>(timeline.getEvents());
             events.add(event);
             timeline.setEvents(events);
 
-            List<Timeline> timelines = new ArrayList<>(event.getTimelines());
-            timelines.add(timeline);
-            event.setTimelines(timelines);
+            event.setTimeline(timeline);
 
             timelineDao.editTimeline(timeline);
             eventDao.editEvent(event);
@@ -128,13 +125,11 @@ public class TimelineServiceImpl implements TimelineService {
             Timeline timeline = timelineDao.findTimeline(timelineId);
             Event event = eventDao.findEvent(eventId);
 
-            List<Event> events = new ArrayList<>(timeline.getEvents());
+            Set<Event> events = new HashSet<>(timeline.getEvents());
             events.remove(event);
             timeline.setEvents(events);
 
-            List<Timeline> timelines = new ArrayList<>(event.getTimelines());
-            timelines.remove(timeline);
-            event.setTimelines(timelines);
+            event.setTimeline(null);
 
             timelineDao.editTimeline(timeline);
             eventDao.editEvent(event);

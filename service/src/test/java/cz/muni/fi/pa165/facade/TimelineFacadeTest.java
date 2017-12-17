@@ -1,6 +1,7 @@
 package cz.muni.fi.pa165.facade;
 
 import cz.muni.fi.pa165.configuration.ServiceConfiguration;
+import cz.muni.fi.pa165.dto.TimelineCreateDTO;
 import cz.muni.fi.pa165.dto.TimelineDTO;
 import cz.muni.fi.pa165.entities.Timeline;
 import cz.muni.fi.pa165.mapping.BeanMappingService;
@@ -67,7 +68,8 @@ public class TimelineFacadeTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void createTimelineTest() {
-        timelineFacade.createTimeline(testTimelineDTO);
+        TimelineCreateDTO testTimelineCreateDTO = new TimelineCreateDTO();
+        timelineFacade.createTimeline(testTimelineCreateDTO);
         verify(timelineService).createTimeline(any(Timeline.class));
     }
 

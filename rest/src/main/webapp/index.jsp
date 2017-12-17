@@ -16,13 +16,15 @@
 	<script type="text/javascript" src="./angular_app.js"></script>
 	<script type="text/javascript" src="./event_controller.js"></script>
 	<script type="text/javascript" src="./group_controller.js"></script>
+	<script type="text/javascript" src="./timeline_controller.js"></script>
 </head>
 <body>
 	<h1>Welcome to the Historical Timeline project!</h1>
 	
 	<a href="#!/groups">Seminar groups</a>
-  <a href="#!/events">Events</a>
-	
+	<a href="#!/events">Events</a>
+	<a href="#!/timelines">Timelines</a>
+
 	<div class="container">
 		<div ng-app="historicalTimelineApp">
 			<div ng-view></div>
