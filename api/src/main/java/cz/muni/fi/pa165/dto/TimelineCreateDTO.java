@@ -9,17 +9,18 @@ import java.util.Set;
  */
 public class TimelineCreateDTO {
 
-    private Long id;
     private String name;
     private Set<Long> events = new HashSet<>();
     private Long seminarGroup;
 
-    public Long getId() {
-        return id;
+    public TimelineCreateDTO(String name, Set<Long> events, Long seminarGroup) {
+        this.name = name;
+        this.events = events;
+        this.seminarGroup = seminarGroup;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public TimelineCreateDTO() {
+
     }
 
     public String getName() {

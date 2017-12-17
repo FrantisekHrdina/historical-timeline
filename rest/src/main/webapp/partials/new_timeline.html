@@ -12,8 +12,8 @@
 
     <div class="form-group">
         <label for="repeatSelect">Seminar group</label>
-        <select name="repeatSelect" id="repeatSelect" ng-model="timeline.group">
-            <option ng-repeat="g in groups" value="{{g}}">{{g.name}}</option>
+        <select name="repeatSelect" id="repeatSelect" ng-model="timeline.seminarGroup">
+            <option ng-repeat="g in groups" value="{{g.id}}">{{g.name}}</option>
         </select>
     </div>
 
@@ -21,7 +21,7 @@
         <label for="multipleSelect" class="col-sm-2 control-label">Events</label>
         <div class="col-sm-10">
             <select name="multipleSelect" id="multipleSelect" ng-model="timeline.events" multiple>
-                <option ng-repeat="e in events" value="{{e}}">{{e.name}}</option>
+                <option ng-repeat="e in events" value="{{e.id}}">{{e.name}}</option>
             </select>
         </div>
     </div>
