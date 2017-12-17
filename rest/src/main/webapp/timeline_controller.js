@@ -39,12 +39,14 @@ timeline.controller('TimelinesCtrl', function ($scope, $http, $rootScope, $locat
     };
 
     $scope.loadEvent = function (event) {
-        $location.path('events/' + event.id);
+        // $location.path('events/' + event.id);
+        $rootScope.event = event;
+        $location.path('new_event');
     }
 
     $scope.removeEvent = function (timeline, event) {
         $http({
-            method: 'DELETE',
+            method: 'PUT',
             url: 'timelines/' + timeline.id + '/removeevent/' + event.id
         }).then(function success(response) {
             console.log('Removed timeline ' + timeline.name);
