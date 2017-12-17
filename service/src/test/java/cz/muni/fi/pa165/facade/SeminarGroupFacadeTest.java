@@ -53,6 +53,15 @@ public class SeminarGroupFacadeTest extends AbstractTestNGSpringContextTests {
 	}
 	
 	@Test
+	public void editGroup() {
+		Long id = seminarGroupFacade.saveGroup(basicGroupCreate);
+		basicGroupCreate.setId(id);
+		basicGroupCreate.setName("New name");
+		seminarGroupFacade.editGroup(basicGroupCreate);
+		assertThat(seminarGroupFacade.findGroup(id).getName()).isEqualTo(basicGroupCreate.getName());
+	}
+	
+	@Test
 	public void removeGroup() {
 		Long id = seminarGroupFacade.saveGroup(basicGroupCreate);
 		seminarGroupFacade.saveGroup(advancedGroupCreate);

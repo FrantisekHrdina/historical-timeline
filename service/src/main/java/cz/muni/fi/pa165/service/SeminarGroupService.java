@@ -11,12 +11,19 @@ import cz.muni.fi.pa165.entities.SeminarGroup;
 public interface SeminarGroupService {
 
 	/**
-	 * Add group g to the database or update g if it already exists.
+	 * Add group g to the database
 	 * 
 	 * @param g
 	 */
 	public void saveGroup(SeminarGroup g);
 
+	/**
+	 * Edit group g in database
+	 * 
+	 * @param g
+	 */
+	public void editGroup(SeminarGroup g);
+	
 	/**
 	 * Delete group g from the database.
 	 * 

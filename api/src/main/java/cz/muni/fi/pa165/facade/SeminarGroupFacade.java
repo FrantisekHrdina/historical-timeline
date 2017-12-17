@@ -10,12 +10,17 @@ import cz.muni.fi.pa165.dto.SeminarGroupDTO;
  */
 public interface SeminarGroupFacade {
 	/**
-	 * Add group g to the database or update g if it already exists.
+	 * Add group g to the database.
 	 * 
 	 * @param seminarGroupCreateDTO
 	 */
 	public Long saveGroup(SeminarGroupCreateDTO seminarGroupCreateDTO);
 
+	/**
+	 * Update group g in database.
+	 */
+	public void editGroup(SeminarGroupCreateDTO seminarGroupCreateDTO);
+	
 	/**
 	 * Delete group g from the database.
 	 * 

@@ -57,8 +57,14 @@ public class SeminarGroup {
     public void setTimelines(List<Timeline> timelines) {
         this.timelines = timelines;
     }
-
+    
     @Override
+	public String toString() {
+		return "SeminarGroup [id=" + id + ", name=" + name + ", timelines="
+				+ timelines + "]";
+	}
+
+	@Override
     public int hashCode() {
         int hash = 7;
         hash = 79 * hash + (this.id != null ? this.id.hashCode() : 0);

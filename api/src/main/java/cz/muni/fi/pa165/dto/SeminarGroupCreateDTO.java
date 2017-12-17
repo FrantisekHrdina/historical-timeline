@@ -10,11 +10,12 @@ import javax.validation.constraints.Size;
  * @author Martin Wörgötter
  */
 public class SeminarGroupCreateDTO {
-	
+	private Long id;
+
 	@NotNull
 	@Size(max = 32)
 	private String name;
-	
+
 	private List<TimelineDTO> timelines = new ArrayList<>();
 
 	public SeminarGroupCreateDTO(String name, List<TimelineDTO> timelines) {
@@ -23,6 +24,14 @@ public class SeminarGroupCreateDTO {
 	}
 
 	public SeminarGroupCreateDTO() {
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getName() {
@@ -43,8 +52,8 @@ public class SeminarGroupCreateDTO {
 
 	@Override
 	public String toString() {
-		return "SeminarGroupCreateDTO [name=" + name + ", timelines="
-				+ timelines + "]";
+		return "SeminarGroupCreateDTO [id=" + id + ", name=" + name
+				+ ", timelines=" + timelines + "]";
 	}
 
 	@Override

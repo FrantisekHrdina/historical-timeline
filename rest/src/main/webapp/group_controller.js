@@ -10,9 +10,9 @@ function loadGroups($http, $scope) {
 group.controller('GroupsCtrl', function ($scope, $http, $rootScope, $location) {
 	loadGroups($http, $scope);
 	
-	$scope.createGroup = function (group) {
+	$scope.createGroup = function () {
 		console.log('create new group');
-		$scope.group = null;
+		$rootScope.group = null;
 		$location.path('new_group');
 	}
 	
@@ -43,17 +43,32 @@ group.controller('GroupsCtrl', function ($scope, $http, $rootScope, $location) {
 group.controller('NewGroupCtrl', function ($scope, $http, $rootScope, $location) {
 	console.log('group form');
 	$scope.create = function (group) {
-		$http({
-			method: 'POST',
-			url: 'groups/create',
-			data: group
-		}).then(function success(response) {
-			let createdGroup = response.data;
-			console.log('created group ' + createdGroup.name)
-			$rootScope.successAlert = 'A new seminar group "' + createdGroup.name + '" was created';
-			$location.path('groups')
-		}, function error(response) {
-			$scope.errorAlert = 'Cannot create group.';
-		})
+		if (!group.id) {
+			$http({
+				method: 'POST',
+				url: 'groups/create',
+				data: group
+			}).then(function success(response) {
+				let createdGroup = response.data;
+				console.log('created group ' + createdGroup.name)
+				$rootScope.successAlert = 'A new seminar group "' + createdGroup.name + '" was created';
+				$location.path('groups')
+			}, function error(response) {
+				$scope.errorAlert = 'Cannot create group.';
+			})
+		} else {
+			$http({
+				method: 'PUT',
+				url: 'groups/' + group.id,
+				data: group
+			}).then(function success(response) {
+				let createdGroup = response.data;
+				console.log('updated group ' + createdGroup.name)
+				$rootScope.successAlert = 'Seminar group "' + createdGroup.name + '" was updated';
+				$location.path('groups')
+			}, function error(response) {
+				$scope.errorAlert = 'Cannot update group.';
+			})
+		}
 	};
 });

@@ -19,6 +19,7 @@ import cz.muni.fi.pa165.rest.ApiUris;
 import cz.muni.fi.pa165.rest.exceptions.ResourceNotDeletableException;
 import cz.muni.fi.pa165.rest.exceptions.ResourceNotFoundException;
 import cz.muni.fi.pa165.rest.exceptions.InvalidRequestException;
+import cz.muni.fi.pa165.dto.EventDTO;
 import cz.muni.fi.pa165.dto.SeminarGroupCreateDTO;
 import cz.muni.fi.pa165.dto.SeminarGroupDTO;
 import cz.muni.fi.pa165.exception.DAOException;
@@ -67,7 +68,7 @@ public class SeminarGroupController {
 
 	}
 
-	@RequestMapping(value = "/create", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/create", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public final SeminarGroupDTO createSeminarGroup(
 			@RequestBody @Valid SeminarGroupCreateDTO seminarGroupCreateDTO,
 			BindingResult bindingResult) {
@@ -75,7 +76,7 @@ public class SeminarGroupController {
 		Long id = null;
 		if (bindingResult.hasErrors()) {
 			logger.error("failed validation {}", bindingResult.toString());
-            throw new InvalidRequestException("Failed validation.");
+			throw new InvalidRequestException("Failed validation.");
 		}
 		try {
 			id = seminarGroupFacade.saveGroup(seminarGroupCreateDTO);
@@ -87,6 +88,34 @@ public class SeminarGroupController {
 			return seminarGroupFacade.findGroup(id);
 		} catch (DAOException ex) {
 			logger.debug("rest error retrieving SeminarGroup after save.");
+		}
+		return null;
+	}
+
+	@RequestMapping(value = "/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public final SeminarGroupDTO updateSeminarGroup(@PathVariable("id") long id,
+			@RequestBody @Valid SeminarGroupCreateDTO seminarGroupCreateDTO,
+			BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+			logger.error("failed validation {}", bindingResult.toString());
+			throw new InvalidRequestException("Failed validation.");
+		}
+		try {
+			seminarGroupFacade.editGroup(seminarGroupCreateDTO);
+		} catch (IllegalArgumentException ex) {
+			logger.debug("rest error editing group ({})",
+					seminarGroupCreateDTO);
+		} catch (DAOException ex) {
+			logger.debug("rest error editing group ({})",
+					seminarGroupCreateDTO);
+			throw new ResourceNotFoundException(
+					String.format("SeminarGroup to update not found ({})",
+							seminarGroupCreateDTO.toString()));
+		}
+		try {
+			return seminarGroupFacade.findGroup(seminarGroupCreateDTO.getId());
+		} catch (DAOException ex) {
+			logger.debug("rest error retrieving SeminarGroup after update.");
 		}
 		return null;
 	}

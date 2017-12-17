@@ -60,4 +60,16 @@ public class SeminarGroupServiceImpl implements SeminarGroupService {
 		}
 	}
 
+	@Override
+	public void editGroup(SeminarGroup g) {
+		if (g == null) {
+			throw new IllegalArgumentException("SeminarGroup must not be null.");
+		}
+		try {
+			seminarGroupDao.editGroup(g);
+		} catch (Exception e) {
+			throw new DAOException("Error when updating group " + g.toString(), e);
+		}
+	}
+
 }
