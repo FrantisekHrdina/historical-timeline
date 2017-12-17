@@ -1,0 +1,17 @@
+<form name="form" novalidate class="form-horizontal">
+
+    <div class="form-group">
+        <label for="comment" class="col-sm-2 control-label">Comment</label>
+        <div class="col-sm-10">
+            <input placeholder="comment" id="comment" type="text" ng-minlength="2" ng-maxlength="280"
+                   name="comment" class="form-control" ng-model="comment" value="comment" required />
+            <p class="help-block" ng-show="form.name.$error.maxlength">comment
+                must be at most 280 characters long</p>
+            <p class="help-block" ng-show="form.name.$error.minlength">comment
+                must be at least 2 character long</p>
+        </div>
+    </div>
+
+    <button ng-disabled="!form.$valid" ng-click="addComment(timelineId, comment)"
+            class="btn btn-primary" type="submit">Submit</button>
+</form>

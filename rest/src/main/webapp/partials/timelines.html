@@ -37,6 +37,10 @@
                 <tr ng-repeat="comment in timeline.comments">
                     <td>{{comment}}</td>
                 </tr>
+                <tr>
+                    <td><button ng-click="addCommentView(timeline.id)" type="submit"
+                                class="btn btn-primary btn-xs">Add comment</button></td>
+                </tr>
             </table>
         <td>
             <button ng-click="updateTimeline(timeline)" type="submit"

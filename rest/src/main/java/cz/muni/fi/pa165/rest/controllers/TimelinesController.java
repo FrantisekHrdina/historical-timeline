@@ -1,5 +1,7 @@
 package cz.muni.fi.pa165.rest.controllers;
 
+import com.fasterxml.jackson.databind.node.TextNode;
+import cz.muni.fi.pa165.dto.CommentDTO;
 import cz.muni.fi.pa165.dto.TimelineCreateDTO;
 import cz.muni.fi.pa165.dto.TimelineDTO;
 import cz.muni.fi.pa165.facade.TimelineFacade;
@@ -51,12 +53,12 @@ public class TimelinesController {
     @RequestMapping(
             value = "/{id}/addcomment",
             method = RequestMethod.PUT,
-            consumes = "text/plain",
+            consumes = APPLICATION_JSON_VALUE,
             produces = APPLICATION_JSON_VALUE)
-    public TimelineDTO addComment(@PathVariable("id") Long timelineId, @RequestBody String comment) {
+    public TimelineDTO addComment(@PathVariable("id") Long timelineId, @RequestBody CommentDTO comment) {
         logger.debug("rest addComment");
         try {
-            timelineFacade.addComment(timelineId, comment);
+            timelineFacade.addComment(timelineId, comment.getComment());
             return timelineFacade.getTimelineById(timelineId);
         } catch (Exception e) {
             logger.error("addComment", timelineId, e);
@@ -115,7 +117,7 @@ public class TimelinesController {
     @RequestMapping(
             value = "/{id}",
             method = RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_VALUE)
+            produces = APPLICATION_JSON_VALUE)
     public TimelineDTO getTimelineById(@PathVariable("id") Long timelineId) {
         try {
             return timelineFacade.getTimelineById(timelineId);
@@ -127,7 +129,7 @@ public class TimelinesController {
 
     @RequestMapping(
             method = RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_VALUE)
+            produces = APPLICATION_JSON_VALUE)
     public List<TimelineDTO> getAllTimelines() {
         try {
             return timelineFacade.getAllTimelines();

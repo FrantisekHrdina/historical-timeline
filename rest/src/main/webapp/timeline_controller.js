@@ -39,7 +39,6 @@ timeline.controller('TimelinesCtrl', function ($scope, $http, $rootScope, $locat
     };
 
     $scope.loadEvent = function (event) {
-        // $location.path('events/' + event.id);
         $rootScope.event = event;
         $location.path('new_event');
     }
@@ -58,6 +57,29 @@ timeline.controller('TimelinesCtrl', function ($scope, $http, $rootScope, $locat
         });
     }
 
+    $scope.addCommentView = function (timelineId) {
+        $rootScope.timelineId = timelineId;
+        $location.path('new_comment');
+    }
+
+    $scope.addComment = function (timelineId, comment) {
+        $scope.comment = {
+            'comment' :''
+        };
+        $scope.comment.comment = comment;
+        $http({
+            method: 'PUT',
+            url: 'timelines/' + timelineId + '/addcomment',
+            data: $scope.comment
+        }).then(function success(response) {
+            console.log('adding comment');
+            $rootScope.successAlert = 'Added comment.';
+            loadTimelines($http, $scope);
+        }, function error(response) {
+            console.log('could not add comment to timeline');
+            $scope.errorAlert = 'Could not add comment to timeline.';
+        });
+    }
 });
 
 timeline.controller('NewTimelineCtrl', function ($scope, $http, $rootScope, $location) {
