@@ -81,6 +81,25 @@ public class SeminarGroupServiceTest extends AbstractTestNGSpringContextTests {
 	}
 
 	@Test
+	public void editGroup() {
+		seminarGroupService.editGroup(basicGroup);
+		verify(seminarGroupDao).editGroup(basicGroup);
+	}
+
+	@Test
+	public void editNullGroup() {
+		assertThatThrownBy(() -> seminarGroupService.editGroup(null))
+				.isInstanceOf(IllegalArgumentException.class);
+	}
+
+	@Test
+	public void editFails() {
+		doThrow(new RuntimeException()).when(seminarGroupDao).editGroup(any());
+		assertThatThrownBy(() -> seminarGroupService.editGroup(basicGroup))
+				.isInstanceOf(DAOException.class);
+	}
+
+	@Test
 	public void removeGroup() {
 		seminarGroupService.saveGroup(basicGroup);
 		seminarGroupService.removeGroup(basicGroup);

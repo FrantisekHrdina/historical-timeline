@@ -60,4 +60,13 @@ public class SeminarGroupServiceImpl implements SeminarGroupService {
 		}
 	}
 
+	@Override
+	public void editGroup(SeminarGroup g) {
+		try {
+			seminarGroupDao.editGroup(g);
+		} catch (Exception e) {
+			throw new DAOException(String.format("Error when updating group ({0})", g.toString()), e);
+		}
+	}
+
 }
