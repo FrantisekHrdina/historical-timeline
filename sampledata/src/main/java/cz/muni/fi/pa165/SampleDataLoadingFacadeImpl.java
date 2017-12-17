@@ -49,6 +49,40 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
         timelineService.addComment(timeline.getId(), "This is a boring period.");
         timelineService.addEventToTimeline(timeline.getId(), event.getId());
 //        timelineService.setSeminarGroupToTimeline(timeline.getId(), seminarGroup.getId());
+
+
+        Timeline timeline1 = sampleTimeline("Timeline1");
+        //SeminarGroup seminarGroup1 = sampleSeminarGroup("Seminargroup-Timeline1");
+
+        Event event1 = sampleEvent("Event1-Timeline1", "Event1-Timeline1-Location", "Event1-Timeline1-Desc");
+        Event event2 = sampleEvent("Event2-Timeline1", "Event2-Timeline1-Location", "Event2-Timeline1-Desc");
+        Event event3 = sampleEvent("Event3-Timeline1", "Event3-Timeline1-Location", "Event3-Timeline1-Desc");
+
+        timelineService.addEventToTimeline(timeline1.getId(), event1.getId());
+        timelineService.addEventToTimeline(timeline1.getId(), event2.getId());
+        timelineService.addEventToTimeline(timeline1.getId(), event3.getId());
+
+        Timeline timeline2 = sampleTimeline("Timeline2");
+        //SeminarGroup seminarGroup1 = sampleSeminarGroup("Seminargroup-Timeline1");
+
+        Event event12 = sampleEvent("Event1-Timeline2", "Event1-Timeline2-Location", "Event1-Timeline2-Desc");
+        Event event22 = sampleEvent("Event2-Timeline2", "Event2-Timeline2-Location", "Event2-Timeline2-Desc");
+        Event event32 = sampleEvent("Event3-Timeline2", "Event3-Timeline2-Location", "Event3-Timeline2-Desc");
+
+        timelineService.addEventToTimeline(timeline2.getId(), event12.getId());
+        timelineService.addEventToTimeline(timeline2.getId(), event22.getId());
+        timelineService.addEventToTimeline(timeline2.getId(), event32.getId());
+
+        Timeline timeline3 = sampleTimeline("Timeline3");
+        //SeminarGroup seminarGroup1 = sampleSeminarGroup("Seminargroup-Timeline1");
+
+        Event event13 = sampleEvent("Event1-Timeline3", "Event1-Timeline3-Location", "Event1-Timeline3-Desc");
+        Event event23 = sampleEvent("Event2-Timeline3", "Event2-Timeline3-Location", "Event2-Timeline3-Desc");
+        Event event33 = sampleEvent("Event3-Timeline3", "Event3-Timeline3-Location", "Event3-Timeline3-Desc");
+
+        timelineService.addEventToTimeline(timeline3.getId(), event13.getId());
+        timelineService.addEventToTimeline(timeline3.getId(), event23.getId());
+        timelineService.addEventToTimeline(timeline3.getId(), event33.getId());
     }
 
     private SeminarGroup sampleSeminarGroup(String name) {
