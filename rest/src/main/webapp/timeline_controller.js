@@ -80,6 +80,7 @@ timeline.controller('TimelinesCtrl', function ($scope, $http, $rootScope, $locat
             $scope.errorAlert = 'Could not add comment to timeline.';
         });
     }
+
 });
 
 timeline.controller('NewTimelineCtrl', function ($scope, $http, $rootScope, $location) {

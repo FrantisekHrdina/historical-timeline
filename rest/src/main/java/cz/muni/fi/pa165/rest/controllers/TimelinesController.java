@@ -1,6 +1,5 @@
 package cz.muni.fi.pa165.rest.controllers;
 
-import com.fasterxml.jackson.databind.node.TextNode;
 import cz.muni.fi.pa165.dto.CommentDTO;
 import cz.muni.fi.pa165.dto.TimelineCreateDTO;
 import cz.muni.fi.pa165.dto.TimelineDTO;

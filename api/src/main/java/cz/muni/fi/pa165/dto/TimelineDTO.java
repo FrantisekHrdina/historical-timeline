@@ -15,7 +15,6 @@ public class TimelineDTO {
 
     private SeminarGroupDTO seminarGroup;
 
-
     public TimelineDTO() {
 
     }
