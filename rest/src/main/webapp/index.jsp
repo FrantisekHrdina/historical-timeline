@@ -19,6 +19,7 @@
 	<script type="text/javascript" src="./timeline_controller.js"></script>
 </head>
 <body>
+
 <nav class="navbar navbar-inverse">
 	<div class="container">
 		<div class="navbar-header">

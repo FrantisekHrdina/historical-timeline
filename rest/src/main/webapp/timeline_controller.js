@@ -38,6 +38,49 @@ timeline.controller('TimelinesCtrl', function ($scope, $http, $rootScope, $locat
         });
     };
 
+    $scope.loadEvent = function (event) {
+        $rootScope.event = event;
+        $location.path('new_event');
+    }
+
+    $scope.removeEvent = function (timeline, event) {
+        $http({
+            method: 'PUT',
+            url: 'timelines/' + timeline.id + '/removeevent/' + event.id
+        }).then(function success(response) {
+            console.log('Removed timeline ' + timeline.name);
+            $rootScope.successAlert = 'Event "' + event.name + '" removed from timeline "' + timeline.name + '"';
+            loadTimelines($http, $scope);
+        }, function error(response) {
+            console.log('Could not remove event from timeline "' + timeline.name + '".');
+            $scope.errorAlert = 'Could not remove event from timeline.';
+        });
+    }
+
+    $scope.addCommentView = function (timelineId) {
+        $rootScope.timelineId = timelineId;
+        $location.path('new_comment');
+    }
+
+    $scope.addComment = function (timelineId, comment) {
+        $scope.comment = {
+            'comment' :''
+        };
+        $scope.comment.comment = comment;
+        $http({
+            method: 'PUT',
+            url: 'timelines/' + timelineId + '/addcomment',
+            data: $scope.comment
+        }).then(function success(response) {
+            console.log('adding comment');
+            $rootScope.successAlert = 'Added comment.';
+            loadTimelines($http, $scope);
+        }, function error(response) {
+            console.log('could not add comment to timeline');
+            $scope.errorAlert = 'Could not add comment to timeline.';
+        });
+    }
+
 });
 
 timeline.controller('NewTimelineCtrl', function ($scope, $http, $rootScope, $location) {
