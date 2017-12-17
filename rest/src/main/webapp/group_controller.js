@@ -10,9 +10,9 @@ function loadGroups($http, $scope) {
 group.controller('GroupsCtrl', function ($scope, $http, $rootScope, $location) {
 	loadGroups($http, $scope);
 	
-	$scope.createGroup = function (group) {
+	$scope.createGroup = function () {
 		console.log('create new group');
-		$scope.group = null;
+		$rootScope.group = null;
 		$location.path('new_group');
 	}
 	
