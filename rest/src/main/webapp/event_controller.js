@@ -12,7 +12,7 @@ event.controller('EventsCtrl', function ($scope, $http, $rootScope, $location) {
 
     $scope.createEvent = function (event) {
         console.log('create new event');
-        $scope.event = null;
+        $rootScope.event = null;
         $location.path('new_event');
     }
 
@@ -43,17 +43,33 @@ event.controller('EventsCtrl', function ($scope, $http, $rootScope, $location) {
 event.controller('NewEventCtrl', function ($scope, $http, $rootScope, $location) {
     console.log('event form');
     $scope.create = function (event) {
-        $http({
-            method: 'POST',
-            url: 'events/create',
-            data: event
-        }).then(function success(response) {
-            let createdEvent = response.data;
-            console.log('created event ' + createdEvent.name)
-            $rootScope.successAlert = 'A new event "' + createdEvent.name + '" was created';
-            $location.path('events')
-        }, function error(response) {
-            $scope.errorAlert = 'Cannot create event.';
-        })
+        if (!event.id) {
+            $http({
+                method: 'POST',
+                url: 'events/create',
+                data: event
+            }).then(function success(response) {
+                let createdEvent = response.data;
+                console.log('created event ' + createdEvent.name)
+                $rootScope.successAlert = 'A new event "' + createdEvent.name + '" was created';
+                $location.path('events')
+            }, function error(response) {
+                $scope.errorAlert = 'Cannot create event.';
+            })
+        }
+        else {
+            $http({
+                method: 'PUT',
+                url: 'events/' + event.id,
+                data: event
+            }).then(function success(response) {
+                let updatedEvent = response.data;
+                console.log('updated event ' + updatedEvent.name)
+                $rootScope.successAlert = 'Event "' + updatedEvent.name + '" was updated';
+                $location.path('events')
+            }, function error(response) {
+                $scope.errorAlert = 'Cannot update event.';
+            })
+        }
     };
 });

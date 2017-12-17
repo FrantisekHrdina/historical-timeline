@@ -1,21 +1,21 @@
 package cz.muni.fi.pa165.rest.controllers;
 
 import cz.muni.fi.pa165.entities.Event;
+import cz.muni.fi.pa165.exception.DAOException;
 import cz.muni.fi.pa165.rest.ApiUris;
 import cz.muni.fi.pa165.dto.EventDTO;
 import cz.muni.fi.pa165.facade.EventFacade;
-import cz.muni.fi.pa165.rest.exceptions.ResourceAlreadyExistingException;
-import cz.muni.fi.pa165.rest.exceptions.ResourceNotDeletableException;
-import cz.muni.fi.pa165.rest.exceptions.ResourceNotFoundException;
-import cz.muni.fi.pa165.rest.exceptions.ResourceNotModifiedException;
+import cz.muni.fi.pa165.rest.exceptions.*;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.MediaType;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import org.slf4j.Logger;
 
 import javax.inject.Inject;
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -71,7 +71,7 @@ public class EventsController {
         }
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT,
+/*    @RequestMapping(value = "/{id}", method = RequestMethod.PUT,
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public final EventDTO updateEvent(@PathVariable("id") long id,
@@ -96,6 +96,32 @@ public class EventsController {
             logger.error("updateEvent({})", id, ex);
             throw new ResourceNotModifiedException("Event not updated, id:" + id, ex);
         }
+    }*/
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public final EventDTO updateEvent(@PathVariable("id") long id,
+                                                    @RequestBody @Valid EventDTO eventDTO,
+                                                    BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            logger.error("failed validation {}", bindingResult.toString());
+            throw new InvalidRequestException("Failed validation.");
+        }
+        try {
+            eventFacade.editEvent(eventDTO);
+        } catch (IllegalArgumentException ex) {
+            logger.debug("rest error editing group ({})", eventDTO);
+        } catch (DAOException ex) {
+            logger.debug("rest error editing group ({})", eventDTO);
+            throw new ResourceNotFoundException(
+                    String.format("Event to update not found ({})",
+                            eventDTO.toString()));
+        }
+        try {
+            return eventFacade.findEvent(eventDTO.getId());
+        } catch (DAOException ex) {
+            logger.debug("rest error retrieving Event after update.");
+        }
+        return null;
     }
 
     @RequestMapping(value = "/{id}",
