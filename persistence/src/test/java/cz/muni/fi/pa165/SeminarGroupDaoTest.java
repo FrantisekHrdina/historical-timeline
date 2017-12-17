@@ -140,14 +140,6 @@ public class SeminarGroupDaoTest extends AbstractTestNGSpringContextTests {
 	}
 
 	@Test
-	public void editNonExistingGroup() {
-		basicSeminarGroup.setId(1L);
-		assertThatThrownBy(() -> {
-			seminarGroupDao.editGroup(basicSeminarGroup);
-		}).isInstanceOf(IllegalArgumentException.class);
-	}
-
-	@Test
 	public void editGroupWithNullId() {
 		assertThatThrownBy(() -> {
 			seminarGroupDao.editGroup(basicSeminarGroup);
