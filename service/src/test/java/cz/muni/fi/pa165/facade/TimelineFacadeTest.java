@@ -36,7 +36,7 @@ public class TimelineFacadeTest extends AbstractTestNGSpringContextTests {
 
     @Autowired
     @InjectMocks
-    private TimelineFacadeImpl timelineFacade;
+    private TimelineFacade timelineFacade;
 
     private TimelineDTO testTimelineDTO;
     private Timeline testTimeline;
