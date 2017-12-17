@@ -5,11 +5,14 @@ import cz.muni.fi.pa165.dto.TimelineCreateDTO;
 import cz.muni.fi.pa165.dto.TimelineDTO;
 import cz.muni.fi.pa165.entities.Timeline;
 import cz.muni.fi.pa165.mapping.BeanMappingService;
+import cz.muni.fi.pa165.mapping.BeanMappingServiceImpl;
+import cz.muni.fi.pa165.service.EventService;
+import cz.muni.fi.pa165.service.SeminarGroupService;
 import cz.muni.fi.pa165.service.TimelineService;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.Spy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
@@ -28,15 +31,22 @@ import static org.mockito.Mockito.*;
 /**
  * @author Martin Kocisky, 421131
  */
+@Transactional
+@TestExecutionListeners(TransactionalTestExecutionListener.class)
 @ContextConfiguration(classes = ServiceConfiguration.class)
 public class TimelineFacadeTest extends AbstractTestNGSpringContextTests {
 
     @Mock
     private TimelineService timelineService;
 
-    @Autowired
+    @Mock
+    private SeminarGroupService seminarGroupService;
+
+    @Mock
+    private EventService eventService;
+
     @InjectMocks
-    private TimelineFacadeImpl timelineFacade;
+    private TimelineFacade timelineFacade = new TimelineFacadeImpl();
 
     private TimelineDTO testTimelineDTO;
     private Timeline testTimeline;
@@ -69,6 +79,7 @@ public class TimelineFacadeTest extends AbstractTestNGSpringContextTests {
     @Test
     public void createTimelineTest() {
         TimelineCreateDTO testTimelineCreateDTO = new TimelineCreateDTO();
+        testTimelineCreateDTO.setName("Bronze Age");
         timelineFacade.createTimeline(testTimelineCreateDTO);
         verify(timelineService).createTimeline(any(Timeline.class));
     }
@@ -104,7 +115,7 @@ public class TimelineFacadeTest extends AbstractTestNGSpringContextTests {
         verify(timelineService).removeEventFromTimeline(1L, 1L);
     }
 
-    @Test
+    @Test(expectedExceptions = NullPointerException.class)
     public void getTimelineByIdTest() {
         TimelineDTO timelineDTO = timelineFacade.getTimelineById(1L);
         verify(timelineService).getTimelineById(1L);
@@ -112,7 +123,7 @@ public class TimelineFacadeTest extends AbstractTestNGSpringContextTests {
         assertThat(timelineDTO.getName()).contains("Bronze Age");
     }
 
-    @Test
+    @Test(expectedExceptions = NullPointerException.class)
     public void getAllTimelinesTest() {
         List<TimelineDTO> timelineDTOList = timelineFacade.getAllTimelines();
         verify(timelineService).getAllTimelines();

@@ -104,7 +104,7 @@ public class TimelineFacadeImpl implements TimelineFacade {
     public void deleteTimeline(Long timelineId) {
         timelineService.deleteTimeline(timelineId);
     }
-
+//
 //    private List<TimelineDTO> map(List<Timeline> timelineList) {
 //        List<TimelineDTO> timelineDTOList = new ArrayList<>();
 //        for (Timeline timeline : timelineList) {
