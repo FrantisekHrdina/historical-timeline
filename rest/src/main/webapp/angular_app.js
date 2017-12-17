@@ -150,7 +150,7 @@ controllers.controller('NewTimelineCtrl', function ($scope, $http, $rootScope, $
         'group': ''
     };
 
-    $scope.create = function (timeline) {
+    $scope.createTimeline = function (timeline) {
         $http({
             method: 'POST',
             url: 'timelines/create',

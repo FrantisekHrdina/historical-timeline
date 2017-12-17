@@ -1,5 +1,6 @@
 package cz.muni.fi.pa165.rest.controllers;
 
+import cz.muni.fi.pa165.dto.TimelineCreateDTO;
 import cz.muni.fi.pa165.dto.TimelineDTO;
 import cz.muni.fi.pa165.facade.TimelineFacade;
 import cz.muni.fi.pa165.rest.ApiUris;
@@ -35,7 +36,8 @@ public class TimelinesController {
             method = RequestMethod.POST,
             consumes = APPLICATION_JSON_VALUE,
             produces = APPLICATION_JSON_VALUE)
-    public TimelineDTO createTimeline(@RequestBody TimelineDTO timelineDTO) {
+//    public TimelineDTO createTimeline(@RequestBody TimelineDTO timelineDTO) {
+    public TimelineDTO createTimeline(@RequestBody TimelineCreateDTO timelineDTO) {
         logger.debug("rest createTimeline");
         try {
             Long id = timelineFacade.createTimeline(timelineDTO);

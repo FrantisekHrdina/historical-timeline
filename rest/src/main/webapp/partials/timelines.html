@@ -9,7 +9,9 @@
     <tr>
         <th>Id</th>
         <th>Name</th>
-        <!--<th>Seminar Group</th>-->
+        <th>Seminar Group</th>
+        <th>Events</th>
+        <th>Comments</th>
         <th>Delete</th>
     </tr>
     </thead>
@@ -17,13 +19,15 @@
     <tr ng-repeat="timeline in timelines track by $index">
         <td>{{timeline.id}}</td>
         <td>{{timeline.name}}</td>
-        <!--<td>{{timeline.saminarGroup}}</td>-->
-
-        <!--<td>-->
-            <!--<button ng-click="deleteEvent(timeline)" type="submit" class="btn btn-primary">Edit</button>-->
-        <!--</td>-->
+        <td>{{timeline.saminarGroup}}</td>
         <td>
-            <button ng-click="deleteEvent(timeline)" type="submit" class="btn btn-primary">Delete</button>
+            <table class="table"><tr ng-repeat="event in timeline.events">{{event.name}}</table></tr>
+        </td>
+        <td>
+            <table class="table"><tr ng-repeat="comment in timeline.comments">{{comment}}</table></tr>
+        </td>
+        <td>
+            <button ng-click="deleteTimeline(timeline)" type="submit" class="btn btn-primary">Delete</button>
         </td>
     </tr>
     </tbody>

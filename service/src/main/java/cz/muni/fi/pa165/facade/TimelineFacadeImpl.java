@@ -2,6 +2,7 @@ package cz.muni.fi.pa165.facade;
 
 import cz.muni.fi.pa165.dto.EventDTO;
 import cz.muni.fi.pa165.dto.SeminarGroupDTO;
+import cz.muni.fi.pa165.dto.TimelineCreateDTO;
 import cz.muni.fi.pa165.dto.TimelineDTO;
 import cz.muni.fi.pa165.entities.Event;
 import cz.muni.fi.pa165.entities.SeminarGroup;
@@ -44,19 +45,17 @@ public class TimelineFacadeImpl implements TimelineFacade {
     private BeanMappingService beanMappingService;
 
     @Override
-    public Long createTimeline(TimelineDTO timelineDTO) {
+    public Long createTimeline(TimelineCreateDTO timelineDTO) {
         Timeline timeline = new Timeline();
         timeline.setName(timelineDTO.getName());
-        timeline.setComments(timelineDTO.getComments());
 
         Set<Event> events = new HashSet<>();
-        Set<EventDTO> eventDTOs = timelineDTO.getEvents();
-        for (EventDTO e : eventDTOs) {
-            events.add(eventService.findEvent(e.getId()));
+        for (Long e : timelineDTO.getEvents()) {
+            events.add(eventService.findEvent(e));
         }
         timeline.setEvents(events);
 
-        SeminarGroup seminarGroup = seminarGroupService.findGroup(timelineDTO.getSeminarGroup().getId());
+        SeminarGroup seminarGroup = seminarGroupService.findGroup(timelineDTO.getSeminarGroup());
         timeline.setSeminarGroup(seminarGroup);
 
         timelineService.createTimeline(timeline);
