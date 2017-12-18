@@ -3,6 +3,7 @@ package cz.muni.fi.pa165;
 import cz.muni.fi.pa165.entities.Event;
 import cz.muni.fi.pa165.entities.SeminarGroup;
 import cz.muni.fi.pa165.entities.Timeline;
+import cz.muni.fi.pa165.entities.User;
 import cz.muni.fi.pa165.service.EventService;
 import cz.muni.fi.pa165.service.SeminarGroupService;
 import cz.muni.fi.pa165.service.TimelineService;
@@ -45,6 +46,17 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
         Timeline timeline = sampleTimeline("Ice Age");
         Event event = sampleEvent("Extinction", "World", "Extinction of all.");
         SeminarGroup seminarGroup = sampleSeminarGroup("Group #1");
+        SeminarGroup seminarGroup2 = sampleSeminarGroup("Group #2");
+        SeminarGroup seminarGroup3 = sampleSeminarGroup("Group #3");
+        SeminarGroup seminarGroup4 = sampleSeminarGroup("Group #4");
+        
+        User student = sampleStudent("Student", "1", "s1@skola.cz");
+        User teacher = sampleTeacher("Teacher", "1", "t1@skola.cz");
+        student.addSeminarGroup(seminarGroup);
+        student.addSeminarGroup(seminarGroup2);
+        student.addSeminarGroup(seminarGroup3);
+        student.addSeminarGroup(seminarGroup4);
+        userService.editUser(student);
 
         timelineService.addComment(timeline.getId(), "This is a boring period.");
         timelineService.addEventToTimeline(timeline.getId(), event.getId());
@@ -107,5 +119,25 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
         timeline.setName(name);
         timelineService.createTimeline(timeline);
         return timeline;
+    }
+    
+    private User sampleStudent(String forename, String surname, String email) {
+        User user = new User();
+        user.setForename(forename);
+        user.setSurname(surname);
+        user.setEmail(email);
+        user.setIsTeacher(false);
+        userService.addUser(user);
+        return user;
+    }
+    
+    private User sampleTeacher(String forename, String surname, String email) {
+        User user = new User();
+        user.setForename(forename);
+        user.setSurname(surname);
+        user.setEmail(email);
+        user.setIsTeacher(true);
+        userService.addUser(user);
+        return user;
     }
 }

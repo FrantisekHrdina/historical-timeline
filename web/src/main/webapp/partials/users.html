@@ -1,0 +1,32 @@
+<h1>Users</h1>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Forename</th>
+        <th>Surname</th>
+        <th>Email</th>
+        <th>Is Teacher</th>
+        <th>Seminar Groups</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="user in users track by $index">
+        <td>{{user.id}}</td>
+        <td>{{user.forename}}</td>
+        <td>{{user.surname}}</td>
+        <td>{{user.email}}</td>
+        <td>
+            <input type="checkbox" ng-checked="{{user.isTeacher}}">
+        </td>
+        <td>
+            <table>
+                <tr ng-repeat="group in user.seminarGroups">
+                    <td>{{group.name}}</td>
+                </tr>
+            </table>
+        <td>
+    </tr>
+    </tbody>
+</table>
