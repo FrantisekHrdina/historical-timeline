@@ -1,11 +1,11 @@
 'use strict';
 
 let historicalTimelineApp = angular.module('historicalTimelineApp', [
-'ngRoute',
+    'ngRoute',
 	'group',
 	'event',
-  'user',
-  'timeline'
+    'user',
+    'timeline'
 ]);
 
 historicalTimelineApp.config(['$routeProvider',

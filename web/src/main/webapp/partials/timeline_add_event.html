@@ -3,12 +3,12 @@
     <div class="form-group">
         <label for="multipleSelect" class="col-sm-2 control-label">Add event</label>
         <div class="col-sm-10">
-            <select name="multipleSelect" id="multipleSelect" ng-model="newEvents.ids" multiple>
+            <select class="form-control" name="multipleSelect" id="multipleSelect" ng-model="newEvents.ids" multiple>
                 <option ng-repeat="e in events" value="{{e.id}}"  ng-selected="false">{{e.name}}</option>
             </select>
         </div>
     </div>
 
     <button ng-disabled="!form.$valid" ng-click="setEvents(newEvents.ids)"
-            class="btn btn-primary" type="submit">Submit</button>
+            class="btn btn-default" type="submit">Submit</button>
 </form>
