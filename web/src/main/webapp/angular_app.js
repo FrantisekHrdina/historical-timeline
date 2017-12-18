@@ -19,7 +19,8 @@ historicalTimelineApp.config(['$routeProvider',
         when('/new_timeline', {templateUrl: 'partials/new_timeline.html', controller: 'NewTimelineCtrl'}).
         when('/new_comment', {templateUrl: 'partials/new_comment.html', controller: 'TimelinesCtrl'}).
         when('/timeline_group_change', {templateUrl: 'partials/timeline_group_change.html', controller: 'TimelinesCtrl'}).
-        when('/users', {templateUrl: 'partials/users.html', controller: 'UsersCtrl'})
+        when('/users', {templateUrl: 'partials/users.html', controller: 'UsersCtrl'}).
+        when('/assign_user', {templateUrl: 'partials/assign_user.html', controller: 'UsersCtrl'})
 	}]);
 
 

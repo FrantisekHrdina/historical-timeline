@@ -1,10 +1,15 @@
 package cz.muni.fi.pa165.facade;
 
 import cz.muni.fi.pa165.configuration.ServiceConfiguration;
+import cz.muni.fi.pa165.dto.SeminarGroupCreateDTO;
+import cz.muni.fi.pa165.dto.SeminarGroupDTO;
 import cz.muni.fi.pa165.dto.UserDTO;
 import cz.muni.fi.pa165.exception.DAOException;
 import cz.muni.fi.pa165.mapping.BeanMappingService;
 import cz.muni.fi.pa165.service.UserService;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 import static org.assertj.core.api.Assertions.assertThat;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -35,9 +40,15 @@ public class UserFacadeTest extends AbstractTestNGSpringContextTests {
     @InjectMocks
     private UserFacade userFacade;
     
+    @Autowired
+    private SeminarGroupFacade seminarGroupFacade;
+    
     private UserDTO user1;
     private UserDTO user2;
     private UserDTO user3;
+    
+    private SeminarGroupCreateDTO createGroup1;
+    private SeminarGroupDTO group1;
     
     @BeforeClass
     public void initMocks() {
@@ -67,6 +78,13 @@ public class UserFacadeTest extends AbstractTestNGSpringContextTests {
         user3.setPasswordHash("shameshameshame"); 
         user3.setIsTeacher(true);
         
+        
+        createGroup1 = new SeminarGroupCreateDTO();
+        createGroup1.setName("abc");
+        group1 = new SeminarGroupDTO();
+        group1.setName("abc");
+        
+        group1.setId(seminarGroupFacade.saveGroup(createGroup1));
         user2.setId(userFacade.addUser(user2));
         user3.setId(userFacade.addUser(user3));
     }
@@ -102,6 +120,29 @@ public class UserFacadeTest extends AbstractTestNGSpringContextTests {
     @Test
     public void findAllTeachers() {
         assertThat(userFacade.findAllTeachers()).contains(user3);
+    }
+    
+    @Test
+    public void findAllStudentsWithGroups() {
+        Set<SeminarGroupDTO> groups = new HashSet<>();
+        groups.add(group1);
+        user2.setSeminarGroupSet(groups);
+        userFacade.editUser(user2);
+        assertThat(userFacade.findAllStudents()).contains(user2);
+        for (UserDTO user : userFacade.findAllStudents()) {
+            if (user.getForename() == "khaleesi") {
+                assertThat(user.getSeminarGroupSet()).contains(group1);
+            }
+        }
+    }
+    
+    @Test
+    public void findUser() {
+        user1.addSeminarGroup(group1);
+        Long id = userFacade.addUser(user1);
+        UserDTO user = userFacade.findUser(id);
+        assertThat(user).isEqualTo(user1);
+        assertThat(user.getSeminarGroupSet()).contains(group1);
     }
     
 }

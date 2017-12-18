@@ -10,6 +10,27 @@ function loadUsers($http, $scope) {
 user.controller('UsersCtrl', function ($scope, $http, $rootScope, $location) {
     loadUsers($http, $scope);
     
+    $scope.addSeminarGroupView = function (userId) {
+        $rootScope.userId = userId;
+        $location.path('assign_user');
+    }
+    
+    $scope.addSeminarGroup = function (groupId) {
+        $http({
+            method: 'PUT',
+            url: 'users/' + $rootScope.userId + '/addseminargroup/' + groupId
+        }).then(function success(response) {
+            console.log('adding new group');
+            $rootScope.successAlert = 'Added new group.';
+            loadTimelines($http, $scope);
+            $location.path('users')
+        }, function error(response) {
+            console.log('could not add group to user');
+            $scope.errorAlert = 'Could not add group to user.';
+        });
+    }
+        
+    
     $scope.createUser = function (user) {
         console.log('create new user');
         $scope.user = null;
