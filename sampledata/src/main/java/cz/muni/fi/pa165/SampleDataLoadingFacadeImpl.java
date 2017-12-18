@@ -113,6 +113,7 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
         event.setLocation(location);
         event.setDescription(description);
         event.setDate(LocalDate.now());
+        event.setImage("https://goo.gl/D5Vsdj");
         eventService.addEvent(event);
         return event;
     }
