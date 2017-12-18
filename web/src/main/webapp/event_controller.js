@@ -2,7 +2,7 @@ let event = angular.module('event', []);
 
 function loadEvents($http, $scope) {
     console.log('loading events');
-    $http.get('events').then(function (response) {
+    $http.get(restInterface + '/events').then(function (response) {
         $scope.events = response.data;
     });
 }
@@ -27,7 +27,7 @@ event.controller('EventsCtrl', function ($scope, $http, $rootScope, $location) {
         console.log('delete event with id=' + event.id + ' (' + event.name + ')');
         $http({
             method: 'DELETE',
-            url: 'events/' + event.id
+            url: restInterface + '/events/' + event.id
         }).then(function success(response) {
             console.log('deleted event ' + event.name);
             $rootScope.successAlert = 'Event "' + event.name + '" was deleted.';
@@ -46,7 +46,7 @@ event.controller('NewEventCtrl', function ($scope, $http, $rootScope, $location)
         if (!event.id) {
             $http({
                 method: 'POST',
-                url: 'events/create',
+                url: restInterface + '/events/create',
                 data: event
             }).then(function success(response) {
                 let createdEvent = response.data;
@@ -60,7 +60,7 @@ event.controller('NewEventCtrl', function ($scope, $http, $rootScope, $location)
         else {
             $http({
                 method: 'PUT',
-                url: 'events/' + event.id,
+                url: restInterface + '/events/' + event.id,
                 data: event
             }).then(function success(response) {
                 let updatedEvent = response.data;

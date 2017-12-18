@@ -2,7 +2,7 @@ let group = angular.module('group', []);
 
 function loadGroups($http, $scope) {
 	console.log('loading groups');
-	$http.get('groups').then(function (response) {
+	$http.get(restInterface + '/groups').then(function (response) {
 		$scope.groups = response.data;
 	});
 }
@@ -27,7 +27,7 @@ group.controller('GroupsCtrl', function ($scope, $http, $rootScope, $location) {
 		console.log('delete group with id=' + group.id + ' (' + group.name + ')');
 		$http({
 			method: 'DELETE',
-			url: 'groups/' + group.id
+			url: restInterface + '/groups/' + group.id
 		}).then(function success(response) {
 			console.log('deleted group ' + group.name);
 			$rootScope.successAlert = 'Seminar group "' + group.name + '" was deleted.';
@@ -46,7 +46,7 @@ group.controller('NewGroupCtrl', function ($scope, $http, $rootScope, $location)
 		if (!group.id) {
 			$http({
 				method: 'POST',
-				url: 'groups/create',
+				url: restInterface + '/groups/create',
 				data: group
 			}).then(function success(response) {
 				let createdGroup = response.data;
@@ -59,7 +59,7 @@ group.controller('NewGroupCtrl', function ($scope, $http, $rootScope, $location)
 		} else {
 			$http({
 				method: 'PUT',
-				url: 'groups/' + group.id,
+				url: restInterface + '/groups/' + group.id,
 				data: group
 			}).then(function success(response) {
 				let createdGroup = response.data;
