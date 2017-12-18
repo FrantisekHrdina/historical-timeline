@@ -52,13 +52,11 @@ public class TimelinesController {
     @RequestMapping(
             value = "/{id}/addcomment",
             method = RequestMethod.PUT,
-            consumes = APPLICATION_JSON_VALUE,
-            produces = APPLICATION_JSON_VALUE)
-    public TimelineDTO addComment(@PathVariable("id") Long timelineId, @RequestBody CommentDTO comment) {
+            consumes = APPLICATION_JSON_VALUE)
+    public void addComment(@PathVariable("id") Long timelineId, @RequestBody CommentDTO comment) {
         logger.debug("rest addComment");
         try {
             timelineFacade.addComment(timelineId, comment.getComment());
-            return timelineFacade.getTimelineById(timelineId);
         } catch (Exception e) {
             logger.error("addComment", timelineId, e);
             throw new ResourceNotModifiedException();
@@ -151,3 +149,4 @@ public class TimelinesController {
         }
     }
 }
+

@@ -1,5 +1,7 @@
 package cz.muni.fi.pa165.dto;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -10,6 +12,8 @@ import java.util.Objects;
 public class SeminarGroupDTO {
 	private Long id;
 	private String name;
+
+	@JsonBackReference
 	private List<TimelineDTO> timelines = new ArrayList<>();
 
 	public SeminarGroupDTO(Long id, String name, List<TimelineDTO> timelines) {

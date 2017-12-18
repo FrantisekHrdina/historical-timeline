@@ -89,10 +89,9 @@ public class TimelineServiceImpl implements TimelineService {
                 List<Timeline> timelines = new ArrayList<>(seminarGroup.getTimelines());
                 timelines.remove(timeline);
                 seminarGroup.setTimelines(timelines);
+                seminarGroupDao.editGroup(seminarGroup);
             }
-
             timelineDao.editTimeline(timeline);
-            seminarGroupDao.editGroup(seminarGroup);
         } catch (Exception e) {
             throw new DAOException(e.getMessage());
         }

@@ -10,18 +10,35 @@ function loadTimelines($http, $scope) {
 timeline.controller('TimelinesCtrl', function ($scope, $http, $rootScope, $location) {
     loadTimelines($http, $scope);
 
+    $http.get('groups').then(function (response) {
+        $scope.groups = response.data;
+    });
+
     $scope.createTimeline = function (timeline) {
         console.log('create new timeline');
         $scope.timeline = null;
         $location.path('new_timeline');
-    }
+    };
 
-    $scope.updateTimeline = function (timeline) {
-        console.log('update timeline with id=' + timeline.id);
-        console.log(timeline);
-        $rootScope.timeline = timeline;
-        $location.path('new_timeline');
-    }
+    $scope.changeGroupView = function (timelineId) {
+        $rootScope.timelineId = timelineId;
+        $location.path('timeline_group_change');
+    };
+
+    $scope.changeGroup = function (groupId) {
+        $http({
+            method: 'PUT',
+            url: 'timelines/' + $rootScope.timelineId + '/setseminargroup/' + groupId
+        }).then(function success(response) {
+            console.log('setting new group');
+            $rootScope.successAlert = 'Set new group.';
+            loadTimelines($http, $scope);
+            $location.path('timelines')
+        }, function error(response) {
+            console.log('could not set group to timeline');
+            $scope.errorAlert = 'Could not set group to timeline.';
+        });
+    };
 
     $scope.deleteTimeline = function (timeline) {
         console.log('delete timeline with id=' + timeline.id);
@@ -41,7 +58,7 @@ timeline.controller('TimelinesCtrl', function ($scope, $http, $rootScope, $locat
     $scope.loadEvent = function (event) {
         $rootScope.event = event;
         $location.path('new_event');
-    }
+    };
 
     $scope.removeEvent = function (timeline, event) {
         $http({
@@ -55,12 +72,12 @@ timeline.controller('TimelinesCtrl', function ($scope, $http, $rootScope, $locat
             console.log('Could not remove event from timeline "' + timeline.name + '".');
             $scope.errorAlert = 'Could not remove event from timeline.';
         });
-    }
+    };
 
     $scope.addCommentView = function (timelineId) {
         $rootScope.timelineId = timelineId;
         $location.path('new_comment');
-    }
+    };
 
     $scope.addComment = function (timelineId, comment) {
         $scope.comment = {
@@ -75,17 +92,17 @@ timeline.controller('TimelinesCtrl', function ($scope, $http, $rootScope, $locat
             console.log('adding comment');
             $rootScope.successAlert = 'Added comment.';
             loadTimelines($http, $scope);
+            $location.path('timelines')
         }, function error(response) {
             console.log('could not add comment to timeline');
             $scope.errorAlert = 'Could not add comment to timeline.';
         });
-    }
+    };
 
 });
 
 timeline.controller('NewTimelineCtrl', function ($scope, $http, $rootScope, $location) {
     console.log('New Timeline form');
-    //set object bound to form fields
 
     $http.get('events').then(function (response) {
         $scope.events = response.data;

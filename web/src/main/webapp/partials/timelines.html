@@ -11,7 +11,7 @@
         <th>Seminar Group</th>
         <th>Events</th>
         <th>Comments</th>
-        <th>Update</th>
+        <!--<th>Update</th>-->
         <th>Delete</th>
     </tr>
     </thead>
@@ -19,7 +19,17 @@
     <tr ng-repeat="timeline in timelines track by $index">
         <td>{{timeline.id}}</td>
         <td>{{timeline.name}}</td>
-        <td>{{timeline.seminarGroup.name}}</td>
+        <td>
+            <table>
+                <tr>
+                    <td>{{timeline.seminarGroup.name}}</td>
+                </tr>
+                <tr>
+                    <td><button ng-click="changeGroupView(timeline.id)" type="submit"
+                                class="btn btn-primary btn-xs">Change group</button></td>
+                </tr>
+            </table>
+        </td>
         <td>
             <table>
                 <tr ng-repeat="event in timeline.events">
@@ -41,10 +51,10 @@
                                 class="btn btn-primary btn-xs">Add comment</button></td>
                 </tr>
             </table>
-        <td>
-            <button ng-click="updateTimeline(timeline)" type="submit"
-                    class="btn btn-primary">Update</button>
-        </td>
+            <!--<td>-->
+            <!--<button ng-click="updateTimelineView(timeline)" type="submit"-->
+            <!--class="btn btn-primary">Update</button>-->
+            <!--</td>-->
         <td>
             <button ng-click="deleteTimeline(timeline)" type="submit"
                     class="btn btn-primary">Delete</button>
