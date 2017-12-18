@@ -1,12 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package cz.muni.fi.pa165.rest.controllers;
 
+import cz.muni.fi.pa165.dto.SeminarGroupDTO;
 import cz.muni.fi.pa165.dto.UserDTO;
 import cz.muni.fi.pa165.exception.DAOException;
+import cz.muni.fi.pa165.facade.SeminarGroupFacade;
 import cz.muni.fi.pa165.facade.UserFacade;
 import cz.muni.fi.pa165.rest.ApiUris;
 import cz.muni.fi.pa165.rest.exceptions.ResourceAlreadyExistingException;
@@ -14,6 +11,7 @@ import cz.muni.fi.pa165.rest.exceptions.ResourceNotFoundException;
 import cz.muni.fi.pa165.rest.exceptions.ResourceNotModifiedException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,6 +34,9 @@ public class UserController {
 
     @Inject
     private UserFacade userFacade;
+    
+    @Inject
+    private SeminarGroupFacade seminarGroupFacade;
     
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public final List<UserDTO> getUsers() {
@@ -128,6 +129,20 @@ public class UserController {
         } catch (DAOException e) {
             logger.error("rest removeUser({}) error", id, e);
             throw new ResourceNotFoundException("User with id: " + id + " could not be removed");
+        }
+    }
+    
+    @RequestMapping(value = "/{userid}/addseminargroup/{groupid}", method = RequestMethod.PUT)
+    public void addSeminarGroup(@PathVariable("userid") Long userId, @PathVariable("groupid") Long seminarGroupId) {
+        try {
+            UserDTO user = userFacade.findUser(userId);
+            SeminarGroupDTO group = seminarGroupFacade.findGroup(seminarGroupId);
+            Set<SeminarGroupDTO> groups = user.getSeminarGroupSet();
+            groups.add(group);
+            user.setSeminarGroupSet(groups);
+        } catch (DAOException e) {
+            logger.error("rest add Seminar Group", userId, e);
+            throw new ResourceNotModifiedException();
         }
     }
     

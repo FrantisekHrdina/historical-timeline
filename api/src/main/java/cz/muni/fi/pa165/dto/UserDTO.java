@@ -68,6 +68,10 @@ public class UserDTO {
     public Set<SeminarGroupDTO> getSeminarGroupSet() {
         return seminarGroupSet;
     }
+    
+    public void addSeminarGroup(SeminarGroupDTO seminarGroup) {
+        this.seminarGroupSet.add(seminarGroup); 
+    }
 
     public void setSeminarGroupSet(Set<SeminarGroupDTO> seminarGroupSet) {
         this.seminarGroupSet = seminarGroupSet;

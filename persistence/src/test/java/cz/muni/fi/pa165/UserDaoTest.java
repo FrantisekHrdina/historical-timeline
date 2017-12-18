@@ -94,9 +94,11 @@ public class UserDaoTest extends AbstractTestNGSpringContextTests{
     @Test
     public void addUser() {
         assertThat(user1.getId()).isNull();
+        user1.addSeminarGroup(seminarGroup1);
         userDao.addUser(user1);
         assertThat(user1.getId()).isNotNull();
-        assertThat(userDao.findUser(user1.getId())).hasFieldOrPropertyWithValue("surname", "Snow");
+        assertThat(userDao.findUser(user1.getId())).isEqualTo(user1);
+        assertThat(userDao.findUser(user1.getId()).getSeminarGroups()).contains(seminarGroup1);
     }
     
     @Test
@@ -138,7 +140,16 @@ public class UserDaoTest extends AbstractTestNGSpringContextTests{
         userDao.addUser(user1);
         user1.setSurname("Targaryen");
         userDao.editUser(user1);
-        assertThat(userDao.findUser(user1.getId())).hasFieldOrPropertyWithValue("surname", "Targaryen");
+        assertThat(userDao.findUser(user1.getId())).isEqualTo(user1);
+    }
+    
+    @Test
+    public void editUserGroup() {
+        userDao.addUser(user1);
+        user1.addSeminarGroup(seminarGroup1);
+        userDao.editUser(user1);
+        User user = userDao.findUser(user1.getId());
+        assertThat(user.getSeminarGroups()).contains(seminarGroup1);
     }
     
     @Test

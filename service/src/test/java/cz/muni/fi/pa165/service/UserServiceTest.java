@@ -95,9 +95,10 @@ public class UserServiceTest extends AbstractTransactionalTestNGSpringContextTes
     @Test
     public void addUser() {
         assertThat(user1.getId()).isNull();
+        user1.addSeminarGroup(group);
         userService.addUser(user1);
         assertThat(user1.getId()).isNotNull();
-        assertThat(userService.findUser(user1.getId())).hasFieldOrPropertyWithValue("surname", "Snow");
+        assertThat(userService.findUser(user1.getId())).isEqualTo(user1);
     }
     
     @Test
@@ -157,10 +158,20 @@ public class UserServiceTest extends AbstractTransactionalTestNGSpringContextTes
                 .usingFieldByFieldElementComparator()
                 .containsOnly(user2);
     }
+    
     @Test
     public void findAllTeachers() {
         assertThat(userService.findAllTeachers())
                 .usingFieldByFieldElementComparator()
                 .containsOnly(user3);
     }
+    
+    @Test
+    public void findAllStudentsWithGroup() {
+        user1.addSeminarGroup(group);
+        assertThat(userService.findAllStudents())
+                .usingFieldByFieldElementComparator()
+                .containsOnly(user2);
+    }
+    
 }
