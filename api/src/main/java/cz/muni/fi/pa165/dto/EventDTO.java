@@ -21,7 +21,7 @@ public class EventDTO {
     private LocalDate date;
     private String location;
     private String description;
-    private byte[] image;
+    private String image;
 
     @JsonBackReference
     private TimelineDTO timeline;
@@ -29,7 +29,7 @@ public class EventDTO {
     public EventDTO() {
     }
 
-    public EventDTO(Long id, String name, LocalDate date, String location, String description, byte[] image) {
+    public EventDTO(Long id, String name, LocalDate date, String location, String description, String image) {
         this.id = id;
         this.name = name;
         this.date = date;
@@ -78,11 +78,11 @@ public class EventDTO {
         this.description = description;
     }
 
-    public byte[] getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(byte[] image) {
+    public void setImage(String image) {
         this.image = image;
     }
 

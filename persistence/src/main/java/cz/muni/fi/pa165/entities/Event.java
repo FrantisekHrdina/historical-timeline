@@ -1,5 +1,6 @@
 package cz.muni.fi.pa165.entities;
 
+import javax.naming.event.ObjectChangeListener;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
@@ -22,12 +23,12 @@ public class Event {
 	private LocalDate date;
 	private String location;
 	private String description;
-	private byte[] image;
+	private String image;
 
 	@ManyToOne
 	private Timeline timeline;
 
-	public Event(Long id, String name, LocalDate date, String location, String description, byte[] image) {
+	public Event(Long id, String name, LocalDate date, String location, String description, String image) {
 		this.id = id;
 		this.name = name;
 		this.date = date;
@@ -79,11 +80,11 @@ public class Event {
 		this.description = description;
 	}
 
-	public byte[] getImage() {
+	public String getImage() {
 		return image;
 	}
 
-	public void setImage(byte[] image) {
+	public void setImage(String image) {
 		this.image = image;
 	}
 
@@ -94,7 +95,6 @@ public class Event {
 		result = prime * result + ((date == null) ? 0 : date.hashCode());
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + Arrays.hashCode(image);
 		result = prime * result + ((location == null) ? 0 : location.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
@@ -115,7 +115,7 @@ public class Event {
 			return false;
 		if (!Objects.equals(id, other.getId()))
 			return false;
-		if (!Arrays.equals(image, other.getImage()))
+		if (!Objects.equals(image, other.getImage()))
 			return false;
 		if (!Objects.equals(location, other.getLocation()))
 			return false;
@@ -132,7 +132,7 @@ public class Event {
 				", date=" + date +
 				", location='" + location + '\'' +
 				", description='" + description + '\'' +
-				", image=" + Arrays.toString(image) +
+				", image=" + image +
 				'}';
 	}
 

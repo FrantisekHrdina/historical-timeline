@@ -11,6 +11,7 @@
         <th>Location</th>
         <th>Date</th>
         <th>Description</th>
+        <th>Image</th>
         <th>Update</th>
         <th>Delete</th>
     </tr>
@@ -22,6 +23,7 @@
         <td>{{event.location}}</td>
         <td>{{event.date}}</td>
         <td>{{event.description}}</td>
+        <td><img src="{{event.image}}" width="50" height="50"></td>
         <td>
             <button ng-click="updateEvent(event)" type="submit"
                     class="btn btn-primary">Update</button>
