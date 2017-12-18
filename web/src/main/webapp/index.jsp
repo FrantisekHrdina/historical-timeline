@@ -39,7 +39,7 @@
 				<li><a href="#!/groups">Seminar groups</a></li>
 				<li><a href="#!/events">Events</a></li>
 				<li><a href="#!/timelines">Timelines</a></li>
-                                <li><a href="#!/users">Users</a></li>
+                <li><a href="#!/users">Users</a></li>
 			</ul>
 		</div><!--/.nav-collapse -->
 	</div>
