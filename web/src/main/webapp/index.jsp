@@ -19,6 +19,7 @@
 	<script type="text/javascript" src="./timeline_controller.js"></script>
 	<script type="text/javascript" src="./user_controller.js"></script>
     <script type="text/javascript" src="./config.js"></script>
+    <script type="text/javascript" src="./auth_controller.js"></script>
 
 </head>
 <body>
@@ -44,6 +45,8 @@
 		</div><!--/.nav-collapse -->
 	</div>
 </nav>
+	<a href="#!/login">Login</a>
+
 	<div class="container">
 		<div ng-app="historicalTimelineApp">
 			<div ng-view></div>

@@ -5,7 +5,8 @@ let historicalTimelineApp = angular.module('historicalTimelineApp', [
 	'group',
 	'event',
     'user',
-    'timeline'
+    'timeline',
+    'auth'
 ]);
 
 historicalTimelineApp.config(['$routeProvider',
@@ -21,7 +22,8 @@ historicalTimelineApp.config(['$routeProvider',
         when('/timeline_group_change', {templateUrl: 'partials/timeline_group_change.html', controller: 'TimelinesCtrl'}).
         when('/timeline_add_event', {templateUrl: 'partials/timeline_add_event.html', controller: 'TimelinesCtrl'}).
         when('/users', {templateUrl: 'partials/users.html', controller: 'UsersCtrl'}).
-        when('/assign_user', {templateUrl: 'partials/assign_user.html', controller: 'UsersCtrl'})
+        when('/assign_user', {templateUrl: 'partials/assign_user.html', controller: 'UsersCtrl'}).
+        when('/auth', {templateUrl: 'partials/login_form.html', controller: 'LoginController'})
 	}]);
 
 
