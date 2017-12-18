@@ -1,11 +1,11 @@
 'use strict';
 
 let historicalTimelineApp = angular.module('historicalTimelineApp', [
-	'ngRoute',
+'ngRoute',
 	'group',
 	'event',
-        'user',
-    'timeline'
+  'user',
+  'timeline'
 ]);
 
 historicalTimelineApp.config(['$routeProvider',
@@ -18,6 +18,8 @@ historicalTimelineApp.config(['$routeProvider',
         when('/timelines', {templateUrl: 'partials/timelines.html', controller: 'TimelinesCtrl'}).
         when('/new_timeline', {templateUrl: 'partials/new_timeline.html', controller: 'NewTimelineCtrl'}).
         when('/new_comment', {templateUrl: 'partials/new_comment.html', controller: 'TimelinesCtrl'}).
+        when('/timeline_group_change', {templateUrl: 'partials/timeline_group_change.html', controller: 'TimelinesCtrl'}).
         when('/users', {templateUrl: 'partials/users.html', controller: 'UsersCtrl'})
 	}]);
+
 
