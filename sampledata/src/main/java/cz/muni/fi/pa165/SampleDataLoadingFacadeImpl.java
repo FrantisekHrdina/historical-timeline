@@ -60,7 +60,7 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
 
         timelineService.addComment(timeline.getId(), "This is a boring period.");
         timelineService.addEventToTimeline(timeline.getId(), event.getId());
-//        timelineService.setSeminarGroupToTimeline(timeline.getId(), seminarGroup.getId());
+        timelineService.setSeminarGroupToTimeline(timeline.getId(), seminarGroup.getId());
 
 
         Timeline timeline1 = sampleTimeline("Timeline1");
@@ -95,6 +95,9 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
         timelineService.addEventToTimeline(timeline3.getId(), event13.getId());
         timelineService.addEventToTimeline(timeline3.getId(), event23.getId());
         timelineService.addEventToTimeline(timeline3.getId(), event33.getId());
+
+        timelineService.setSeminarGroupToTimeline(timeline1.getId(), seminarGroup4.getId());
+        timelineService.setSeminarGroupToTimeline(timeline2.getId(), seminarGroup3.getId());
     }
 
     private SeminarGroup sampleSeminarGroup(String name) {

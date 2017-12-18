@@ -2,7 +2,7 @@ let timeline = angular.module('timeline', []);
 
 function loadTimelines($http, $scope) {
     console.log('Loading timelines');
-    $http.get('timelines').then(function (response) {
+    $http.get(restInterface + '/timelines').then(function (response) {
         $scope.timelines = response.data;
     });
 }
@@ -10,8 +10,12 @@ function loadTimelines($http, $scope) {
 timeline.controller('TimelinesCtrl', function ($scope, $http, $rootScope, $location) {
     loadTimelines($http, $scope);
 
-    $http.get('groups').then(function (response) {
+    $http.get(restInterface + '/groups').then(function (response) {
         $scope.groups = response.data;
+    });
+
+    $http.get(restInterface + '/events').then(function (response) {
+        $scope.events = response.data;
     });
 
     $scope.createTimeline = function (timeline) {
@@ -28,7 +32,7 @@ timeline.controller('TimelinesCtrl', function ($scope, $http, $rootScope, $locat
     $scope.changeGroup = function (groupId) {
         $http({
             method: 'PUT',
-            url: 'timelines/' + $rootScope.timelineId + '/setseminargroup/' + groupId
+            url: restInterface + '/timelines/' + $rootScope.timelineId + '/setseminargroup/' + groupId
         }).then(function success(response) {
             console.log('setting new group');
             $rootScope.successAlert = 'Set new group.';
@@ -40,11 +44,39 @@ timeline.controller('TimelinesCtrl', function ($scope, $http, $rootScope, $locat
         });
     };
 
+    $scope.addEventsView = function (timelineId) {
+        console.log('add event view tml_id' + timelineId);
+        $rootScope.timelineId = timelineId;
+        $scope.newEvents = {
+            ids: []
+        };
+        $location.path('timeline_add_event');
+    };
+
+    $scope.setEvents = function (newEvents) {
+        console.log('setEvents ' + $rootScope.timelineId);
+        console.log('setEvents ' + newEvents);
+        for (i = 0; i < newEvents.length; i++) {
+            $http({
+                method: 'PUT',
+                url: restInterface + '/timelines/' + $rootScope.timelineId + '/addevent/' + newEvents[i]
+            }).then(function success(response) {
+                console.log('setting new group');
+                $rootScope.successAlert = 'Set new event.';
+                loadTimelines($http, $scope);
+                $location.path('timelines')
+            }, function error(response) {
+                console.log('could not set event to timeline');
+                $scope.errorAlert = 'Could not set event to timeline.';
+            });
+        }
+    };
+
     $scope.deleteTimeline = function (timeline) {
         console.log('delete timeline with id=' + timeline.id);
         $http({
             method: 'DELETE',
-            url: 'timelines/' + timeline.id
+            url: restInterface + '/timelines/' + timeline.id
         }).then(function success(response) {
             console.log('deleted timeline ' + timeline.name);
             $rootScope.successAlert = 'Timeline "' + timeline.name + '" was deleted.';
@@ -63,7 +95,7 @@ timeline.controller('TimelinesCtrl', function ($scope, $http, $rootScope, $locat
     $scope.removeEvent = function (timeline, event) {
         $http({
             method: 'PUT',
-            url: 'timelines/' + timeline.id + '/removeevent/' + event.id
+            url: restInterface + '/timelines/' + timeline.id + '/removeevent/' + event.id
         }).then(function success(response) {
             console.log('Removed timeline ' + timeline.name);
             $rootScope.successAlert = 'Event "' + event.name + '" removed from timeline "' + timeline.name + '"';
@@ -86,7 +118,7 @@ timeline.controller('TimelinesCtrl', function ($scope, $http, $rootScope, $locat
         $scope.comment.comment = comment;
         $http({
             method: 'PUT',
-            url: 'timelines/' + timelineId + '/addcomment',
+            url: restInterface + '/timelines/' + timelineId + '/addcomment',
             data: $scope.comment
         }).then(function success(response) {
             console.log('adding comment');
@@ -121,7 +153,7 @@ timeline.controller('NewTimelineCtrl', function ($scope, $http, $rootScope, $loc
     $scope.createTimeline = function (timeline) {
         $http({
             method: 'POST',
-            url: 'timelines/create',
+            url: restInterface + '/timelines/create',
             data: timeline
         }).then(function success(response) {
             var createdTimeline = response.data;

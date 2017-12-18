@@ -48,17 +48,14 @@ public class TimelineFacadeImpl implements TimelineFacade {
     public Long createTimeline(TimelineCreateDTO timelineDTO) {
         Timeline timeline = new Timeline();
         timeline.setName(timelineDTO.getName());
-
-        Set<Event> events = new HashSet<>();
-        for (Long e : timelineDTO.getEvents()) {
-            events.add(eventService.findEvent(e));
-        }
-        timeline.setEvents(events);
-
-        SeminarGroup seminarGroup = seminarGroupService.findGroup(timelineDTO.getSeminarGroup());
-        timeline.setSeminarGroup(seminarGroup);
-
         timelineService.createTimeline(timeline);
+
+        for (Long e : timelineDTO.getEvents()) {
+            addEvent(timeline.getId(), e);
+        }
+
+        setSeminarGroup(timeline.getId(), timelineDTO.getSeminarGroup());
+
         return timeline.getId();
     }
 
