@@ -26,7 +26,7 @@ curl -i -X DELETE http://localhost:8080/pa165/events/1
 ```
 curl -X POST -i -H "Content-Type: application/json" --data 
 '{"name":"Test","date":"2017-12-12","location":"Brno","description":"some desc"}' 
-http://localhost:8080/pa165/events
+http://localhost:8080/pa165/events/create
 ```
 
 ### Update event
