@@ -34,7 +34,7 @@ public class User {
     private boolean isTeacher = false;
 
     @ManyToMany(/*mappedBy = users*/) // TODO: add dependency to SeminarGroup as per diagram
-    private Set<SeminarGroup> seminarGroupSet = new HashSet<>();
+    private Set<SeminarGroup> seminarGroups = new HashSet<>();
 
     public User() {
 
@@ -97,15 +97,15 @@ public class User {
     }
 
     public void addSeminarGroup(SeminarGroup g) {
-        seminarGroupSet.add(g);
+        seminarGroups.add(g);
     }
 
     public void removeSeminarGroup(SeminarGroup g) {
-        seminarGroupSet.remove(g);
+        seminarGroups.remove(g);
     }
 
     public Set<SeminarGroup> getSeminarGroups() {
-        return Collections.unmodifiableSet(seminarGroupSet);
+        return Collections.unmodifiableSet(seminarGroups);
     }
     @Override
     public int hashCode() {
