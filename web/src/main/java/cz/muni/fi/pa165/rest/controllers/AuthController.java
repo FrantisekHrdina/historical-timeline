@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import cz.muni.fi.pa165.dto.CredentialsDTO;
 import cz.muni.fi.pa165.rest.ApiUris;
+import cz.muni.fi.pa165.rest.exceptions.ResourceNotFoundException;
 
 /**
  * 
@@ -39,11 +40,15 @@ public class AuthController {
 	        String teacherPwd = new String(messageDigest.digest());
 	        
 	        
-	        if (credentials.getLogin() == "student") {
+	        if (credentials.getLogin().equals("student")) {
 				messageDigest.update(credentials.getPassword().getBytes());
-				if (new String(messageDigest.digest()) == studentPwd) {
-					return "{role: student}"; 
+				if (new String(messageDigest.digest()).equals(studentPwd)) {
+					return "student"; 
 				}
+	        } else if (new String(messageDigest.digest()).equals(teacherPwd)) {
+				return "teacher";
+			} else {
+				throw new ResourceNotFoundException("Bad credentials.");
 			}
 		} catch (NoSuchAlgorithmException e) {
 			// TODO Auto-generated catch block

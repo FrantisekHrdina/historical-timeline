@@ -4,8 +4,11 @@ public class CredentialsDTO {
 	private String login;
 	private String password;
 	
+	public CredentialsDTO() {
+		
+	}
+	
 	public CredentialsDTO(String login, String password) {
-		super();
 		this.login = login;
 		this.password = password;
 	}

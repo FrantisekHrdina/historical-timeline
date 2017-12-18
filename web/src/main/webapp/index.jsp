@@ -45,9 +45,7 @@
 		</div><!--/.nav-collapse -->
 	</div>
 </nav>
-	<a href="#!/login">Login</a>
-
-	<div class="container">
+ 	<div class="container">
 		<div ng-app="historicalTimelineApp">
 			<div ng-view></div>
 		</div>

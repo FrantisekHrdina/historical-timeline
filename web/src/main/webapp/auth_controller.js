@@ -1,17 +1,24 @@
 let auth = angular.module('auth', []);
 
-
-auth.controller('LoginController', function ($scope, $rootScope, AUTH_EVENTS, AuthService) {
+auth.controller('LoginController', function ($scope, $rootScope, $http) {
   $scope.credentials = {
-    username: '',
+    login: '',
     password: ''
   };
+  
   $scope.login = function (credentials) {
-    AuthService.login(credentials).then(function (user) {
-      $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
-      $scope.setCurrentUser(user);
-    }, function () {
-      $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
-    });
+	  $http({
+          method: 'POST',
+          url: restInterface + '/auth',
+          data: credentials
+      }).then(function success(response) {
+          console.log('signed in user using ' + credentials.login);
+          $rootScope.userRole = response.data;
+          console.log('user role', $rootScope.userRole);
+      }, function error(response) {
+          console.log('error signing in user ' + credentials.login);
+          $scope.errorAlert = 'Could not sign in. Please check username and password.';
+      });
+	  
   };
 })
