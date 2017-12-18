@@ -32,9 +32,7 @@ http://localhost:8080/pa165/events/create
 ### Update event
 
 ```
-curl -X PUT -i -H "Content-Type: application/json" --data 
-'{"name":"UpdatedName"}' 
-http://localhost:8080/pa165/events/1
+curl -X PUT -i -H "Content-Type: application/json" --data '{"id":"1","name":"UpdatedName", "date":"2017-11-11"}' http://localhost:8080/pa165/events/1
 ```
 
 
