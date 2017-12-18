@@ -3,12 +3,12 @@
     <div class="form-group">
         <label for="repeatSelect" class="col-sm-2 control-label">Seminar group</label>
         <div class="col-sm-10">
-            <select name="repeatSelect" id="repeatSelect" ng-model="groupId">
+            <select class="form-control" name="repeatSelect" id="repeatSelect" ng-model="groupId">
                 <option ng-repeat="g in groups" value="{{g.id}}" ng-selected="{{g.id == groupId}}">{{g.name}}</option>
             </select>
         </div>
     </div>
 
     <button ng-disabled="!form.$valid" ng-click="changeGroup(groupId)"
-            class="btn btn-primary" type="submit">Submit</button>
+            class="btn btn-default" type="submit">Submit</button>
 </form>

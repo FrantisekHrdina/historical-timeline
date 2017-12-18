@@ -17,7 +17,8 @@
 	<script type="text/javascript" src="./event_controller.js"></script>
 	<script type="text/javascript" src="./group_controller.js"></script>
 	<script type="text/javascript" src="./timeline_controller.js"></script>
-        <script type="text/javascript" src="./user_controller.js"></script>
+	<script type="text/javascript" src="./user_controller.js"></script>
+
 </head>
 <body>
 

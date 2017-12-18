@@ -104,7 +104,11 @@ public class TimelineServiceImpl implements TimelineService {
             Timeline timeline = timelineDao.findTimeline(timelineId);
             Event event = eventDao.findEvent(eventId);
 
-            Set<Event> events = new HashSet<>(timeline.getEvents());
+            if (timeline.getEvents().contains(event)) {
+                return;
+            }
+
+            Set<Event> events = timeline.getEvents();
             events.add(event);
             timeline.setEvents(events);
 
@@ -124,7 +128,7 @@ public class TimelineServiceImpl implements TimelineService {
             Timeline timeline = timelineDao.findTimeline(timelineId);
             Event event = eventDao.findEvent(eventId);
 
-            Set<Event> events = new HashSet<>(timeline.getEvents());
+            Set<Event> events = timeline.getEvents();
             events.remove(event);
             timeline.setEvents(events);
 
