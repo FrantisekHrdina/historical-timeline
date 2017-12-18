@@ -33,6 +33,7 @@ public class MainController {
 
         resourceMap.put("events_uri", ApiUris.ROOT_URI_EVENTS);
         resourceMap.put("timelines_uri", ApiUris.ROOT_URI_TIMELINES);
+        resourceMap.put("users_uri", ApiUris.ROOT_URI_USERS);
 
         return Collections.unmodifiableMap(resourceMap);
     }

@@ -12,6 +12,7 @@ import cz.muni.fi.pa165.rest.ApiUris;
 import cz.muni.fi.pa165.rest.exceptions.ResourceAlreadyExistingException;
 import cz.muni.fi.pa165.rest.exceptions.ResourceNotFoundException;
 import cz.muni.fi.pa165.rest.exceptions.ResourceNotModifiedException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
 import org.slf4j.Logger;
@@ -35,8 +36,22 @@ public class UserController {
 
     @Inject
     private UserFacade userFacade;
-    /*
+    
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public final List<UserDTO> getUsers() {
+	logger.debug("rest getUsers()");
+        try {
+            List<UserDTO> users = new ArrayList<>();
+            users.addAll(userFacade.findAllStudents());
+            users.addAll(userFacade.findAllTeachers());
+            return users;
+	} catch (DAOException ex) {
+            logger.error("rest findAllStudents() or findAllTeachers() error");
+	}
+            return null;
+    }
+    
+    @RequestMapping(value = "/students", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public final List<UserDTO> getStudents() {
 	logger.debug("rest getStudents()");
         try {
@@ -47,7 +62,7 @@ public class UserController {
             return null;
     }
     
-    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/teachers", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public final List<UserDTO> getTeachers() {
 	logger.debug("rest getTeachers()");
         try {
@@ -57,7 +72,7 @@ public class UserController {
 	}
             return null;
     }
-    */
+    
     @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public final UserDTO getUser(@PathVariable("id") long id) throws Exception {
         logger.debug("rest getUser({})", id);

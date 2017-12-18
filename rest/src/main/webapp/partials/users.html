@@ -1,0 +1,29 @@
+<h1>Users</h1>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Forename</th>
+        <th>Surname</th>
+        <th>Email</th>
+        <th>Is Teacher</th>
+        <th>Delete</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="user in users track by $index">
+        <td>{{user.id}}</td>
+        <td>{{user.forename}}</td>
+        <td>{{user.surname}}</td>
+        <td>{{user.email}}</td>
+        <td>
+            <input type="checkbox" ng-checked="{{user.isTeacher}}">
+        </td>
+        <td>
+            <button ng-click="deleteUser(user)" type="submit"
+                    class="btn btn-primary">Delete</button>
+        </td>
+    </tr>
+    </tbody>
+</table>
