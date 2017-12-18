@@ -51,7 +51,7 @@ public class UserController {
 	}
         return null;
     }
-    /*
+    
     @RequestMapping(value = "/students", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public final List<UserDTO> getStudents() {
 	logger.debug("rest getStudents()");
@@ -73,7 +73,7 @@ public class UserController {
 	}
             return null;
     }
-    */
+    
     @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public final UserDTO getUser(@PathVariable("id") long id) throws Exception {
         logger.debug("rest getUser({})", id);
@@ -137,9 +137,8 @@ public class UserController {
         try {
             UserDTO user = userFacade.findUser(userId);
             SeminarGroupDTO group = seminarGroupFacade.findGroup(seminarGroupId);
-            Set<SeminarGroupDTO> groups = user.getSeminarGroupSet();
-            groups.add(group);
-            user.setSeminarGroupSet(groups);
+            user.addSeminarGroup(group);
+            userFacade.editUser(user);
         } catch (DAOException e) {
             logger.error("rest add Seminar Group", userId, e);
             throw new ResourceNotModifiedException();

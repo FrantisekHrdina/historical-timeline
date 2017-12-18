@@ -10,6 +10,10 @@ function loadUsers($http, $scope) {
 user.controller('UsersCtrl', function ($scope, $http, $rootScope, $location) {
     loadUsers($http, $scope);
     
+        $http.get(restInterface + '/groups').then(function (response) {
+        $scope.groups = response.data;
+    });
+    
     $scope.addSeminarGroupView = function (userId) {
         $rootScope.userId = userId;
         $location.path('assign_user');
@@ -22,8 +26,8 @@ user.controller('UsersCtrl', function ($scope, $http, $rootScope, $location) {
         }).then(function success(response) {
             console.log('adding new group');
             $rootScope.successAlert = 'Added new group.';
-            loadTimelines($http, $scope);
-            $location.path('users')
+            loadUsers($http, $scope);
+            $location.path('users');
         }, function error(response) {
             console.log('could not add group to user');
             $scope.errorAlert = 'Could not add group to user.';
