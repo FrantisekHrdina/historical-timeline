@@ -161,6 +161,11 @@ public class TimelineServiceImpl implements TimelineService {
         if (timelineId == null) throw new IllegalArgumentException("Null is not acceptable!");
         try {
             Timeline timeline = timelineDao.findTimeline(timelineId);
+
+            for (Event e : timeline.getEvents()) {
+                removeEventFromTimeline(timelineId, e.getId());
+            }
+
             timelineDao.removeTimeline(timeline);
         } catch (Exception e) {
             throw new DAOException(e.getMessage());
