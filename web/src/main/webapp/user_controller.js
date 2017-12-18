@@ -2,7 +2,7 @@ let user = angular.module('user', []);
 
 function loadUsers($http, $scope) {
     console.log('loading users');
-    $http.get('users').then(function (response) {
+    $http.get(restInterface + '/users').then(function (response) {
         $scope.users = response.data;
     });
 }
@@ -27,7 +27,7 @@ user.controller('UsersCtrl', function ($scope, $http, $rootScope, $location) {
         console.log('delete user with id=' + user.id + ' (' + user.forename + ')');
         $http({
             method: 'DELETE',
-            url: 'users/' + user.id
+            url: restInterface + '/users/' + user.id
         }).then(function success(response) {
             console.log('deleted user ' + user.forename);
             $rootScope.successAlert = 'User "' + user.forename + '" was deleted.';
