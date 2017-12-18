@@ -14,6 +14,10 @@ timeline.controller('TimelinesCtrl', function ($scope, $http, $rootScope, $locat
         $scope.groups = response.data;
     });
 
+    $http.get('events').then(function (response) {
+        $scope.events = response.data;
+    });
+
     $scope.createTimeline = function (timeline) {
         console.log('create new timeline');
         $scope.timeline = null;
@@ -38,6 +42,34 @@ timeline.controller('TimelinesCtrl', function ($scope, $http, $rootScope, $locat
             console.log('could not set group to timeline');
             $scope.errorAlert = 'Could not set group to timeline.';
         });
+    };
+
+    $scope.addEventsView = function (timelineId) {
+        console.log('add event view tml_id' + timelineId);
+        $rootScope.timelineId = timelineId;
+        $scope.newEvents = {
+            ids: []
+        };
+        $location.path('timeline_add_event');
+    };
+
+    $scope.setEvents = function (newEvents) {
+        console.log('setEvents ' + $rootScope.timelineId);
+        console.log('setEvents ' + newEvents);
+        for (i = 0; i < newEvents.length; i++) {
+            $http({
+                method: 'PUT',
+                url: 'timelines/' + $rootScope.timelineId + '/addevent/' + newEvents[i]
+            }).then(function success(response) {
+                console.log('setting new group');
+                $rootScope.successAlert = 'Set new event.';
+                loadTimelines($http, $scope);
+                $location.path('timelines')
+            }, function error(response) {
+                console.log('could not set event to timeline');
+                $scope.errorAlert = 'Could not set event to timeline.';
+            });
+        }
     };
 
     $scope.deleteTimeline = function (timeline) {

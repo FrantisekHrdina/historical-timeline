@@ -17,6 +17,14 @@
     </thead>
     <tbody>
     <tr ng-repeat="timeline in timelines track by $index">
+        <table class="table">
+            <tr>
+
+            </tr>
+            <tr>
+
+            </tr>
+        </table>
         <td>{{timeline.id}}</td>
         <td>{{timeline.name}}</td>
         <td>
@@ -40,6 +48,10 @@
                     <td><button ng-click="removeEvent(timeline, event)" type="submit"
                                 class="btn btn-primary btn-xs">Remove event</button></td>
                 </tr>
+                <tr>
+                    <td><button ng-click="addEventsView(timeline.id)" type="submit"
+                                class="btn btn-primary btn-xs">Add events</button></td>
+                </tr>
             </table>
         <td>
             <table>
@@ -51,10 +63,7 @@
                                 class="btn btn-primary btn-xs">Add comment</button></td>
                 </tr>
             </table>
-            <!--<td>-->
-            <!--<button ng-click="updateTimelineView(timeline)" type="submit"-->
-            <!--class="btn btn-primary">Update</button>-->
-            <!--</td>-->
+
         <td>
             <button ng-click="deleteTimeline(timeline)" type="submit"
                     class="btn btn-primary">Delete</button>
