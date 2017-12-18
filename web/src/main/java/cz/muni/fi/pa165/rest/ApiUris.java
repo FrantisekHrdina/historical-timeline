@@ -10,4 +10,5 @@ public abstract class ApiUris {
     public static final String ROOT_URI_TIMELINES = "/timelines";
     public static final String ROOT_URI_GROUPS = "/groups";
     public static final String ROOT_URI_USERS = "/users";
+    public static final String ROOT_URI_AUTH = "/auth";
 }

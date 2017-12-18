@@ -15,6 +15,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Time;
 import java.time.LocalDate;
 
@@ -52,6 +54,20 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
         
         User student = sampleStudent("Student", "1", "s1@skola.cz");
         User teacher = sampleTeacher("Teacher", "1", "t1@skola.cz");
+        
+        MessageDigest messageDigest;
+		try {
+			messageDigest = MessageDigest.getInstance("SHA-256");
+			messageDigest.update("1234".getBytes());
+	        String encryptedString = new String(messageDigest.digest());
+	        student.setPasswordHash(encryptedString);
+	        messageDigest.update("4321".getBytes());
+	        encryptedString = new String(messageDigest.digest());
+	        teacher.setPasswordHash(encryptedString);
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		}
+        
         student.addSeminarGroup(seminarGroup);
         student.addSeminarGroup(seminarGroup2);
         student.addSeminarGroup(seminarGroup3);
