@@ -2,6 +2,7 @@ package cz.muni.fi.pa165.service;
 
 import cz.muni.fi.pa165.configuration.ServiceConfiguration;
 import cz.muni.fi.pa165.dao.UserDao;
+import cz.muni.fi.pa165.entities.SeminarGroup;
 import cz.muni.fi.pa165.entities.User;
 import cz.muni.fi.pa165.exception.DAOException;
 import cz.muni.fi.pa165.service.UserServiceImpl;
@@ -36,9 +37,13 @@ public class UserServiceTest extends AbstractTransactionalTestNGSpringContextTes
     @Autowired
     private UserServiceImpl userService;
     
+    @Autowired
+    private SeminarGroupServiceImpl seminarGroupService;
+    
     private User user1;
     private User user2;
     private User user3;
+    private SeminarGroup group;
     
     @BeforeClass
     public void initMocks() {
@@ -64,6 +69,9 @@ public class UserServiceTest extends AbstractTransactionalTestNGSpringContextTes
                 "CerseiLannister@kingslanding.com",
                 "shameshameshame",
                 true);
+        
+        SeminarGroup group = new SeminarGroup("abc");
+        seminarGroupService.saveGroup(group);
                 
         userService.addUser(user2);
         userService.addUser(user3);
@@ -132,6 +140,15 @@ public class UserServiceTest extends AbstractTransactionalTestNGSpringContextTes
         user1.setSurname("Targaryen");
         userService.editUser(user1);
         assertThat(userService.findUser(user1.getId())).hasFieldOrPropertyWithValue("surname", "Targaryen");
+    }
+    
+    @Test
+    public void editUserGroup() {
+        userService.addUser(user1);
+        user1.addSeminarGroup(group);
+        userService.editUser(user1);
+        User user = userService.findUser(user1.getId());
+        assertThat(user.getSeminarGroups()).contains(group);
     }
     
     @Test
