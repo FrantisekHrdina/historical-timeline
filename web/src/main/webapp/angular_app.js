@@ -37,6 +37,10 @@ historicalTimelineApp.run( function($rootScope, $location) {
           // not going to #login, we should redirect now
           $location.path( "/login" );
         }
+      } else {
+    	  if ( $rootScope.userRole != "teacher" && next.templateUrl == "partials/users.html" ) {
+    		  $location.path("/login");
+    	  }
       }         
     });
 });

@@ -38,14 +38,14 @@ public class AuthController {
 	        String studentPwd = new String(messageDigest.digest());
 	        messageDigest.update("4321".getBytes());
 	        String teacherPwd = new String(messageDigest.digest());
-	        
-	        
+
+			messageDigest.update(credentials.getPassword().getBytes());
+	        String hash = new String(messageDigest.digest());
 	        if (credentials.getLogin().equals("student")) {
-				messageDigest.update(credentials.getPassword().getBytes());
-				if (new String(messageDigest.digest()).equals(studentPwd)) {
+				if (hash.equals(studentPwd)) {
 					return "student"; 
 				}
-	        } else if (new String(messageDigest.digest()).equals(teacherPwd)) {
+	        } else if (hash.equals(teacherPwd)) {
 				return "teacher";
 			} else {
 				throw new ResourceNotFoundException("Bad credentials.");

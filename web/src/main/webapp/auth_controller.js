@@ -1,6 +1,6 @@
 let auth = angular.module('auth', []);
 
-auth.controller('LoginController', function ($scope, $rootScope, $http) {
+auth.controller('LoginController', function ($scope, $rootScope, $http, $location) {
   $scope.credentials = {
     login: '',
     password: ''
@@ -15,6 +15,7 @@ auth.controller('LoginController', function ($scope, $rootScope, $http) {
           console.log('signed in user using ' + credentials.login);
           $rootScope.userRole = response.data;
           console.log('user role', $rootScope.userRole);
+          $location.path('timelines');
       }, function error(response) {
           console.log('error signing in user ' + credentials.login);
           $scope.errorAlert = 'Could not sign in. Please check username and password.';
