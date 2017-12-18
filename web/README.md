@@ -1,3 +1,7 @@
+# Historical Timeline credentials
+student: 1234
+teacher: 4321
+
 # Historical Timeline REST API
 
 
