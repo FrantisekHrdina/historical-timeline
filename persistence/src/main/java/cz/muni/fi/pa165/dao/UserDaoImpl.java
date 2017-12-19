@@ -85,4 +85,12 @@ public class UserDaoImpl implements UserDao{
     public List<User> findAllTeachers() {
         return em.createQuery("Select u from User u WHERE u.isTeacher = true", User.class).getResultList();
     }
+
+    @Override
+    public User findUserByEmail(String email) {
+        return em.createQuery("SELECT u from User u WHERE u.email = ?1", User.class).setParameter(1, email).getSingleResult();
+
+    }
+
+
 }
