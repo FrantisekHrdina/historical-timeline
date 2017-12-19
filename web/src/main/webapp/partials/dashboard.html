@@ -1,0 +1,26 @@
+<table class="table">
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>SeminarGroup</th>
+        <th>View Timeline</th>
+
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="timeline in timelines track by $index">
+        <td>{{timeline.id}}</td>
+        <td>{{timeline.name}}</td>
+        <td>{{timeline.seminarGroup.name}}</td>
+
+        <td>
+            <a href="#!/timelines/{{timeline.id}}"><button type="submit"
+                                                           class="btn btn-primary btn-xs">View Timeline</button></a>
+        </td>
+    </tr>
+            </table>
+        </td>
+    </tr>
+    </tbody>
+</table>

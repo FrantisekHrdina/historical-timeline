@@ -1,6 +1,10 @@
 package cz.muni.fi.pa165.dto;
 
+import org.apache.commons.beanutils.BeanComparator;
+
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 
 /**
  * @author Martin Kocisky, 421131
@@ -11,7 +15,7 @@ public class TimelineDTO {
     private String name;
     private Set<String> comments = new LinkedHashSet<>();
 
-    private Set<EventDTO> events = new HashSet<>();
+    private List<EventDTO> events = new ArrayList<EventDTO>();
 
     private SeminarGroupDTO seminarGroup;
 
@@ -19,7 +23,7 @@ public class TimelineDTO {
 
     }
 
-    public TimelineDTO(String name, Set<String> comments, Set<EventDTO> events, SeminarGroupDTO seminarGroup) {
+    public TimelineDTO(String name, Set<String> comments, List<EventDTO> events, SeminarGroupDTO seminarGroup) {
         this.name = name;
         this.comments = comments;
         this.events = events;
@@ -67,11 +71,17 @@ public class TimelineDTO {
         return 0;
     }
 
-    public Set<EventDTO> getEvents() {
+    public List<EventDTO> getEvents() {
+        BeanComparator fieldComparator = new BeanComparator(
+                "date");
+        Collections.sort(events, fieldComparator);
+
         return events;
+
+
     }
 
-    public void setEvents(Set<EventDTO> events) {
+    public void setEvents(List<EventDTO> events) {
         this.events = events;
     }
 
@@ -82,4 +92,8 @@ public class TimelineDTO {
     public void setSeminarGroup(SeminarGroupDTO seminarGroup) {
         this.seminarGroup = seminarGroup;
     }
+
+
 }
+
+
