@@ -26,21 +26,20 @@ historicalTimelineApp.config(['$routeProvider',
         when('/login', {templateUrl: 'partials/login_form.html', controller: 'LoginController'})
 	}]);
 
+function authentication($rootScope, $location) {
+	if ( !$rootScope.userRole ) {
+		// no logged user, redirect to login form
+		$location.path( "/login" );
+	}
+}
+
 historicalTimelineApp.run( function($rootScope, $location) {
+	$rootScope.$location = $location;
+	console.log($location.path());
+	authentication($rootScope, $location);
     // register listener to watch route changes
     $rootScope.$on( "$routeChangeStart", function(event, next, current) {
-      if ( !$rootScope.userRole ) {
-        // no logged user, we should be going to #login
-        if ( next.templateUrl == "partials/login_form.html" ) {
-          // already going to #login, no redirect needed
-        } else {
-          // not going to #login, we should redirect now
-          $location.path( "/login" );
-        }
-      } else {
-    	  if ( $rootScope.userRole != "teacher" && next.templateUrl == "partials/users.html" ) {
-    		  $location.path("/login");
-    	  }
-      }         
+    	authentication($rootScope, $location);
+    	console.log($location.path());
     });
 });
