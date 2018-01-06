@@ -2,6 +2,7 @@
 
 let historicalTimelineApp = angular.module('historicalTimelineApp', [
     'ngRoute',
+    'ngCookies',
 	'group',
 	'event',
     'user',
@@ -33,13 +34,20 @@ function authentication($rootScope, $location) {
 	}
 }
 
-historicalTimelineApp.run( function($rootScope, $location) {
+historicalTimelineApp.run( function($rootScope, $location, $cookieStore) {
 	$rootScope.$location = $location;
-	console.log($location.path());
+	$rootScope.userRole = $cookieStore.get('userRole');
 	authentication($rootScope, $location);
     // register listener to watch route changes
-    $rootScope.$on( "$routeChangeStart", function(event, next, current) {
+    $rootScope.$on('$routeChangeStart', function(event, next, current) {
     	authentication($rootScope, $location);
-    	console.log($location.path());
+    	
+    	console.log(next, current);
+    	console.log(next.$$route.controller, current.$$route.controller);
+    	if (current && next.$$route.controller !== current.$$route.controller) {
+    		// dismiss alerts
+    		$rootScope.errorAlert = '';
+    		$rootScope.successAlert = '';
+    	}
     });
 });

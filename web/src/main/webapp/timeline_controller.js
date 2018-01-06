@@ -40,7 +40,7 @@ timeline.controller('TimelinesCtrl', function ($scope, $http, $rootScope, $locat
             $location.path('timelines')
         }, function error(response) {
             console.log('could not set group to timeline');
-            $scope.errorAlert = 'Could not set group to timeline.';
+            $rootScope.errorAlert = 'Could not set group to timeline.';
         });
     };
 
@@ -67,7 +67,7 @@ timeline.controller('TimelinesCtrl', function ($scope, $http, $rootScope, $locat
                 $location.path('timelines')
             }, function error(response) {
                 console.log('could not set event to timeline');
-                $scope.errorAlert = 'Could not set event to timeline.';
+                $rootScope.errorAlert = 'Could not set event to timeline.';
             });
         }
     };
@@ -83,7 +83,7 @@ timeline.controller('TimelinesCtrl', function ($scope, $http, $rootScope, $locat
             loadTimelines($http, $scope);
         }, function error(response) {
             console.log('could not delete timeline ' + timeline.name);
-            $scope.errorAlert = 'Could not delete timeline.';
+            $rootScope.errorAlert = 'Could not delete timeline.';
         });
     };
 
@@ -102,7 +102,7 @@ timeline.controller('TimelinesCtrl', function ($scope, $http, $rootScope, $locat
             loadTimelines($http, $scope);
         }, function error(response) {
             console.log('Could not remove event from timeline "' + timeline.name + '".');
-            $scope.errorAlert = 'Could not remove event from timeline.';
+            $rootScope.errorAlert = 'Could not remove event from timeline.';
         });
     };
 
@@ -127,7 +127,7 @@ timeline.controller('TimelinesCtrl', function ($scope, $http, $rootScope, $locat
             $location.path('timelines')
         }, function error(response) {
             console.log('could not add comment to timeline');
-            $scope.errorAlert = 'Could not add comment to timeline.';
+            $rootScope.errorAlert = 'Could not add comment to timeline.';
         });
     };
 
@@ -160,7 +160,7 @@ timeline.controller('NewTimelineCtrl', function ($scope, $http, $rootScope, $loc
             $rootScope.successAlert = 'A new timeline "' + createdTimeline.name + '" was created';
             $location.path('timelines')
         }, function error(response) {
-            $scope.errorAlert = 'Cannot create timeline.';
+            $rootScope.errorAlert = 'Cannot create timeline.';
         })
     };
 });

@@ -34,7 +34,7 @@ group.controller('GroupsCtrl', function ($scope, $http, $rootScope, $location) {
 			loadGroups($http, $scope);
 		}, function error(response) {
 			console.log('could not delete group ' + group.name);
-			$scope.errorAlert = 'Could not delete seminar group.';
+			$rootScope.errorAlert = 'Could not delete seminar group.';
 		});
 	};
 
@@ -54,7 +54,7 @@ group.controller('NewGroupCtrl', function ($scope, $http, $rootScope, $location)
 				$rootScope.successAlert = 'A new seminar group "' + createdGroup.name + '" was created';
 				$location.path('groups')
 			}, function error(response) {
-				$scope.errorAlert = 'Cannot create group.';
+				$rootScope.errorAlert = 'Cannot create group.';
 			})
 		} else {
 			$http({
@@ -67,7 +67,7 @@ group.controller('NewGroupCtrl', function ($scope, $http, $rootScope, $location)
 				$rootScope.successAlert = 'Seminar group "' + createdGroup.name + '" was updated';
 				$location.path('groups')
 			}, function error(response) {
-				$scope.errorAlert = 'Cannot update group.';
+				$rootScope.errorAlert = 'Cannot update group.';
 			})
 		}
 	};

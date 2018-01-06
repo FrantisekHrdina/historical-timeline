@@ -18,6 +18,8 @@
 <script type="text/javascript"
 	src="./node_modules/angular-route/angular-route.min.js"></script>
 <script type="text/javascript"
+	src="./node_modules/angular-cookies/angular-cookies.min.js"></script>
+<script type="text/javascript"
 	src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
 
 <script type="text/javascript" src="./angular_app.js"></script>
@@ -45,14 +47,20 @@
 			</div>
 			<div id="navbar" class="collapse navbar-collapse">
 				<ul class="nav navbar-nav">
-					<li><a href="#!/groups">Seminar groups</a></li>
-					<li><a href="#!/events">Events</a></li>
+					<li ng-if="userRole === 'teacher'"><a href="#!/groups">Seminar groups</a></li>
+					<li ng-if="userRole === 'teacher'"><a href="#!/events">Events</a></li>
 					<li><a href="#!/timelines">Timelines</a></li>
 					<li ng-if="userRole === 'teacher'"><a href="#!/users">Users</a></li>
 				</ul>
 			</div>
 		</nav>
 		<div class="container">
+			<div ng-show="errorAlert" class="alert alert-danger">
+				{{errorAlert}}
+    			</div>	
+			<div ng-show="successAlert" class="alert alert-success">
+				{{successAlert}}
+			</div>
 			<div ng-view></div>
 		</div>
 	</div>
