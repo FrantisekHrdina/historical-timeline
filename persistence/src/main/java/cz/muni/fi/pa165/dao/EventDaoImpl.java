@@ -30,7 +30,15 @@ public class EventDaoImpl implements EventDao {
 
     @Override
     public void editEvent(Event e) {
-        em.merge(e);
+        Event eventToUpdate = em.find(Event.class, e.getId());
+
+        eventToUpdate.setName(e.getName());
+        eventToUpdate.setDate(e.getDate());
+        eventToUpdate.setDescription(e.getDescription());
+        eventToUpdate.setLocation(e.getLocation());
+        eventToUpdate.setImage(e.getImage());
+
+        em.merge(eventToUpdate);
     }
 
     @Override
