@@ -34,7 +34,7 @@ event.controller('EventsCtrl', function ($scope, $http, $rootScope, $location) {
             loadEvents($http, $scope);
         }, function error(response) {
             console.log('could not delete event ' + event.name);
-            $scope.errorAlert = 'Could not delete event.';
+            $rootScope.errorAlert = 'Could not delete event.';
         });
     };
 
@@ -54,7 +54,7 @@ event.controller('NewEventCtrl', function ($scope, $http, $rootScope, $location)
                 $rootScope.successAlert = 'A new event "' + createdEvent.name + '" was created';
                 $location.path('events')
             }, function error(response) {
-                $scope.errorAlert = 'Cannot create event.';
+                $rootScope.errorAlert = 'Cannot create event.';
             })
         }
         else {
@@ -68,7 +68,7 @@ event.controller('NewEventCtrl', function ($scope, $http, $rootScope, $location)
                 $rootScope.successAlert = 'Event "' + updatedEvent.name + '" was updated';
                 $location.path('events')
             }, function error(response) {
-                $scope.errorAlert = 'Cannot update event.';
+                $rootScope.errorAlert = 'Cannot update event.';
             })
         }
     };

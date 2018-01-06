@@ -26,7 +26,7 @@ user.controller('UsersCtrl', function ($scope, $http, $rootScope, $location) {
             $location.path('users')
         }, function error(response) {
             console.log('could not add group to user');
-            $scope.errorAlert = 'Could not add group to user.';
+            $rootScope.errorAlert = 'Could not add group to user.';
         });
     }
         
@@ -55,7 +55,7 @@ user.controller('UsersCtrl', function ($scope, $http, $rootScope, $location) {
             loadUsers($http, $scope);
         }, function error(response) {
             console.log('could not delete user ' + user.forename);
-            $scope.errorAlert = 'Could not delete user.';
+            $rootScope.errorAlert = 'Could not delete user.';
         });
     };
 

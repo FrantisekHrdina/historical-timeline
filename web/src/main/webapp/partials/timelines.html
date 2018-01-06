@@ -1,6 +1,6 @@
 <h1>Timelines</h1>
 
-<button ng-click="createTimeline()" class="btn btn-primary">
+<button ng-if="userRole === 'teacher'" ng-click="createTimeline()" class="btn btn-primary">
     <span class="glyphicon glyphicon-plus"></span> New Timeline
 </button>
 <table class="table">
@@ -23,13 +23,13 @@
                 <tr>
                     <td>{{timeline.seminarGroup.name}}</td>
                 </tr>
-                <tr>
+                <tr ng-if="userRole === 'teacher'">
                     <td>
                         <button ng-click="changeGroupView(timeline.id)" type="submit"
                                 class="btn btn-primary btn-xs btn-block">Change group</button>
                     </td>
                 </tr>
-                <tr>
+                <tr ng-if="userRole === 'teacher'">
                     <td>
                         <button ng-click="deleteTimeline(timeline)" type="submit"
                                 class="btn btn-danger btn-xs btn-block">Delete</button>
@@ -45,7 +45,7 @@
                     <th>Name</th>
                     <th>Location</th>
                     <th>Description</th>
-                    <th>Remove</th>
+                    <th ng-if="userRole === 'teacher'">Remove</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -54,12 +54,12 @@
                     <td>{{event.name}}</td>
                     <td>{{event.location}}</td>
                     <td>{{event.description}}</td>
-                    <td><button ng-click="removeEvent(timeline, event)" type="submit"
+                    <td ng-if="userRole === 'teacher'"><button ng-click="removeEvent(timeline, event)" type="submit"
                                 class="btn btn-danger btn-xs">Remove event</button></td>
                 </tr>
                 </tbody>
                 <tr>
-                    <td><button ng-click="addEventsView(timeline.id)" type="submit"
+                    <td ng-if="userRole === 'teacher'"><button ng-click="addEventsView(timeline.id)" type="submit"
                                 class="btn btn-primary btn-xs">Add events</button></td>
                 </tr>
             </table>

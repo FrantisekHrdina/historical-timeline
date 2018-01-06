@@ -2,6 +2,7 @@
 
 let historicalTimelineApp = angular.module('historicalTimelineApp', [
     'ngRoute',
+    'ngCookies',
 	'group',
 	'event',
     'user',
@@ -30,21 +31,27 @@ historicalTimelineApp.config(['$routeProvider',
 
 	}]);
 
-historicalTimelineApp.run( function($rootScope, $location) {
+function authentication($rootScope, $location) {
+	if ( !$rootScope.userRole ) {
+		// no logged user, redirect to login form
+		$location.path( "/login" );
+	}
+}
+
+historicalTimelineApp.run( function($rootScope, $location, $cookieStore) {
+	$rootScope.$location = $location;
+	$rootScope.userRole = $cookieStore.get('userRole');
+	authentication($rootScope, $location);
     // register listener to watch route changes
-    $rootScope.$on( "$routeChangeStart", function(event, next, current) {
-      if ( !$rootScope.userRole ) {
-        // no logged user, we should be going to #login
-        if ( next.templateUrl == "partials/login_form.html" ) {
-          // already going to #login, no redirect needed
-        } else {
-          // not going to #login, we should redirect now
-          $location.path( "/login" );
-        }
-      } else {
-    	  if ( $rootScope.userRole != "teacher" && next.templateUrl == "partials/users.html" ) {
-    		  $location.path("/login");
-    	  }
-      }         
+    $rootScope.$on('$routeChangeStart', function(event, next, current) {
+    	authentication($rootScope, $location);
+    	
+    	console.log(next, current);
+    	console.log(next.$$route.controller, current.$$route.controller);
+    	if (current && next.$$route.controller !== current.$$route.controller) {
+    		// dismiss alerts
+    		$rootScope.errorAlert = '';
+    		$rootScope.successAlert = '';
+    	}
     });
 });
