@@ -70,4 +70,6 @@ public interface TimelineFacade {
      * @param timelineId
      */
     public void deleteTimeline(Long timelineId);
+
+    List<TimelineDTO> findTimelinesByUserEmail(String email);
 }

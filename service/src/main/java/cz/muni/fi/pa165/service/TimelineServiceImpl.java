@@ -185,7 +185,6 @@ public class TimelineServiceImpl implements TimelineService {
 
     @Override
     public List<Timeline> findTimelinesByUserEmail(String email) {
-        List<User> allUsers = userDao.findAllStudents();
         User foundedUser = userDao.findUserByEmail(email);
         Set<SeminarGroup> userGroups = foundedUser.getSeminarGroups();
 
