@@ -1,6 +1,6 @@
 # Historical Timeline credentials
-student: 1234
-teacher: 4321
+s1@skola.cz: 1234
+t1@skola.cz: 4321
 
 # Historical Timeline REST API
 
