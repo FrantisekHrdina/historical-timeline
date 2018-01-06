@@ -52,4 +52,13 @@ public interface UserDao {
      */
     public List<User> findAllTeachers();
 
+    /**
+     * Find user by the given email
+     *
+     *
+     * @param email Given email
+     * @return founded user
+     */
+      public User findUserByEmail(String email);
+
 }

@@ -20,6 +20,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.test.context.ContextConfiguration;
 import org.testng.Assert;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 
@@ -97,7 +98,7 @@ public class TimelineServiceTest {
         testEvent.setLocation("Europe");
         testEvent.setId(1L);
 
-        testTimeline3.setEvents(new HashSet<>(Arrays.asList(testEvent)));
+        testTimeline3.setEvents(new ArrayList<>(Arrays.asList(testEvent)));
         testEvent.setTimeline(testTimeline3);
 
         testEvent2 = new Event();

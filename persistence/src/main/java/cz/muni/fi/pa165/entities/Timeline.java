@@ -1,5 +1,7 @@
 package cz.muni.fi.pa165.entities;
 
+import org.apache.commons.beanutils.BeanComparator;
+
 import javax.validation.constraints.NotNull;
 import java.util.*;
 import javax.persistence.*;
@@ -20,7 +22,7 @@ public class Timeline {
     private String name;
 
     @OneToMany(mappedBy = "timeline")
-    private Set<Event> events = new HashSet<Event>();
+    private List<Event> events = new ArrayList<Event>();
 
     @ElementCollection(fetch = FetchType.EAGER)
     private Set<String> comments = new LinkedHashSet<>();
@@ -32,7 +34,7 @@ public class Timeline {
 
     }
 
-    public Timeline(String name, Set<Event> events, Set<String> comments, SeminarGroup seminarGroup) {
+    public Timeline(String name, List<Event> events, Set<String> comments, SeminarGroup seminarGroup) {
         this.name = name;
         this.events = events;
         this.comments = comments;
@@ -55,11 +57,15 @@ public class Timeline {
         this.name = name;
     }
 
-    public Set<Event> getEvents() {
+    public List<Event> getEvents() {
+        BeanComparator fieldComparator = new BeanComparator(
+                "date");
+        Collections.sort(events, fieldComparator);
+
         return events;
     }
 
-    public void setEvents(Set<Event> events) {
+    public void setEvents(List<Event> events) {
         this.events = events;
     }
 

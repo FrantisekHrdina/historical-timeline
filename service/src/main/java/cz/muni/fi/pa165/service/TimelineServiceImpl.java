@@ -108,7 +108,7 @@ public class TimelineServiceImpl implements TimelineService {
                 return;
             }
 
-            Set<Event> events = timeline.getEvents();
+            List<Event> events = timeline.getEvents();
             events.add(event);
             timeline.setEvents(events);
 
@@ -119,6 +119,8 @@ public class TimelineServiceImpl implements TimelineService {
         } catch (Exception e) {
             throw new DAOException(e.getMessage());
         }
+
+
     }
 
     @Override
@@ -128,7 +130,7 @@ public class TimelineServiceImpl implements TimelineService {
             Timeline timeline = timelineDao.findTimeline(timelineId);
             Event event = eventDao.findEvent(eventId);
 
-            Set<Event> events = timeline.getEvents();
+            List<Event> events = timeline.getEvents();
             events.remove(event);
             timeline.setEvents(events);
 
@@ -175,4 +177,5 @@ public class TimelineServiceImpl implements TimelineService {
             throw new DAOException(e.getMessage());
         }
     }
+
 }

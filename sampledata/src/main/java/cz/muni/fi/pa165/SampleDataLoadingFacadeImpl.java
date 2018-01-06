@@ -114,6 +114,42 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
 
         timelineService.setSeminarGroupToTimeline(timeline1.getId(), seminarGroup4.getId());
         timelineService.setSeminarGroupToTimeline(timeline2.getId(), seminarGroup3.getId());
+
+
+        //Testing View Events in Timeline
+        Timeline timelineTestView = sampleTimeline("TestView");
+        Event first = new Event();
+        first.setName("First");
+        first.setDate(LocalDate.of(2000,1,1));
+        first.setLocation("somewhere");
+        first.setDescription("some Desc");
+        first.setImage("https://goo.gl/ipe3Eo");
+
+        Event second = new Event();
+        second.setName("Second");
+        second.setDate(LocalDate.of(2005,1,1));
+        second.setLocation("somewhere");
+        second.setDescription("some Desc");
+        second.setImage("https://goo.gl/r3NzTG");
+
+        Event third = new Event();
+        third.setName("Third");
+        third.setDate(LocalDate.of(2010,1,1));
+        third.setLocation("somewhere");
+        third.setDescription("some Desc");
+        third.setImage("https://goo.gl/KuHjEz");
+
+        eventService.addEvent(first);
+        eventService.addEvent(third);
+        eventService.addEvent(second);
+
+        timelineService.addEventToTimeline(timelineTestView.getId(), first.getId());
+        timelineService.addEventToTimeline(timelineTestView.getId(), third.getId());
+        timelineService.addEventToTimeline(timelineTestView.getId(), second.getId());
+
+        timelineService.setSeminarGroupToTimeline(timelineTestView.getId(),seminarGroup4.getId());
+
+
     }
 
     private SeminarGroup sampleSeminarGroup(String name) {

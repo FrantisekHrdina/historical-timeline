@@ -53,6 +53,8 @@ timeline.controller('TimelinesCtrl', function ($scope, $http, $rootScope, $locat
         $location.path('timeline_add_event');
     };
 
+
+
     $scope.setEvents = function (newEvents) {
         console.log('setEvents ' + $rootScope.timelineId);
         console.log('setEvents ' + newEvents);
@@ -106,10 +108,30 @@ timeline.controller('TimelinesCtrl', function ($scope, $http, $rootScope, $locat
         });
     };
 
+    $scope.viewTimeline = function (timeline) {
+        $http({
+            method: 'GET',
+            url: restInterface + '/timelines/' + timeline.id
+        }).then(function success(response){
+            $scope.timeline = response.data;
+
+            console.log('View timeline ' + timeline.name);
+            $rootScope.successAlert = 'Timeline view loaded ' + timeline.name;
+            $location.path('view_timeline')
+        }, function error(response) {
+        console.log('Could notload timeline "' + timeline.name + '".');
+        $scope.errorAlert = 'Could notload timeline.';
+    });
+
+    }
+
     $scope.addCommentView = function (timelineId) {
+        console.log(timelineId);
         $rootScope.timelineId = timelineId;
+        console.log(timelineId);
         $location.path('new_comment');
     };
+
 
     $scope.addComment = function (timelineId, comment) {
         $scope.comment = {
@@ -164,3 +186,16 @@ timeline.controller('NewTimelineCtrl', function ($scope, $http, $rootScope, $loc
         })
     };
 });
+
+
+timeline.controller('TimelineViewCtrl', ['$scope', '$routeParams', '$http',
+    function ($scope, $routeParams, $http) {
+        var timelineId = $routeParams.timelineId;
+        $http.get(restInterface + '/timelines/' + timelineId).then(function (response) {
+            var timeline = response.data;
+            $scope.timeline = timeline;
+            console.log('AJAX loaded detail of category ' + timeline.name);
+            //$location.path('view_timeline')
+        });
+    }]);
+
