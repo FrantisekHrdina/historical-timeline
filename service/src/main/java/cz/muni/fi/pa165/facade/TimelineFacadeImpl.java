@@ -101,6 +101,13 @@ public class TimelineFacadeImpl implements TimelineFacade {
     public void deleteTimeline(Long timelineId) {
         timelineService.deleteTimeline(timelineId);
     }
+
+    @Override
+    public List<TimelineDTO> findTimelinesByUserEmail(String email) {
+        List<Timeline> result = timelineService.findTimelinesByUserEmail(email);
+
+        return beanMappingService.mapTo(result, TimelineDTO.class);
+    }
 //
 //    private List<TimelineDTO> map(List<Timeline> timelineList) {
 //        List<TimelineDTO> timelineDTOList = new ArrayList<>();
