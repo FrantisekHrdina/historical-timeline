@@ -1,8 +1,6 @@
 package cz.muni.fi.pa165.dto;
 
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author Martin Kocisky, 421131
@@ -10,10 +8,10 @@ import java.util.Set;
 public class TimelineCreateDTO {
 
     private String name;
-    private Set<Long> events = new HashSet<>();
+    private List<Long> events = new ArrayList<Long>();
     private Long seminarGroup;
 
-    public TimelineCreateDTO(String name, Set<Long> events, Long seminarGroup) {
+    public TimelineCreateDTO(String name, List<Long> events, Long seminarGroup) {
         this.name = name;
         this.events = events;
         this.seminarGroup = seminarGroup;
@@ -31,11 +29,11 @@ public class TimelineCreateDTO {
         this.name = name;
     }
 
-    public Set<Long> getEvents() {
+    public List<Long> getEvents() {
         return events;
     }
 
-    public void setEvents(Set<Long> events) {
+    public void setEvents(List<Long> events) {
         this.events = events;
     }
 

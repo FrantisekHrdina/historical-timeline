@@ -80,5 +80,16 @@ public class UserServiceImpl implements UserService {
             throw new DAOException("Persistance error occured", e);
         }
     }
-    
+
+    @Override
+    public User findUserByEmail(String email) {
+        try {
+            return userDao.findUserByEmail(email);
+        }
+        catch (Exception ex) {
+            throw new DAOException("Error when finding user by email", ex);
+        }
+    }
+
+
 }

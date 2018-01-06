@@ -53,4 +53,13 @@ public interface UserService {
      * @return List of teachers
      */
     List<User> findAllTeachers();
+
+    /**
+     * Find user by email
+     *
+     * @param email Given email
+     * @return Founded user
+     */
+    User findUserByEmail(String email);
+
 }

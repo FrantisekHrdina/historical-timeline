@@ -50,4 +50,12 @@ public interface UserFacade {
      * @return List of teachers
      */
     List<UserDTO> findAllTeachers();
+
+    /**
+     * Find user by email
+     *
+     * @param email Given email
+     * @return founded User
+     */
+    UserDTO findUserByEmail(String email);
 }

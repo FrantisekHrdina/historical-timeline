@@ -1,0 +1,24 @@
+<h1>Timeline name: {{timeline.name}} {{timeline.id}}</h1>
+<h2>Timeline group: {{timeline.seminarGroup.name}}</h2>
+
+<h3></h3>
+<table class="table-responsive table-hover table table-bordered" style="font-size: large">
+<tr ng-repeat="event in timeline.events">
+    <td>{{event.date}}</td>
+    <td>{{event.name}}</td>
+    <td>{{event.location}}</td>
+    <td>{{event.description}}</td>
+    <td><img src="{{event.image}}" width="100" height="100"></td>
+</tr>
+</table>
+
+<table class="table-responsive table-hover table table-bordered">
+    <tr ng-repeat="comment in timeline.comments">
+        <td>{{comment}}</td>
+    </tr>
+    <tr>
+        <td><button ng-click="addCommentView(timeline.id)" type="submit"
+                    class="btn btn-primary btn-xs">Add comment</button></td>
+    </tr>
+</table>
+
