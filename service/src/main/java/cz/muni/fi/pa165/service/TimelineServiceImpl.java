@@ -3,9 +3,11 @@ package cz.muni.fi.pa165.service;
 import cz.muni.fi.pa165.dao.EventDao;
 import cz.muni.fi.pa165.dao.SeminarGroupDao;
 import cz.muni.fi.pa165.dao.TimelineDao;
+import cz.muni.fi.pa165.dao.UserDao;
 import cz.muni.fi.pa165.entities.Event;
 import cz.muni.fi.pa165.entities.SeminarGroup;
 import cz.muni.fi.pa165.entities.Timeline;
+import cz.muni.fi.pa165.entities.User;
 import cz.muni.fi.pa165.exception.DAOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,6 +28,9 @@ public class TimelineServiceImpl implements TimelineService {
 
     @Autowired
     private EventDao eventDao;
+    
+    @Autowired
+    private UserDao userDao;
 
     @Override
     public Long createTimeline(Timeline t) {
@@ -176,6 +181,22 @@ public class TimelineServiceImpl implements TimelineService {
         } catch (Exception e) {
             throw new DAOException(e.getMessage());
         }
+    }
+
+    @Override
+    public List<Timeline> findTimelinesByUserEmail(String email) {
+        List<User> allUsers = userDao.findAllStudents();
+        User foundedUser = userDao.findUserByEmail(email);
+        Set<SeminarGroup> userGroups = foundedUser.getSeminarGroups();
+
+        List<Timeline> foundedTimelines = new ArrayList<Timeline>();
+
+        for (SeminarGroup group : userGroups) {
+            foundedTimelines.addAll(group.getTimelines());
+        }
+
+        return  foundedTimelines;
+       
     }
 
 }
