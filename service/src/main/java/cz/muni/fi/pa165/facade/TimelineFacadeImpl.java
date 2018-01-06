@@ -50,11 +50,11 @@ public class TimelineFacadeImpl implements TimelineFacade {
         timeline.setName(timelineDTO.getName());
         timelineService.createTimeline(timeline);
 
-        for (Long e : timelineDTO.getEvents()) {
-            addEvent(timeline.getId(), e);
-        }
-
-        setSeminarGroup(timeline.getId(), timelineDTO.getSeminarGroup());
+//        for (Long e : timelineDTO.getEvents()) {
+//            addEvent(timeline.getId(), e);
+//        }
+//
+//        setSeminarGroup(timeline.getId(), timelineDTO.getSeminarGroup());
 
         return timeline.getId();
     }

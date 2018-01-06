@@ -173,7 +173,9 @@ public class TimelineServiceImpl implements TimelineService {
         try {
             Timeline timeline = timelineDao.findTimeline(timelineId);
 
-            for (Event e : timeline.getEvents()) {
+            removeSeminarGroupFromTimeline(timelineId);
+            Set<Event> setE = new HashSet<>(timeline.getEvents());
+            for (Event e : setE) {
                 removeEventFromTimeline(timelineId, e.getId());
             }
 

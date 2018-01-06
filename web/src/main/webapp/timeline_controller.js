@@ -167,9 +167,9 @@ timeline.controller('NewTimelineCtrl', function ($scope, $http, $rootScope, $loc
     });
 
     $scope.timeline = {
-        'name': '',
-        'events': {},
-        'seminarGroup': ''
+        'name': ''//,
+        // 'events': {},
+        // 'seminarGroup': ''
     };
 
     $scope.createTimeline = function (timeline) {
