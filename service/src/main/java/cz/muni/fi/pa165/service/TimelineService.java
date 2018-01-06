@@ -72,4 +72,6 @@ public interface TimelineService {
      */
     public void deleteTimeline(Long timelineId);
 
+    List<Timeline> findTimelinesByUserEmail(String email);
+
 }
