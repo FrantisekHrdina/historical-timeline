@@ -46,8 +46,6 @@ historicalTimelineApp.run( function($rootScope, $location, $cookieStore) {
     $rootScope.$on('$routeChangeStart', function(event, next, current) {
     	authentication($rootScope, $location);
     	
-    	console.log(next, current);
-    	console.log(next.$$route.controller, current.$$route.controller);
     	if (current && next.$$route.controller !== current.$$route.controller) {
     		// dismiss alerts
     		$rootScope.errorAlert = '';

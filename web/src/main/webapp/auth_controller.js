@@ -15,8 +15,6 @@ auth.controller('LoginController', function ($scope, $rootScope, $http, $locatio
           console.log('signed in user using ' + credentials.login);
           $rootScope.userRole = response.data;
           $cookieStore.put('userRole', response.data);
-          console.log('cookie', $cookieStore.get('userRole'));
-          console.log('user role', $rootScope.userRole);
           $location.path('timelines');
       }, function error(response) {
           console.log('error signing in user ' + credentials.login);
