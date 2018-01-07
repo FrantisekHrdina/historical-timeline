@@ -49,11 +49,12 @@
 				<ul class="nav navbar-nav">
 					<li ng-if="userRole === 'teacher'"><a href="#!/groups">Seminar groups</a></li>
 					<li ng-if="userRole === 'teacher'"><a href="#!/events">Events</a></li>
-					<li><a href="#!/timelines">Timelines</a></li>
+					<li ng-if="userRole === 'teacher'"><a href="#!/timelines">Timelines</a></li>
 					<li ng-if="userRole === 'teacher'"><a href="#!/users">Users</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
-					<li><a href="#profil">Logged user name + Logout</a></li>
+					<li><a href="#profil" class="glyphicon glyphicon-user"> {{username}}</a></li>
+					<li><button class="btn btn-default" ng-click="logout()">Logout</button></li>
 				</ul>
 			</div>
 		</nav>
