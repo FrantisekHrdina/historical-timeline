@@ -45,16 +45,123 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
     }
 
     private void sampleData() {
+
+        
+        User student = sampleStudent("Student", "1", "s1@skola.cz");
+        User teacher = sampleTeacher("Teacher", "1", "t1@skola.cz");
+
+        /**
+         * Star of Example
+         */
+        SeminarGroup groupExample = sampleSeminarGroup("History Group");
+        Timeline timelineExample = sampleTimeline("History Timeline");
+        student.addSeminarGroup(groupExample);
+        userService.editUser(student);
+
+        timelineService.setSeminarGroupToTimeline(timelineExample.getId(), groupExample.getId());
+
+        Event startWWI = new Event();
+        startWWI.setName("Start of WW I");
+        startWWI.setDate(LocalDate.of(1914,7,28));
+        startWWI.setLocation("Sarajevo");
+        startWWI.setDescription("It was start of WW I ......");
+        startWWI.setImage("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSEyFcYQnSJl2MLf1u3BDWqiv_0UftQ9BLgafU2HltkA8yVFtIfdQ");
+
+        Event endWWI = new Event();
+        endWWI.setName("End of WW I");
+        endWWI.setDate(LocalDate.of(1918,11,11));
+        endWWI.setLocation("Compiègne");
+        endWWI.setDescription("It was end of WW I ......");
+        endWWI.setImage("https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/World_War_I_photographs_-_NARA_-_285377.jpg/220px-World_War_I_photographs_-_NARA_-_285377.jpg");
+
+        Event startWWII = new Event();
+        startWWII.setName("Start of WW II");
+        startWWII.setDate(LocalDate.of(1939,9,1));
+        startWWII.setLocation("Poland");
+        startWWII.setDescription("Invasion to Poland..");
+        startWWII.setImage("https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Spotkanie_Sojusznik%C3%B3w.jpg/250px-Spotkanie_Sojusznik%C3%B3w.jpg");
+
+        Event endWWII = new Event();
+        endWWII.setName("End of WW II");
+        endWWII.setDate(LocalDate.of(1945,9,2));
+        endWWII.setLocation("Japan");
+        endWWII.setDescription("Capitulation of Japan");
+        endWWII.setImage("https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Hiroshima_aftermath.jpg/290px-Hiroshima_aftermath.jpg");
+
+        Event atomBomb = new Event();
+        atomBomb.setName("Atomic Bomb");
+        atomBomb.setLocation("Hiroshima");
+        atomBomb.setDate(LocalDate.of(1945,8,6));
+        atomBomb.setImage("https://upload.wikimedia.org/wikipedia/commons/thumb/5/54/Atomic_bombing_of_Japan.jpg/300px-Atomic_bombing_of_Japan.jpg");
+
+        Event czechRep = new Event();
+        czechRep.setName("Creation of Czech Republic");
+        czechRep.setLocation("Central Europe");
+        czechRep.setDate(LocalDate.of(1993,1,1));
+        czechRep.setDescription("Creation of CZ ....");
+        czechRep.setImage("https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Coat_of_arms_of_the_Czech_Republic.svg/50px-Coat_of_arms_of_the_Czech_Republic.svg.png");
+
+
+        Event czechslovakia = new Event();
+        czechslovakia.setName("Creation of Czechoslovakia");
+        czechslovakia.setLocation("Central Europe");
+        czechslovakia.setDate(LocalDate.of(1918,10,28));
+        czechslovakia.setDescription("Creation of ČSR ....");
+        czechslovakia.setImage("https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Flag_of_the_Czech_Republic.svg/125px-Flag_of_the_Czech_Republic.svg.png");
+
+        Event gagarin = new Event();
+        gagarin.setName("First man in space");
+        gagarin.setDate(LocalDate.of(1961,5,12));
+        gagarin.setLocation("Space");
+        gagarin.setDescription("..........................");
+        gagarin.setImage("https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/Yuri-Gagarin-1961-Helsinki-crop.jpg/220px-Yuri-Gagarin-1961-Helsinki-crop.jpg");
+
+        Event moon = new Event();
+        moon.setName("Fist man on the Moon");
+        moon.setLocation("The moon");
+        moon.setDate(LocalDate.of(1969,7,20));
+        moon.setDescription("That's one small step for man one giant leap for mankind");
+        moon.setImage("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTe0OMT8o9I8wFyTBBwXrLXAcr2q0qvNi4hJ11xygAdHy_f3fzY");
+
+
+        eventService.addEvent(startWWI);
+        eventService.addEvent(startWWII);
+        eventService.addEvent(endWWI);
+        eventService.addEvent(endWWII);
+        eventService.addEvent(moon);
+        eventService.addEvent(gagarin);
+        eventService.addEvent(czechRep);
+        eventService.addEvent(czechslovakia);
+        eventService.addEvent(atomBomb);
+
+        timelineService.addEventToTimeline(timelineExample.getId(), startWWI.getId());
+        timelineService.addEventToTimeline(timelineExample.getId(), startWWII.getId());
+        timelineService.addEventToTimeline(timelineExample.getId(), endWWI.getId());
+        timelineService.addEventToTimeline(timelineExample.getId(), endWWII.getId());
+        timelineService.addEventToTimeline(timelineExample.getId(), moon.getId());
+        timelineService.addEventToTimeline(timelineExample.getId(), gagarin.getId());
+        timelineService.addEventToTimeline(timelineExample.getId(), czechRep.getId());
+        timelineService.addEventToTimeline(timelineExample.getId(), czechslovakia.getId());
+        timelineService.addEventToTimeline(timelineExample.getId(), atomBomb.getId());
+
+        timelineService.addComment(timelineExample.getId(), "CooL!");
+        timelineService.addComment(timelineExample.getId(), "OMG!");
+        timelineService.addComment(timelineExample.getId(), "Nice, bro!");
+        timelineService.addComment(timelineExample.getId(), "Interesting");
+
+        /**
+         * End of Example
+         */
+
         Timeline timeline = sampleTimeline("Ice Age");
         Event event = sampleEvent("Extinction", "World", "Extinction of all.");
         SeminarGroup seminarGroup = sampleSeminarGroup("Group #1");
         SeminarGroup seminarGroup2 = sampleSeminarGroup("Group #2");
         SeminarGroup seminarGroup3 = sampleSeminarGroup("Group #3");
         SeminarGroup seminarGroup4 = sampleSeminarGroup("Group #4");
-        
-        User student = sampleStudent("Student", "1", "s1@skola.cz");
-        User teacher = sampleTeacher("Teacher", "1", "t1@skola.cz");
-        
+
+
+
         MessageDigest messageDigest;
 		try {
 			messageDigest = MessageDigest.getInstance("SHA-256");
@@ -69,6 +176,7 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
 		}
         
         student.addSeminarGroup(seminarGroup2);
+        student.addSeminarGroup(seminarGroup);
         student.addSeminarGroup(seminarGroup4);
         userService.editUser(student);
 
@@ -83,6 +191,14 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
         Event event1 = sampleEvent("Event1-Timeline1", "Event1-Timeline1-Location", "Event1-Timeline1-Desc");
         Event event2 = sampleEvent("Event2-Timeline1", "Event2-Timeline1-Location", "Event2-Timeline1-Desc");
         Event event3 = sampleEvent("Event3-Timeline1", "Event3-Timeline1-Location", "Event3-Timeline1-Desc");
+
+        Event beforeChrist = new Event();
+        beforeChrist.setLocation("bla");
+        beforeChrist.setDescription("bla bla");
+        beforeChrist.setName("before christ");
+        beforeChrist.setDate(LocalDate.of(-200,1,1));
+
+        eventService.addEvent(beforeChrist);
 
         timelineService.addEventToTimeline(timeline1.getId(), event1.getId());
         timelineService.addEventToTimeline(timeline1.getId(), event2.getId());
