@@ -140,6 +140,7 @@ public class UserController {
             Set<SeminarGroupDTO> groups = user.getSeminarGroupSet();
             groups.add(group);
             user.setSeminarGroupSet(groups);
+            userFacade.editUser(user);
         } catch (DAOException e) {
             logger.error("rest add Seminar Group", userId, e);
             throw new ResourceNotModifiedException();
