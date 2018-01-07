@@ -1,24 +1,56 @@
-<h1>Timeline name: {{timeline.name}} {{timeline.id}}</h1>
-<h2>Timeline group: {{timeline.seminarGroup.name}}</h2>
+<div style="text-align: center">
+    <h2>Timeline name: {{timeline.name}} {{timeline.id}}</h2>
+    <h3>Timeline group: {{timeline.seminarGroup.name}}</h3>
+</div>
+<div class="panel panel-default">
+    <table class="table-responsive table-hover table table-bordered" style="font-size: large">
+        <tr class="info"><th>Date</th><th>Event name</th><th>Event location</th><th>Description</th><th style="text-align: center">Image</th></tr>
+        <tr ng-repeat="event in timeline.events">
+            <td>{{event.date}}</td>
+            <td>{{event.name}}</td>
+            <td>{{event.location}}</td>
+            <td>{{event.description}}</td>
+            <td align="center"><img src="{{event.image}}" width="100" height="100"></td>
+        </tr>
+    </table>
+</div>
 
-<h3></h3>
-<table class="table-responsive table-hover table table-bordered" style="font-size: large">
-<tr ng-repeat="event in timeline.events">
-    <td>{{event.date}}</td>
-    <td>{{event.name}}</td>
-    <td>{{event.location}}</td>
-    <td>{{event.description}}</td>
-    <td><img src="{{event.image}}" width="100" height="100"></td>
-</tr>
-</table>
 
-<table class="table-responsive table-hover table table-bordered">
-    <tr ng-repeat="comment in timeline.comments">
-        <td>{{comment}}</td>
-    </tr>
-    <tr>
-        <td><button ng-click="addCommentView(timeline.id)" type="submit"
-                    class="btn btn-primary btn-xs">Add comment</button></td>
-    </tr>
-</table>
+<div class="panel panel-default">
+    <table class="table-responsive table-hover table table-bordered" style="font-size: large">
+        <tr class="info"><th align="center" style="text-align: center">Comments for this timeline</th></tr>
+        <tr ng-repeat="comment in timeline.comments">
+            <td style="text-align: center">{{comment}}</td>
+        </tr>
+    </table>
+</div>
+<div class=" panel panel-default">
+    <table class="table-responsive table-hover table table-bordered" style="font-size: large">
+        <tr class="info"><th align="center" style="text-align: center">Add new comment</th></tr>
+        <tr>
+            <td align="center">
+                <form name="form" novalidate class="form-horizontal">
+
+                    <div class="form-group">
+                        <label for="comment" class="col-sm-2 control-label">Comment</label>
+                        <div class="col-sm-10">
+                            <input placeholder="comment" id="comment" type="text" ng-minlength="2" ng-maxlength="280"
+                                   name="comment" class="form-control" ng-model="comment" value="comment" required />
+                            <p class="help-block" ng-show="form.name.$error.maxlength">comment
+                                must be at most 280 characters long</p>
+                            <p class="help-block" ng-show="form.name.$error.minlength">comment
+                                must be at least 2 character long</p>
+                        </div>
+                    </div>
+
+                    <button ng-disabled="!form.$valid" ng-click="addCommentFromView(timelineId, comment)"
+                            class="btn btn-default" type="submit">Submit</button>
+                </form>
+
+
+            </td>
+        </tr>
+    </table>
+</div>
+
 

@@ -187,15 +187,75 @@ timeline.controller('NewTimelineCtrl', function ($scope, $http, $rootScope, $loc
     };
 });
 
+function loadTimeline($http, $scope, $id) {
+    console.log('Loading timeline');
+    $http.get(restInterface + '/timelines/' + $id).then(function (response) {
+        $scope.timeline = response.data;
+    });
+}
 
-timeline.controller('TimelineViewCtrl', ['$scope', '$routeParams', '$http',
-    function ($scope, $routeParams, $http) {
-        var timelineId = $routeParams.timelineId;
-        $http.get(restInterface + '/timelines/' + timelineId).then(function (response) {
-            var timeline = response.data;
-            $scope.timeline = timeline;
-            console.log('AJAX loaded detail of category ' + timeline.name);
-            //$location.path('view_timeline')
+
+
+timeline.controller('TimelineViewCtrl',
+    function ($scope, $routeParams, $http, $rootScope, $location) {
+    var timelineId = $routeParams.timelineId;
+    $http.get(restInterface + '/timelines/' + timelineId).then(function (response) {
+        var timeline = response.data;
+        $scope.timeline = timeline;
+        console.log('AJAX loaded detail of timeline ' + timeline.name);
+        $location.path('timelines/' + timelineId)
+    });
+
+    $scope.addCommentView = function (timelineId) {
+        console.log(timelineId);
+        $rootScope.timelineId = timelineId;
+        console.log(timelineId);
+        $location.path('new_comment');
+    };
+
+
+    $scope.addComment = function (timelineId, comment) {
+        $scope.comment = {
+            'comment' :''
+        };
+        $scope.comment.comment = comment;
+        $http({
+            method: 'PUT',
+            url: restInterface + '/timelines/' + timelineId + '/addcomment',
+            data: $scope.comment
+        }).then(function success(response) {
+            console.log('adding comment');
+            $rootScope.successAlert = 'Added comment.';
+            $location.path('timelines/' + timelineId)
+        }, function error(response) {
+            console.log('could not add comment to timeline');
+            $rootScope.errorAlert = 'Could not add comment to timeline.';
         });
-    }]);
+    };
+
+    $scope.addCommentFromView = function (timelineId, comment) {
+        $scope.comment = {
+            'comment' :''
+        };
+        $scope.comment.comment = comment;
+        $http({
+            method: 'PUT',
+            url: restInterface + '/timelines/' + $routeParams.timelineId + '/addcomment',
+            data: $scope.comment
+        }).then(function success(response) {
+            console.log('adding comment');
+            $rootScope.successAlert = 'Added comment.';
+            loadTimeline($http,$scope,$routeParams.timelineId);
+            $location.path('timelines/' + $routeParams.timelineId);
+            $scope.comment = '';
+                //forceReload;
+        }, function error(response) {
+            console.log('could not add comment to timeline');
+            $rootScope.errorAlert = 'Could not add comment to timeline.';
+        });
+    }}
+
+);
+
+
 

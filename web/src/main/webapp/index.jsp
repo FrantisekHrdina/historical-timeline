@@ -32,7 +32,7 @@
 
 </head>
 <body>
-	<div ng-app="historicalTimelineApp">
+	<div ng-app="historicalTimelineApp" style="font-size: large">
 		<nav class="navbar navbar-inverse"
 			ng-if="$location.path() !== '/login'">
 			<div class="navbar-header">
@@ -52,9 +52,12 @@
 					<li><a href="#!/timelines">Timelines</a></li>
 					<li ng-if="userRole === 'teacher'"><a href="#!/users">Users</a></li>
 				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="#profil">Logged user name + Logout</a></li>
+				</ul>
 			</div>
 		</nav>
-		<div class="container">
+		<div class="container" style="width: 90%;">
 			<div ng-show="errorAlert" class="alert alert-danger">
 				{{errorAlert}}
     			</div>	
