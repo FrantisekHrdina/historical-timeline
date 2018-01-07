@@ -1,37 +1,42 @@
-<h1>Events</h1>
+<div style="text-align: center">
+    <h1 class="ng-scope">Event Administration</h1>
+</div>
 
-<button ng-click="createEvent()" class="btn btn-primary">
-    <span class="glyphicon glyphicon-plus"></span> New Event
-</button>
-<table class="table">
-    <thead>
-    <tr>
-        <th>Id</th>
-        <th>Name</th>
-        <th>Location</th>
-        <th>Date</th>
-        <th>Description</th>
-        <th>Image</th>
-        <th>Update</th>
-        <th>Delete</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr ng-repeat="event in events track by $index">
-        <td>{{event.id}}</td>
-        <td>{{event.name}}</td>
-        <td>{{event.location}}</td>
-        <td>{{event.date}}</td>
-        <td>{{event.description}}</td>
-        <td><img src="{{event.image}}" width="50" height="50"></td>
-        <td>
-            <button ng-click="updateEvent(event)" type="submit"
-                    class="btn btn-primary">Update</button>
-        </td>
-        <td>
-            <button ng-click="deleteEvent(event)" type="submit"
-                    class="btn btn btn-danger">Delete</button>
-        </td>
-    </tr>
-    </tbody>
-</table>
+<button ng-click="createEvent()" class="btn btn-primary btn-md">
+    <span class="glyphicon glyphicon-plus"></span> Add a new Event
+</button><br><br>
+
+<div class="panel panel-default">
+    <table class="table-responsive table-hover table table-bordered" style="font-size: large">
+        <thead>
+        <tr class="info">
+            <th>Id</th>
+            <th>Name</th>
+            <th>Location</th>
+            <th>Date</th>
+            <th>Description</th>
+            <th style="text-align: center">Image</th>
+            <th style="text-align: center">Update</th>
+            <th style="text-align: center">Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="event in events track by $index">
+            <td style="vertical-align: middle">{{event.id}}</td>
+            <td style="vertical-align: middle">{{event.name}}</td>
+            <td style="vertical-align: middle">{{event.location}}</td>
+            <td style="vertical-align: middle">{{event.date}}</td>
+            <td style="vertical-align: middle">{{event.description}}</td>
+            <td style="vertical-align: middle; text-align: center"><img src="{{event.image}}" width="50" height="50"></td>
+            <td style="vertical-align: middle; text-align: center">
+                <button ng-click="updateEvent(event)" type="submit"
+                        class="btn btn-primary">Update</button>
+            </td>
+            <td style="vertical-align: middle; text-align: center">
+                <button ng-click="deleteEvent(event)" type="submit"
+                        class="btn btn btn-danger">Delete</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>

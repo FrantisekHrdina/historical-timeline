@@ -1,26 +1,32 @@
-<table class="table">
-    <thead>
-    <tr>
-        <th>Id</th>
-        <th>Name</th>
-        <th>SeminarGroup</th>
-        <th>View Timeline</th>
+<div style="text-align: center">
+    <h1 class="ng-scope">Available Timelines</h1>
+</div>
+<div class="panel panel-default">
+    <table class="table-responsive table-hover table table-bordered" style="font-size: large">
+        <thead>
+        <tr class="info">
+            <th>Id</th>
+            <th>Name</th>
+            <th>SeminarGroup</th>
+            <th style="text-align: center">View Timeline</th>
 
-    </tr>
-    </thead>
-    <tbody>
-    <tr ng-repeat="timeline in timelines track by $index">
-        <td>{{timeline.id}}</td>
-        <td>{{timeline.name}}</td>
-        <td>{{timeline.seminarGroup.name}}</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="timeline in timelines track by $index">
+            <td>{{timeline.id}}</td>
+            <td>{{timeline.name}}</td>
+            <td>{{timeline.seminarGroup.name}}</td>
 
-        <td>
-            <a href="#!/timelines/{{timeline.id}}"><button type="submit"
-                                                           class="btn btn-primary btn-xs">View Timeline</button></a>
-        </td>
-    </tr>
-            </table>
-        </td>
+            <td style="text-align: center; vertical-align: middle">
+                <a href="#!/timelines/{{timeline.id}}">
+                    <button type="submit" class="btn btn-primary btn-md">View Timeline</button>
+                </a>
+            </td>
+        </tr>
+    </table>
+    </td>
     </tr>
     </tbody>
-</table>
+    </table>
+</div>

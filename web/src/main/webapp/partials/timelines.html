@@ -1,81 +1,89 @@
-<h1>Timelines</h1>
+<div style="text-align: center">
+    <h1 class="ng-scope">Timelines Administration</h1>
+</div>
 
 <button ng-if="userRole === 'teacher'" ng-click="createTimeline()" class="btn btn-primary">
-    <span class="glyphicon glyphicon-plus"></span> New Timeline
-</button>
-<table class="table">
-    <thead>
-    <tr>
-        <th>Id</th>
-        <th>Name</th>
-        <th>Events</th>
-        <th>Comments</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr ng-repeat="timeline in timelines track by $index">
-        <td>{{timeline.id}}</td>
-        <td>
-            <table>
-                <tr>
-                    <td>{{timeline.name}}</td>
-                </tr>
-                <tr>
-                    <td>{{timeline.seminarGroup.name}}</td>
-                </tr>
-                <tr ng-if="userRole === 'teacher'">
-                    <td>
-                        <button ng-click="changeGroupView(timeline.id)" type="submit"
-                                class="btn btn-primary btn-xs btn-block">Change group</button>
-                    </td>
-                </tr>
-                <tr ng-if="userRole === 'teacher'">
-                    <td>
-                        <button ng-click="deleteTimeline(timeline)" type="submit"
-                                class="btn btn-danger btn-xs btn-block">Delete</button>
-                    </td>
-                </tr>
-            </table>
-        </td>
-        <td>
-            <table class="table">
-                <thead>
-                <tr>
-                    <th>Date</th>
-                    <th>Name</th>
-                    <th>Location</th>
-                    <th>Description</th>
-                    <th ng-if="userRole === 'teacher'">Remove</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr ng-repeat="event in timeline.events">
-                    <td>{{event.date}}</td>
-                    <td>{{event.name}}</td>
-                    <td>{{event.location}}</td>
-                    <td>{{event.description}}</td>
-                    <td ng-if="userRole === 'teacher'"><button ng-click="removeEvent(timeline, event)" type="submit"
-                                class="btn btn-danger btn-xs">Remove event</button></td>
-                </tr>
-                </tbody>
-                <tr>
-                    <td ng-if="userRole === 'teacher'"><button ng-click="addEventsView(timeline.id)" type="submit"
-                                class="btn btn-primary btn-xs">Add events</button></td>
-                </tr>
-            </table>
-        </td>
-        <td>
-            <table>
-                <tr ng-repeat="comment in timeline.comments">
-                    <td>{{comment}}</td>
-                </tr>
-                <tr>
-                    <td><button ng-click="addCommentView(timeline.id)" type="submit"
-                                class="btn btn-primary btn-xs">Add comment</button></td>
-                </tr>
-            </table>
-        </td>
+    <span class="glyphicon glyphicon-plus"></span> Add a new Timeline
+</button><br><br>
 
-    </tr>
-    </tbody>
-</table>
+<div class="panel panel-default">
+    <table class="table-responsive table-hover table table-bordered" style="font-size: large">
+        <thead>
+        <tr class="info">
+            <th>Id</th>
+            <th style="text-align: center">Timeline</th>
+            <th style="text-align: center">Events</th>
+            <th style="text-align: center">Comments</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="timeline in timelines track by $index">
+            <td>{{timeline.id}}</td>
+            <td>
+                <table class="table table-responsive" style="border: 0">
+                    <thead>
+                        <tr>
+                            <th style="text-align: center">{{timeline.name}}</th>
+                        </tr>
+                    </thead>
+
+                    <tr>
+                        <td style="text-align: center">{{timeline.seminarGroup.name}}</td>
+                    </tr>
+                    <tr ng-if="userRole === 'teacher'">
+                        <td>
+                            <button ng-click="changeGroupView(timeline.id)" type="submit"
+                                    class="btn btn-primary btn-sm btn-block">Change group</button>
+                        </td>
+                    </tr>
+                    <tr ng-if="userRole === 'teacher'">
+                        <td>
+                            <button ng-click="deleteTimeline(timeline)" type="submit"
+                                    class="btn btn-danger btn-sm btn-block">Delete timeline</button>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+            <td>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Name</th>
+                        <th>Location</th>
+                        <th>Description</th>
+                        <th ng-if="userRole === 'teacher'">Remove</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="event in timeline.events">
+                        <td>{{event.date}}</td>
+                        <td>{{event.name}}</td>
+                        <td>{{event.location}}</td>
+                        <td>{{event.description}}</td>
+                        <td ng-if="userRole === 'teacher'"><button ng-click="removeEvent(timeline, event)" type="submit"
+                                                                   class="btn btn-danger btn-sm">Delete event</button></td>
+                    </tr>
+                    </tbody>
+                    <tr>
+                        <td ng-if="userRole === 'teacher'"><button ng-click="addEventsView(timeline.id)" type="submit"
+                                                                   class="btn btn-primary btn-sm">Add events</button></td>
+                    </tr>
+                </table>
+            </td>
+            <td>
+                <table class="table table-responsive" style="width: 100%; border: 0">
+                    <tr ng-repeat="comment in timeline.comments">
+                        <td style="text-align: center">{{comment}}</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center;"><button ng-click="addCommentView(timeline.id)" type="submit"
+                                    class="btn btn-primary btn-sm">Add comment</button></td>
+                    </tr>
+                </table>
+            </td>
+
+        </tr>
+        </tbody>
+    </table>
+</div>
