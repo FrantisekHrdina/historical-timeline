@@ -1,36 +1,43 @@
-<h1>Users</h1>
+<div style="text-align: center">
+    <h1 class="ng-scope">Users Administration</h1>
+</div>
 
-<table class="table">
-    <thead>
-    <tr>
-        <th>Id</th>
-        <th>Forename</th>
-        <th>Surname</th>
-        <th>Email</th>
-        <th>Is Teacher</th>
-        <th>Seminar Groups</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr ng-repeat="user in users track by $index">
-        <td>{{user.id}}</td>
-        <td>{{user.forename}}</td>
-        <td>{{user.surname}}</td>
-        <td>{{user.email}}</td>
-        <td>
-            <input type="checkbox" ng-checked="{{user.isTeacher}}">
-        </td>
-        <td>
-            <table>
-                <tr ng-repeat="group in user.seminarGroupSet">
-                    <td>{{group.name}}</td>
-                </tr>
-            </table>
-        <td>
-        <td>
-            <button ng-click="addSeminarGroupView(user.id)" type="submit"
-                                class="btn btn-primary btn-xs">Add Seminar Group</button>
-        </td>
-    </tr>
-    </tbody>
-</table>
+<div class="panel panel-default">
+    <table class="table-responsive table-hover table table-bordered" style="font-size: large">
+        <thead>
+        <tr class="info">
+            <th>Id</th>
+            <th>Forename</th>
+            <th>Surname</th>
+            <th>Email</th>
+            <th>Is Teacher</th>
+            <th>Seminar Groups</th>
+            <th style="text-align: center">Add Seminar Groups</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="user in users track by $index">
+            <td style="vertical-align: middle">{{user.id}}</td>
+            <td style="vertical-align: middle">{{user.forename}}</td>
+            <td style="vertical-align: middle">{{user.surname}}</td>
+            <td style="vertical-align: middle">{{user.email}}</td>
+            <td ng-if="user.isTeacher == true" >
+                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+            </td>
+            <td ng-if="user.isTeacher == false" >
+                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+            </td>
+            <td  style="vertical-align: middle">
+                <table>
+                    <tr ng-repeat="group in user.seminarGroupSet">
+                        <td>{{group.name}}</td>
+                    </tr>
+                </table>
+            <td  style="vertical-align: middle; text-align: center">
+                <button ng-click="addSeminarGroupView(user.id)" type="submit"
+                        class="btn btn-primary btn-sm">Add Seminar Group</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
