@@ -10,6 +10,10 @@ function loadUsers($http, $scope) {
 user.controller('UsersCtrl', function ($scope, $http, $rootScope, $location) {
     loadUsers($http, $scope);
     
+    $http.get(restInterface + '/groups').then(function (response) {
+        $scope.groups = response.data;
+    });
+    
     $scope.addSeminarGroupView = function (userId) {
         $rootScope.userId = userId;
         $location.path('assign_user');
@@ -18,7 +22,7 @@ user.controller('UsersCtrl', function ($scope, $http, $rootScope, $location) {
     $scope.addSeminarGroup = function (groupId) {
         $http({
             method: 'PUT',
-            url: 'users/' + $rootScope.userId + '/addseminargroup/' + groupId
+            url: restInterface + '/users/' + $rootScope.userId + '/addseminargroup/' + groupId
         }).then(function success(response) {
             console.log('adding new group');
             $rootScope.successAlert = 'Added new group.';

@@ -68,9 +68,7 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
 			e.printStackTrace();
 		}
         
-        student.addSeminarGroup(seminarGroup);
         student.addSeminarGroup(seminarGroup2);
-        student.addSeminarGroup(seminarGroup3);
         student.addSeminarGroup(seminarGroup4);
         userService.editUser(student);
 
