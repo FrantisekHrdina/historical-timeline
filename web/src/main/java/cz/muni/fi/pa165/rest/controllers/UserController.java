@@ -147,4 +147,19 @@ public class UserController {
         }
     }
     
+    @RequestMapping(value = "/{userid}/removeseminargroup/{groupid}", method = RequestMethod.PUT)
+    public void removeSeminarGroup(@PathVariable("userid") Long userId, @PathVariable("groupid") Long seminarGroupId) {
+        try {
+            UserDTO user = userFacade.findUser(userId);
+            SeminarGroupDTO group = seminarGroupFacade.findGroup(seminarGroupId);
+            Set<SeminarGroupDTO> groups = user.getSeminarGroupSet();
+            groups.remove(group);
+            user.setSeminarGroupSet(groups);
+            userFacade.editUser(user);
+        } catch (DAOException e) {
+            logger.error("rest remove Seminar Group", userId, e);
+            throw new ResourceNotModifiedException();
+        }
+    }
+    
 }

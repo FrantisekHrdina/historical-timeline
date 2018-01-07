@@ -1,0 +1,14 @@
+<form name="form" novalidate class="form-horizontal">
+
+    <div class="form-group">
+        <label for="repeatSelect" class="col-sm-2 control-label">Seminar group</label>
+        <div class="col-sm-10">
+            <select name="repeatSelect" id="repeatSelect" ng-model="groupId">
+                <option ng-repeat="group in usergroups" value="{{group.id}}" ng-selected="{{group.id == groupId}}">{{group.name}}</option>
+            </select>
+        </div>
+    </div>
+
+    <button ng-click="removeSeminarGroup(groupId)"
+            class="btn btn-primary" type="submit">Submit</button>
+</form>

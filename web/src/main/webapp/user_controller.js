@@ -19,6 +19,12 @@ user.controller('UsersCtrl', function ($scope, $http, $rootScope, $location) {
         $location.path('assign_user');
     }
     
+    $scope.removeSeminarGroupView = function (user) {
+        $rootScope.usergroups = user.seminarGroupSet;
+        $rootScope.userId = user.id;
+        $location.path('unassign_user');
+    }
+    
     $scope.addSeminarGroup = function (groupId) {
         $http({
             method: 'PUT',
@@ -31,6 +37,21 @@ user.controller('UsersCtrl', function ($scope, $http, $rootScope, $location) {
         }, function error(response) {
             console.log('could not add group to user');
             $rootScope.errorAlert = 'Could not add group to user.';
+        });
+    }
+    
+    $scope.removeSeminarGroup = function (groupId) {
+        $http({
+            method: 'PUT',
+            url: restInterface + '/users/' + $rootScope.userId + '/removeseminargroup/' + groupId
+        }).then(function success(response) {
+            console.log('removing new group');
+            $rootScope.successAlert = 'Removed new group.';
+            loadTimelines($http, $scope);
+            $location.path('users')
+        }, function error(response) {
+            console.log('could not remove group from user');
+            $rootScope.errorAlert = 'Could not remove group from user.';
         });
     }
         

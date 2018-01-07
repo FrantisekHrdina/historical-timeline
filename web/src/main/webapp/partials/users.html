@@ -12,7 +12,7 @@
             <th>Email</th>
             <th>Is Teacher</th>
             <th>Seminar Groups</th>
-            <th style="text-align: center">Add Seminar Groups</th>
+            <th style="text-align: center">Change Seminar Groups</th>
         </tr>
         </thead>
         <tbody>
@@ -33,9 +33,21 @@
                         <td>{{group.name}}</td>
                     </tr>
                 </table>
-            <td  style="vertical-align: middle; text-align: center">
-                <button ng-click="addSeminarGroupView(user.id)" type="submit"
-                        class="btn btn-primary btn-sm">Add Seminar Group</button>
+            <td>
+                <table class="table table-responsive" style="border: 0">
+                    <tr style="text-align: center">
+                        <td>
+                            <button ng-click="addSeminarGroupView(user.id)" type="submit"
+                                    class="btn btn-primary btn-sm">Add Seminar Group</button>
+                        </td>
+                    </tr>
+                    <tr style="text-align: center">
+                        <td>
+                            <button ng-click="removeSeminarGroupView(user)" type="submit"
+                                    class="btn btn-primary btn-sm">Remove Seminar Group</button>
+                        </td>
+                    </tr>
+                </table>
             </td>
         </tr>
         </tbody>
