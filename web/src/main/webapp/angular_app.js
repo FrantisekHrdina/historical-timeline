@@ -24,6 +24,7 @@ historicalTimelineApp.config(['$routeProvider',
         when('/timeline_add_event', {templateUrl: 'partials/timeline_add_event.html', controller: 'TimelinesCtrl'}).
         when('/users', {templateUrl: 'partials/users.html', controller: 'UsersCtrl'}).
         when('/assign_user', {templateUrl: 'partials/assign_user.html', controller: 'UsersCtrl'}).
+        when('/unassign_user', {templateUrl: 'partials/unassign_user.html', controller: 'UsersCtrl'}).
         when('/login', {templateUrl: 'partials/login_form.html', controller: 'LoginController'}).
         when('/dashboard', {templateUrl: 'partials/dashboard.html', controller: 'TimelinesCtrl'}).
         when('/view_timeline', {templateUrl: 'partials/view_timeline.html', controller: 'TimelinesCtrl'}).

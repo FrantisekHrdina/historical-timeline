@@ -10,9 +10,9 @@
             <th>Forename</th>
             <th>Surname</th>
             <th>Email</th>
-            <th>Is Teacher</th>
+            <th style="text-align: center;">Is Teacher</th>
             <th>Seminar Groups</th>
-            <th style="text-align: center">Add Seminar Groups</th>
+            <th style="text-align: center">Change Seminar Groups</th>
         </tr>
         </thead>
         <tbody>
@@ -21,10 +21,10 @@
             <td style="vertical-align: middle">{{user.forename}}</td>
             <td style="vertical-align: middle">{{user.surname}}</td>
             <td style="vertical-align: middle">{{user.email}}</td>
-            <td ng-if="user.isTeacher == true" >
+            <td ng-if="user.isTeacher == true" style="text-align: center; vertical-align: middle">
                 <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
             </td>
-            <td ng-if="user.isTeacher == false" >
+            <td ng-if="user.isTeacher == false" style="text-align: center; vertical-align: middle">
                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
             </td>
             <td  style="vertical-align: middle">
@@ -33,9 +33,21 @@
                         <td>{{group.name}}</td>
                     </tr>
                 </table>
-            <td  style="vertical-align: middle; text-align: center">
-                <button ng-click="addSeminarGroupView(user.id)" type="submit"
-                        class="btn btn-primary btn-sm">Add Seminar Group</button>
+            <td>
+                <table class="table table-responsive" style="border: 0">
+                    <tr style="text-align: center">
+                        <td>
+                            <button ng-click="addSeminarGroupView(user.id)" type="submit"
+                                    class="btn btn-primary btn-sm">Add Seminar Group</button>
+                        </td>
+                    </tr>
+                    <tr style="text-align: center">
+                        <td>
+                            <button ng-click="removeSeminarGroupView(user)" type="submit"
+                                    class="btn btn-primary btn-sm">Remove Seminar Group</button>
+                        </td>
+                    </tr>
+                </table>
             </td>
         </tr>
         </tbody>
