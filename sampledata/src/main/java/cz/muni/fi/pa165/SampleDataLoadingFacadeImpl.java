@@ -175,10 +175,11 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
 			e.printStackTrace();
 		}
         
-        student.addSeminarGroup(seminarGroup2);
+/*        student.addSeminarGroup(seminarGroup2);
         student.addSeminarGroup(seminarGroup);
         student.addSeminarGroup(seminarGroup4);
-        userService.editUser(student);
+        student.addSeminarGroup(groupExample);
+        userService.editUser(student);*/
 
         timelineService.addComment(timeline.getId(), "This is a boring period.");
         timelineService.addEventToTimeline(timeline.getId(), event.getId());
