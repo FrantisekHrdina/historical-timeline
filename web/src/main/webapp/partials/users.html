@@ -10,7 +10,7 @@
             <th>Forename</th>
             <th>Surname</th>
             <th>Email</th>
-            <th>Is Teacher</th>
+            <th style="text-align: center;">Is Teacher</th>
             <th>Seminar Groups</th>
             <th style="text-align: center">Change Seminar Groups</th>
         </tr>
@@ -21,10 +21,10 @@
             <td style="vertical-align: middle">{{user.forename}}</td>
             <td style="vertical-align: middle">{{user.surname}}</td>
             <td style="vertical-align: middle">{{user.email}}</td>
-            <td ng-if="user.isTeacher == true" >
+            <td ng-if="user.isTeacher == true" style="text-align: center; vertical-align: middle">
                 <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
             </td>
-            <td ng-if="user.isTeacher == false" >
+            <td ng-if="user.isTeacher == false" style="text-align: center; vertical-align: middle">
                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
             </td>
             <td  style="vertical-align: middle">

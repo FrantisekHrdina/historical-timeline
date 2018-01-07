@@ -1,14 +1,26 @@
-<form name="form" novalidate class="form-horizontal">
+<div style="width: 100%; margin: auto; text-align: center" align="center">
+    <h2>Remove User from Group</h2>
+    <form name="form" novalidate class="form-horizontal" style="text-align: center; align-content: center; margin: auto; align-items: center">
 
-    <div class="form-group">
-        <label for="repeatSelect" class="col-sm-2 control-label">Seminar group</label>
-        <div class="col-sm-10">
-            <select name="repeatSelect" id="repeatSelect" ng-model="groupId">
-                <option ng-repeat="group in usergroups" value="{{group.id}}" ng-selected="{{group.id == groupId}}">{{group.name}}</option>
-            </select>
-        </div>
+    <div class="form-group" style="font-size: large; width: 50%; text-align: center; margin: auto">
+        <table style="width: 100%">
+            <tr>
+                <td>
+                    <label for="repeatSelect" class="control-label">Seminar group</label><br>
+                    <select name="repeatSelect" id="repeatSelect" ng-model="groupId" style="width: 100%;">
+                        <option ng-repeat="group in usergroups" value="{{group.id}}" ng-selected="{{group.id == groupId}}">{{group.name}}</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <br>
+                    <button ng-click="removeSeminarGroup(groupId)"
+                            class="btn btn-primary" type="submit">Submit</button>
+                </td>
+            </tr>
+        </table>
+
     </div>
-
-    <button ng-click="removeSeminarGroup(groupId)"
-            class="btn btn-primary" type="submit">Submit</button>
 </form>
+</div>
