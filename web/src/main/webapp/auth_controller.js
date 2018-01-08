@@ -17,8 +17,8 @@ auth.controller('LoginController', function ($scope, $rootScope, $http, $locatio
           $rootScope.authorizedTimelines = response.data.timelines;
           $rootScope.username = response.data.username;
           $cookieStore.put('userRole', response.data.role);
-          $cookieStore.put('authorizedTimelines', response.data.timelines);
           $cookieStore.put('username', response.data.username);
+          localStorage.setItem('authorizedTimelines', JSON.stringify(response.data.timelines));
           $location.path('dashboard');
       }, function error(response) {
           console.log('error signing in user ' + credentials.login);
