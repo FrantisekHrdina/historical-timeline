@@ -42,20 +42,20 @@ function authentication($rootScope, $location) {
 historicalTimelineApp.run( function($rootScope, $location, $cookieStore) {
 	$rootScope.logout = function logout() {
 		$cookieStore.remove('userRole');
-		$cookieStore.remove('authorizedTimelines');
 		$cookieStore.remove('username');
+		localStorage.clear();
 		$location.path('/login');
 	}
 	$rootScope.$location = $location;
 	$rootScope.userRole = $cookieStore.get('userRole');
-	$rootScope.authorizedTimelines = $cookieStore.get('authorizedTimelines');
+	$rootScope.authorizedTimelines = JSON.parse(localStorage.getItem('authorizedTimelines'));
 	$rootScope.username = $cookieStore.get('username');
 	authentication($rootScope, $location);
     // register listener to watch route changes
     $rootScope.$on('$routeChangeStart', function(event, next, current) {
     	authentication($rootScope, $location);
     	
-    	if (current && next.$$route.controller !== current.$$route.controller) {
+    	if (current && next && next.$$route.controller !== current.$$route.controller) {
     		// dismiss alerts
     		$rootScope.errorAlert = '';
     		$rootScope.successAlert = '';
